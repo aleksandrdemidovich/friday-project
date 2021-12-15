@@ -5,6 +5,8 @@ import {HashRouter} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {initializingTC} from "./pages/Login/loginReducer";
 
+
+
 function App() {
     const dispatch = useDispatch()
 
@@ -14,9 +16,13 @@ function App() {
 
 
     return (
+        <>
+        <div className="wrapper">
         <HashRouter>
             <Routes/>
         </HashRouter>
+        </div>
+        </>
     );
 }
 
