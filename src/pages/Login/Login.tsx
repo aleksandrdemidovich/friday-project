@@ -19,7 +19,7 @@ export const Login: React.FC<LoginPropsType> =
                 <h2 className={s.loginTitle}>It-incubator</h2>
                 <span className={s.loginSubtitle}>Sign In</span>
                 <Form className={s.FormBox} onSubmit={handleSubmit}>
-                    <div className={s.loginInput}>
+                    <div className={s.registrWrap}>
                         <label className={s.loginLabel}>Email</label>
                         <input className={s.loginName}
                         id="email"
@@ -28,9 +28,9 @@ export const Login: React.FC<LoginPropsType> =
                     />
                     </div>
                     <p/>
-                    <div className={s.loginInput}>
+                    <div className={s.registrWrap}>
                         <label className={s.loginLabel}>Password</label>
-                        <div className={s.inputContainer}>
+                        <div className={s.inputWrap}>
                             <input className={s.loginName}
                         id="email"
                         type="password"
