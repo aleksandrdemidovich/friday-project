@@ -116,15 +116,17 @@ function SignUp() {
                     />
                     </div>
                 </div>
-
+{/* 
                 {formik.touched.confirmPassword && formik.errors.confirmPassword &&
-                <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>}
-
-                <button type="button" onClick={formik.handleReset}>Cancel</button>
-                <button type="submit" disabled={status === 'loading'}>Sign Up</button>
-            </form>
+                <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>} */}
+        </form>
+            <div className={s.btnWrap}>
+                <button className={s.btnLeft} type="button" onClick={formik.handleReset}>Cancel</button>
+                <button className={s.btnRight} type="submit" disabled={status === 'loading'}>Sign Up</button>
+            
             {error !== null && <div style={{color: 'red'}}>{error}</div>}
             </div>
+        </div>
         </>
     )
 }
