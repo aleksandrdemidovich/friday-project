@@ -47,13 +47,13 @@ export const Login: React.FC<LoginPropsType> =
                     /> */}
                     <p/>
                     <button className={s.BtnTransparent} type={'submit'}>Forgot Password</button>
-                    <button className={s.BtnBlue} type={'submit'} disabled={loading}>Login</button>
+                    <button className={s.btnBlue} type={'submit'} disabled={loading}>Login</button>
                 </Form>
                 <div className={s.linkWrap}>
-                <NavLink className={s.notAccaunt} to={PATH.SIGN_UP}>
+                <NavLink className={s.linkLight} to={PATH.SIGN_UP}>
                 Don’t have an account?
                 </NavLink>
-                <NavLink className={s.signUp} to={PATH.SIGN_UP}>
+                <NavLink className={s.linkBlue} to={PATH.SIGN_UP}>
                     Sign up
                 </NavLink>
                 </div>
