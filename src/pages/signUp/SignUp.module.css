@@ -3,17 +3,15 @@
     width: 413px;
     padding: 25px 33px 60px 33px;
     text-align: center;
-    margin: 0 auto;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-right: -50%;
     transform: translate(-50%, -50%);
     border-radius: 8px;
 }
 
 .title {
-    /* font-family: 'Poppins'; */
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
     font-size: 26px;
@@ -23,7 +21,7 @@
 }
 
 .subtitle {
-    /* font-family: Poppins; */
+    font-family: Poppins;
     font-weight: 600;
     font-size: 22px;
     line-height: 33px;
@@ -34,7 +32,6 @@
     display: flex;
     flex-direction: column;
     margin-top: 38px;
-    margin-bottom: 46px;
 }
 
 .registrWrap {
@@ -45,7 +42,7 @@
     margin-bottom: 38px;
 }
 
-.loginLabel {
+.label {
     font-family: "SFUIDisplay-Regular";
     font-weight: 400;
     font-size: 13px;
@@ -54,7 +51,7 @@
     opacity: 0.5;
 }
 
-.loginName {
+.field {
     width: 347px;
     height: 48px;
     align-items: center;
@@ -85,6 +82,7 @@
     align-items: center;
     justify-content: center;
     gap: 36px;
+    margin-top: 84px;
 }
 
 .btnLeft {

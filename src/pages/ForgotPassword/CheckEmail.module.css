@@ -1,0 +1,45 @@
+.checkEmail {
+    background: #F9F9FE;
+    width: 413px;
+    padding: 25px 33px 138px 33px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+}
+
+.title {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 39px;
+    color: #2D2E46;
+    margin-bottom: 35px;
+}
+
+.letterImg {
+    margin-bottom: 24px;
+}
+
+.subtitle {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #2D2E46;
+    margin-bottom: 21px;
+}
+
+.textLight {
+    font-family: "SFUIDisplay-Regular";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2D2E46;
+    opacity: 0.5;
+    text-decoration: none;
+    text-align: center;
+}

@@ -17,11 +17,11 @@ export const Login: React.FC<LoginPropsType> =
         <>
             <div className={s.login}>
                 <h2 className={s.loginTitle}>It-incubator</h2>
-                <span className={s.loginSubtitle}>Sign In</span>
+                <h3 className={s.loginSubtitle}>Sign In</h3>
                 <Form className={s.FormBox} onSubmit={handleSubmit}>
                     <div className={s.registrWrap}>
                         <label className={s.loginLabel}>Email</label>
-                        <input className={s.loginName}
+                        <input className={s.loginField}
                         id="email"
                         type="email"
                         {...getFieldProps('email')}
@@ -31,7 +31,7 @@ export const Login: React.FC<LoginPropsType> =
                     <div className={s.registrWrap}>
                         <label className={s.loginLabel}>Password</label>
                         <div className={s.inputWrap}>
-                            <input className={s.loginName}
+                            <input className={s.loginField}
                         id="email"
                         type="password"
                         {...getFieldProps('password')}
@@ -46,19 +46,24 @@ export const Login: React.FC<LoginPropsType> =
                         {...getFieldProps('rememberMe')}
                     /> */}
                     <p/>
-                    <button className={s.BtnTransparent} type={'submit'}>Forgot Password</button>
-                    <button className={s.btnBlue} type={'submit'} disabled={loading}>Login</button>
-                </Form>
-                <div className={s.linkWrap}>
-                <NavLink className={s.linkLight} to={PATH.SIGN_UP}>
-                Don’t have an account?
+                    
+                    <NavLink className={s.linkTransparent} to={PATH.FORGOT_PASSWORD}>
+                    Forgot Password
                 </NavLink>
+                    <button className={s.btnBlue} type={'submit'} disabled={loading}>Login</button>
+                
+                <div className={s.linkWrap}>
+                <p className={s.textLight}>
+                Don’t have an account?
+                </p>
                 <NavLink className={s.linkBlue} to={PATH.SIGN_UP}>
                     Sign up
                 </NavLink>
                 </div>
+            </Form>
                 {/* {error !== null && <div style={{color: 'red'}}>{error}</div>} */}
                 </div>
+                
             </>
 
         );

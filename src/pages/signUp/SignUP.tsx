@@ -66,11 +66,11 @@ function SignUp() {
         <div className={s.signUp}>
             {status === 'loading' && <Preloader/>}
             <h2 className={s.title}>It-incubator</h2>
-            <span className={s.subtitle}>Sign Up</span>
+            <h3 className={s.subtitle}>Sign Up</h3>
             <form className={s.FormBox} onSubmit={formik.handleSubmit}>
                 <div className={s.registrWrap}>
-                    <label className={s.loginLabel}>Email</label>
-                    <input className={s.loginName}
+                    <label className={s.label}>Email</label>
+                    <input className={s.field}
                         id="email"
                         name="email"
                         type="email"
@@ -85,9 +85,9 @@ function SignUp() {
                 {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
 
                 <div className={s.registrWrap}>
-                    <label className={s.loginLabel}>Password</label>
+                    <label className={s.label}>Password</label>
                     <div className={s.inputWrap}>
-                        <input className={s.loginName}
+                        <input className={s.field}
                         id="password"
                         name="password"
                         type="password"
@@ -103,9 +103,9 @@ function SignUp() {
                 <div style={{color: 'red'}}>{formik.errors.password}</div>}
 
                 <div className={s.registrWrap}>
-                    <label className={s.loginLabel}>Confirm password</label>
+                    <label className={s.label}>Confirm password</label>
                     <div className={s.inputWrap}>
-                        <input className={s.loginName}
+                        <input className={s.field}
                         id="confirmPassword"
                         name="confirmPassword"
                         type="password"
@@ -119,14 +119,15 @@ function SignUp() {
 {/* 
                 {formik.touched.confirmPassword && formik.errors.confirmPassword &&
                 <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>} */}
-        </form>
+        
             <div className={s.btnWrap}>
                 <button className={s.btnLeft} type="button" onClick={formik.handleReset}>Cancel</button>
                 <button className={s.btnRight} type="submit" disabled={status === 'loading'}>Sign Up</button>
             
             {error !== null && <div style={{color: 'red'}}>{error}</div>}
             </div>
-        </div>
+        </form>
+    </div>
         </>
     )
 }

@@ -45,12 +45,12 @@ function ForgotPassword() {
     return (
         <div className={s.forgotPassword}>
             <h2 className={s.title}>It-incubator</h2>
-            <span className={s.subtitle}>Forgot your password?</span>
+            <h3 className={s.subtitle}>Forgot your password?</h3>
             {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
             
-                <form className={s.FormBox} onSubmit={formik.handleSubmit}>
+                <form className={s.formBox} onSubmit={formik.handleSubmit}>
                     <div className={s.inputWrap}>
-                        <input className={s.loginName}
+                        <input className={s.field}
                             id="email"
                             name="email"
                             type="email"
@@ -66,22 +66,23 @@ function ForgotPassword() {
                     <div style={{color: 'red'}}>{formik.errors.email}</div>}
                     {appError && <div style={{color: 'red'}}>{appError}</div>}
 
-                    <NavLink className={s.linkLight} to={PATH.SIGN_UP}>
+                    <p className={s.textLight}>
                         Enter your email address and we will send you further instructions
-                    </NavLink>
+                    </p>
                 </form>
 
                 <div className={s.boxLink}>
+                {/* <NavLink className={s.btnBlue} to={PATH.CHECK_EMAIL}>Send Instructions</NavLink> */}
                     <button className={s.btnBlue} type="submit" disabled={appStatus === 'loading'}>Send Instructions</button>
 
-                    <NavLink className={s.linkLight} to={PATH.SIGN_UP}>
+                    <p className={s.textLight}>
                         Did you remember your password?
-                    </NavLink>
+                    </p>
 
                     <NavLink className={s.linkBlue} to={PATH.LOGIN}>Try logging in</NavLink>
                 </div>
         </div>
-      
+    
     )
 }
 
