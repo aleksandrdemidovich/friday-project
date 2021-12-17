@@ -58,6 +58,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
                 {<span className={ restProps.value === '' ? s.placeHolder: s.hidePlaceHolder }>Type here</span>}
             </label>
             <span>test1 git pull(delete)</span>
+            <span>test 2</span>
             {error && <span className={finalSpanClassName}>{error}</span>}
         </div>
     )
