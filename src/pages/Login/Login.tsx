@@ -65,7 +65,6 @@ export const Login: React.FC<LoginPropsType> =
                 </div>
                 
             </>
-
         );
     }
 
