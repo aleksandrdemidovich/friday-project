@@ -1,3 +1,4 @@
+import s from "./ForgotPassword.module.css"
 import React from 'react'
 import {useFormik} from "formik";
 import {NavLink, Redirect} from "react-router-dom";
@@ -42,13 +43,14 @@ function ForgotPassword() {
     }
 
     return (
-        <div>
-            <h3>Forgot your password?</h3>
+        <div className={s.forgotPassword}>
+            <h2 className={s.title}>It-incubator</h2>
+            <h3 className={s.subtitle}>Forgot your password?</h3>
             {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
-            <div>
-                <form onSubmit={formik.handleSubmit}>
-                    <div>
-                        <input
+            
+                <form className={s.formBox} onSubmit={formik.handleSubmit}>
+                    <div className={s.inputWrap}>
+                        <input className={s.field}
                             id="email"
                             name="email"
                             type="email"
@@ -64,14 +66,23 @@ function ForgotPassword() {
                     <div style={{color: 'red'}}>{formik.errors.email}</div>}
                     {appError && <div style={{color: 'red'}}>{appError}</div>}
 
-                    <p>Enter your email address and we will send you further instructions</p>
-
-                    <button type="submit" disabled={appStatus === 'loading'}>Send Instructions</button>
+                    <p className={s.textLight}>
+                        Enter your email address and we will send you further instructions
+                    </p>
                 </form>
-                <p>Did you remember your password?</p>
-                <NavLink to={PATH.LOGIN}>Try logging in</NavLink>
-            </div>
+
+                <div className={s.boxLink}>
+                {/* <NavLink className={s.btnBlue} to={PATH.CHECK_EMAIL}>Send Instructions</NavLink> */}
+                    <button className={s.btnBlue} type="submit" disabled={appStatus === 'loading'}>Send Instructions</button>
+
+                    <p className={s.textLight}>
+                        Did you remember your password?
+                    </p>
+
+                    <NavLink className={s.linkBlue} to={PATH.LOGIN}>Try logging in</NavLink>
+                </div>
         </div>
+    
     )
 }
 
