@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import {inputNewPassword, RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
 import {AppStateType} from "../../redux/store";
-
+import Title from "../../components/common/Title/Title";
 
 type FormikErrorType = {
     password?: string
@@ -38,8 +38,9 @@ function NewPassword() {
 
     return (
         <div className={s.newPassword}>
+            <Title/>
             
-            <h2 className={s.title}>It-incubator</h2>
+            {/* <h2 className={s.title}>It-incubator</h2> */}
             <h3 className={s.subtitle}>Create new password</h3>
 
             {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
