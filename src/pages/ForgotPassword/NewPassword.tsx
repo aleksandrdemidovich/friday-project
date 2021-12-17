@@ -42,6 +42,8 @@ function NewPassword() {
             <h2 className={s.title}>It-incubator</h2>
             <h3 className={s.subtitle}>Create new password</h3>
 
+            {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
+
             <form className={s.FormBox} onSubmit={formik.handleSubmit}>
                 <div className={s.inputWrap}>
                     <input className={s.field}

@@ -69,11 +69,11 @@ function ForgotPassword() {
                     <p className={s.textLight}>
                         Enter your email address and we will send you further instructions
                     </p>
+                    <button className={s.btnBlue} type="submit" disabled={appStatus === 'loading'}>Send Instructions</button>
                 </form>
 
                 <div className={s.boxLink}>
                 {/* <NavLink className={s.btnBlue} to={PATH.CHECK_EMAIL}>Send Instructions</NavLink> */}
-                    <button className={s.btnBlue} type="submit" disabled={appStatus === 'loading'}>Send Instructions</button>
 
                     <p className={s.textLight}>
                         Did you remember your password?
