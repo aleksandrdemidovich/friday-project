@@ -1,3 +1,4 @@
+import s from "./SignUp.module.css"
 import React from 'react'
 import {useFormik} from "formik";
 import {RequestStatusType, setErrorRegistrationAC, setNewUserTC} from "./signUp-reducer";
@@ -62,57 +63,71 @@ function SignUp() {
 
     return (
         <>
+        <div className={s.signUp}>
             {status === 'loading' && <Preloader/>}
-            <h1>Sign Up Page</h1>
-            <form onSubmit={formik.handleSubmit}>
-                <div>
-                    <input
+            <h2 className={s.title}>It-incubator</h2>
+            <h3 className={s.subtitle}>Sign Up</h3>
+            <form className={s.FormBox} onSubmit={formik.handleSubmit}>
+                <div className={s.registrWrap}>
+                    <label className={s.label}>Email</label>
+                    <input className={s.field}
                         id="email"
                         name="email"
                         type="email"
                         onChange={formik.handleChange}
                         value={formik.values.email}
-                        placeholder="Email"
+                        placeholder="j&johnson@gmail.com
+                        "
                         onBlur={formik.handleBlur}
                     />
                 </div>
 
                 {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
 
-                <div>
-                    <input
+                <div className={s.registrWrap}>
+                    <label className={s.label}>Password</label>
+                    <div className={s.inputWrap}>
+                        <input className={s.field}
                         id="password"
                         name="password"
                         type="password"
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        placeholder="Password"
+                        placeholder="*********"
                         onBlur={formik.handleBlur}
                     />
+                    </div>
                 </div>
 
                 {formik.touched.password && formik.errors.password &&
                 <div style={{color: 'red'}}>{formik.errors.password}</div>}
 
-                <div>
-                    <input
+                <div className={s.registrWrap}>
+                    <label className={s.label}>Confirm password</label>
+                    <div className={s.inputWrap}>
+                        <input className={s.field}
                         id="confirmPassword"
                         name="confirmPassword"
                         type="password"
                         onChange={formik.handleChange}
                         value={formik.values.confirmPassword}
-                        placeholder="Confirm password"
+                        placeholder="*********"
                         onBlur={formik.handleBlur}
                     />
+                    </div>
                 </div>
-
+{/* 
                 {formik.touched.confirmPassword && formik.errors.confirmPassword &&
-                <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>}
-
-                <button type="button" onClick={formik.handleReset}>Cancel</button>
-                <button type="submit" disabled={status === 'loading'}>Sign Up</button>
-            </form>
+                <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>} */}
+        
+            <div className={s.btnWrap}>
+                <button className={s.btnLeft} type="button" onClick={formik.handleReset}>Cancel</button>
+                <button className={s.btnRight} type="submit" disabled={status === 'loading'}>Sign Up</button>
+            
             {error !== null && <div style={{color: 'red'}}>{error}</div>}
+            </div>
+        </form>
+    </div>
         </>
     )
 }
