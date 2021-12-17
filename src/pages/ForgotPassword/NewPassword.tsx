@@ -1,3 +1,4 @@
+import s from "./NewPassword.module.css"
 import React from 'react'
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -36,13 +37,16 @@ function NewPassword() {
     })
 
     return (
-        <div>
-            <h1>New Password Page</h1>
-            <div>Create new password</div>
+        <div className={s.newPassword}>
+            
+            <h2 className={s.title}>It-incubator</h2>
+            <h3 className={s.subtitle}>Create new password</h3>
 
-            <form onSubmit={formik.handleSubmit}>
-                <div>
-                    <input
+            {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
+
+            <form className={s.FormBox} onSubmit={formik.handleSubmit}>
+                <div className={s.inputWrap}>
+                    <input className={s.field}
                         id="password"
                         name="password"
                         type="password"
@@ -50,7 +54,7 @@ function NewPassword() {
                         disabled={appStatus === 'loading'}
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        placeholder="password"
+                        placeholder="Password"
                         onBlur={formik.handleBlur}
                     />
                 </div>
@@ -59,9 +63,9 @@ function NewPassword() {
                 <div style={{color: 'red'}}>{formik.errors.password}</div>}
                 {appError && <div style={{color: 'red'}}>{appError}</div>}
 
-                <p>Create new password and we will send you further instructions to email</p>
+                <p className={s.textLight}>Create new password and we will send you further instructions to email</p>
 
-                <button type="submit" disabled={appStatus === 'loading'}>Create new password</button>
+                <button className={s.btnBlue} type="submit" disabled={appStatus === 'loading'}>Create new password</button>
             </form>
         </div>
     )
