@@ -1,5 +1,6 @@
-import {IUser} from "../pages/Login/loginReducer";
+
 import {instance} from "./instanceAPI";
+import {IUser} from "../redux/authReducer";
 
 
 export type DefaultResponseType = {

@@ -3,7 +3,8 @@ import './App.css';
 import Routes from "./pages/Routes";
 import {HashRouter} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {initializingTC} from "./pages/Login/loginReducer";
+import {initializingTC} from "./redux/authReducer";
+
 
 
 
