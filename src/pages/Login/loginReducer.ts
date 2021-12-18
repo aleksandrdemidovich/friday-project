@@ -1,6 +1,6 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../redux/store";
-import {authAPI} from "./authAPI";
+import {authAPI} from "../../api/authAPI";
 
 export enum AuthEvents {
     SET_USER_DATA = 'SET_USER_DATA',

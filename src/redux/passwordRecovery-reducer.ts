@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
-import {passwordRecoveryAPI} from '../api/passwordRecoveryAPI';
 import {setAppError, setAppStatus} from "./app-reducer";
 import errorResponseHandler from "../utils/errorResponseHandler";
+import {authAPI} from "../api/authAPI";
 
 
 export type RecoveryStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -38,7 +38,7 @@ export const passwordRecovery = (email: string, message: string) => async (dispa
     try {
         dispatch(setAppError({error: ''}))
         dispatch(setAppStatus({status: 'loading'}));
-        await passwordRecoveryAPI.passRecovery(email, message);
+        await authAPI.passRecovery(email, message);
         dispatch(setAppStatus({status: 'succeeded'}));
         dispatch((setEmail(email)))
     } catch (e: any) {
@@ -50,7 +50,7 @@ export const inputNewPassword = (password: string, resetPasswordToken: string | 
     try {
         dispatch(setAppError({error: ''}))
         dispatch(setAppStatus({status: 'loading'}));
-        await passwordRecoveryAPI.inputNewPass(password, resetPasswordToken);
+        await authAPI.inputNewPass(password, resetPasswordToken);
         dispatch(setAppStatus({status: 'succeeded'}));
     } catch (e) {
         errorResponseHandler(e, dispatch)

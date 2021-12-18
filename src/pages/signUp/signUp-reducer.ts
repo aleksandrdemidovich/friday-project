@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {RegistrationAPI} from "./signUp-api";
+import {authAPI} from "../../api/authAPI";
 
 
 const SET_ERROR_REGISTRATION = "SET_ERROR_REGISTRATION"
@@ -48,7 +49,7 @@ export const setStatusRegistrationAC = (status: RequestStatusType) => {
 //thunk
 export const setNewUserTC = (email: string, password: string) => (dispatch: Dispatch) => {
     dispatch(setStatusRegistrationAC('loading'))
-    RegistrationAPI.signUp(email, password)
+    authAPI.signUp(email, password)
         .then((res) => {
             console.log(res.data)
             dispatch(setStatusRegistrationAC('succeeded'))
