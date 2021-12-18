@@ -7,6 +7,7 @@ import {AppStateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {Preloader} from "../Login/Preloader";
+import Title from "../../components/common/Title/Title";
 
 type FormikErrorType = {
     email?: string
@@ -65,7 +66,8 @@ function SignUp() {
         <>
         <div className={s.signUp}>
             {status === 'loading' && <Preloader/>}
-            <h2 className={s.title}>It-incubator</h2>
+            <Title/>
+            {/* <h2 className={s.title}>It-incubator</h2> */}
             <h3 className={s.subtitle}>Sign Up</h3>
             <form className={s.FormBox} onSubmit={formik.handleSubmit}>
                 <div className={s.registrWrap}>
