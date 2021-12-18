@@ -6,6 +6,7 @@ import {PATH} from "../Routes";
 import {useDispatch, useSelector} from "react-redux";
 import {passwordRecovery, RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
 import {AppStateType} from "../../redux/store";
+import Title from "../../components/common/Title/Title";
 
 type FormikErrorType = {
     email?: string
@@ -44,7 +45,8 @@ function ForgotPassword() {
 
     return (
         <div className={s.forgotPassword}>
-            <h2 className={s.title}>It-incubator</h2>
+             <Title/>
+            {/* <h2 className={s.title}>It-incubator</h2> */}
             <h3 className={s.subtitle}>Forgot your password?</h3>
             {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
             

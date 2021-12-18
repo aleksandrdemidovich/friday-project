@@ -3,6 +3,8 @@ import React from 'react'
 import {Field, Form, FormikProps} from "formik";
 import {NavLink} from 'react-router-dom'
 import {PATH} from "../Routes";
+import eyeImg from '../../assets/images/eye.svg';
+import Title from "../../components/common/Title/Title";
 
 type LoginPropsType = FormikProps<any> & {
     error: string | null,
@@ -16,22 +18,24 @@ export const Login: React.FC<LoginPropsType> =
         return (
         <>
             <div className={s.login}>
-                <h2 className={s.loginTitle}>It-incubator</h2>
-                <h3 className={s.loginSubtitle}>Sign In</h3>
-                <Form className={s.FormBox} onSubmit={handleSubmit}>
-                    <div className={s.registrWrap}>
-                        <label className={s.loginLabel}>Email</label>
-                        <input className={s.loginField}
+            <Title/>
+                {/* <h2 className={s.title}>It-incubator</h2> */}
+                <h3 className={s.subtitle}>Sign In</h3>
+                <Form className={s.formBox} onSubmit={handleSubmit}>
+                    <div className={s.registrWrap}>                       
+                        <input className={s.field}
                         id="email"
                         type="email"
                         {...getFieldProps('email')}
-                    />
+                        />
+                        <label className={s.label}>Email</label>
+                        <img className={s.eyeImg} src={eyeImg} alt="latter" />
                     </div>
                     <p/>
                     <div className={s.registrWrap}>
-                        <label className={s.loginLabel}>Password</label>
+                        <label className={s.label}>Password</label>
                         <div className={s.inputWrap}>
-                            <input className={s.loginField}
+                            <input className={s.field}
                         id="email"
                         type="password"
                         {...getFieldProps('password')}
