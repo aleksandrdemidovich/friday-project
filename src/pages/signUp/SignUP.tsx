@@ -1,14 +1,13 @@
 import s from "./SignUp.module.css"
 import React from 'react'
 import {useFormik} from "formik";
-import {RequestStatusType} from "../../redux/signUp-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {Preloader} from "../../components/common/Preloader/Preloader";
 import Title from "../../components/common/Title/Title";
-import {authActions, setNewUserTC} from "../../redux/authReducer";
+import {authActions, RequestStatusType, setNewUserTC} from "../../redux/authReducer";
 
 type FormikErrorType = {
     email?: string
@@ -19,8 +18,6 @@ type FormikErrorType = {
 function SignUp() {
 
     const error = useSelector<AppStateType, string | null>(state => state.auth.error)
-    // const error = useSelector<AppStateType, string | null>(state => state.signUp.error)
-    // const status = useSelector<AppStateType, RequestStatusType>(state => state.signUp.status)
     const status = useSelector<AppStateType, RequestStatusType>(state => state.auth.status)
     const dispatch = useDispatch()
 
