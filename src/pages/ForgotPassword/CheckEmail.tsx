@@ -9,7 +9,7 @@ import Title from "../../components/common/Title/Title";
 
 function CheckEmail() {
 
-    const email = useSelector<AppStateType, string>(state => state.passwordRecovery.email)
+    const email = useSelector<AppStateType, string>(state => state.auth.email)
 
     return (
         <div className={s.checkEmail}>

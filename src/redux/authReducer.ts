@@ -2,6 +2,8 @@ import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 import {authAPI} from "../api/authAPI";
 import {Dispatch} from "redux";
+import {setAppError, setAppStatus} from "./app-reducer";
+import errorResponseHandler from "../utils/errorResponseHandler";
 
 export enum AuthEvents {
     SET_USER_DATA = 'SET_USER_DATA',
@@ -9,7 +11,9 @@ export enum AuthEvents {
     SET_ERROR = 'SET_ERROR',
     LOGOUT = 'LOGOUT',
     SET_STATUS_REGISTRATION = "SET_STATUS_REGISTRATION",
+    SET_EMAIL = 'SET_EMAIL',
 }
+
 //types
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -20,6 +24,7 @@ export type AuthStateType = {
     error: string | null
     loading: boolean,
     status: RequestStatusType
+    email: string
 }
 
 export const initialState: AuthStateType = {
@@ -28,6 +33,7 @@ export const initialState: AuthStateType = {
     error: null,
     loading: false,
     status: 'idle',
+    email: ''
 }
 
 export type  IUser = {
@@ -35,8 +41,8 @@ export type  IUser = {
     avatar: string
     email: string
     name: string
-    token:string
-    tokenDeathTime:number
+    token: string
+    tokenDeathTime: number
     publicCardPacksCount: number
     created: string
     updated: string
@@ -60,9 +66,11 @@ export const authReducer = (state = initialState, action: AuthActionsType) => {
             return {...state, error: action.error, loading: false}
         case AuthEvents.LOGOUT:
             return {...state, isLoggedIn: false, loading: false, error: '', user: null}
-        case AuthEvents.SET_STATUS_REGISTRATION: {
+        case AuthEvents.SET_STATUS_REGISTRATION:
             return {...state, status: action.status, loading: false}
-        }
+        case AuthEvents.SET_EMAIL:
+            return {...state, email: action.email};
+
         default :
             return state
     }
@@ -70,12 +78,12 @@ export const authReducer = (state = initialState, action: AuthActionsType) => {
 
 // actions creators
 export const authActions = {
-setUserData: (payload: IUser) => {
-    return {
-        type: AuthEvents.SET_USER_DATA,
-        payload
-    } as const
-},
+    setUserData: (payload: IUser) => {
+        return {
+            type: AuthEvents.SET_USER_DATA,
+            payload
+        } as const
+    },
     setLoading: (payload: boolean) => {
         return {
             type: AuthEvents.SET_LOADING,
@@ -89,14 +97,20 @@ setUserData: (payload: IUser) => {
         } as const
     },
     logout: () => {
-    return {
-        type: AuthEvents.LOGOUT
-    } as const
+        return {
+            type: AuthEvents.LOGOUT
+        } as const
     },
-    setStatusRegistration:(status: RequestStatusType) => {
+    setStatusRegistration: (status: RequestStatusType) => {
         return {
             type: AuthEvents.SET_STATUS_REGISTRATION,
             status
+        } as const
+    },
+    setEmail: (email: string) => {
+        return {
+            type: AuthEvents.SET_EMAIL,
+            email
         } as const
     }
 }
@@ -108,11 +122,10 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): T
         const data = await authAPI.login(email, password, rememberMe);
         dispatch(authActions.setUserData(data))
         dispatch(authActions.setLoading(false))
-    } catch (e:any) {
+    } catch (e: any) {
         const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
         dispatch(authActions.setError(error))
-    }
-    finally {
+    } finally {
 
     }
 }
@@ -123,14 +136,14 @@ export const initializingTC = (): ThunkAction<void, AppStateType, {}, AuthAction
     try {
         const data = await authAPI.me()
         dispatch(authActions.setUserData(data))
-    } catch (e:any) {
+    } catch (e: any) {
         const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
         dispatch(authActions.setError(error))
     } finally {
     }
 }
 
-export const logoutTC = (): ThunkAction<void, AppStateType, {}, any> => async (dispatch) => {
+export const logoutTC = (): ThunkAction<void, AppStateType, {}, AuthActionsType> => async (dispatch) => {
     dispatch(authActions.setLoading(true))
     try {
         const response = await authAPI.logout()
@@ -157,3 +170,25 @@ export const setNewUserTC = (email: string, password: string) => (dispatch: Disp
         })
 }
 
+export const passwordRecovery = (email: string, message: string) => async (dispatch: Dispatch) => {
+    try {
+        dispatch(setAppError({error: ''}))
+        dispatch(setAppStatus({status: 'loading'}));
+        await authAPI.passRecovery(email, message);
+        dispatch(setAppStatus({status: 'succeeded'}));
+        dispatch((authActions.setEmail(email)))
+    } catch (e: any) {
+        errorResponseHandler(e, dispatch)
+    }
+}
+
+export const inputNewPassword = (password: string, resetPasswordToken: string | undefined) => async (dispatch: Dispatch) => {
+    try {
+        dispatch(setAppError({error: ''}))
+        dispatch(setAppStatus({status: 'loading'}));
+        await authAPI.inputNewPass(password, resetPasswordToken);
+        dispatch(setAppStatus({status: 'succeeded'}));
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
