@@ -56,6 +56,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
                 {<span className={ restProps.value === '' ? s.placeHolder: s.hidePlaceHolder }>Type here</span>}
+            <span>test n ew branch</span>
             </label>
             {error && <span className={finalSpanClassName}>{error}</span>}
         </div>
