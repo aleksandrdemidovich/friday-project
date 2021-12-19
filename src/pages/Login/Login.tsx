@@ -5,6 +5,7 @@ import {NavLink} from 'react-router-dom'
 import {PATH} from "../Routes";
 import eyeImg from '../../assets/images/eye.svg';
 import Title from "../../components/common/Title/Title";
+import Input from "../../components/common/Input/Input";
 
 type LoginPropsType = FormikProps<any> & {
     error: string | null,
@@ -22,12 +23,13 @@ export const Login: React.FC<LoginPropsType> =
                 {/* <h2 className={s.title}>It-incubator</h2> */}
                 <h3 className={s.subtitle}>Sign In</h3>
                 <Form className={s.formBox} onSubmit={handleSubmit}>
-                    <div className={s.registrWrap}>                       
-                        <input className={s.field}
+                    <div className={s.registrWrap}> 
+                    <Input/>                      
+                        {/* <input className={s.field}
                         id="email"
                         type="email"
                         {...getFieldProps('email')}
-                        />
+                        /> */}
                         <label className={s.label}>Email</label>
                         <img className={s.eyeImg} src={eyeImg} alt="latter" />
                     </div>

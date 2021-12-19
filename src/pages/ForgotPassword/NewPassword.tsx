@@ -3,9 +3,13 @@ import React from 'react'
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {inputNewPassword, RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
+import {RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
 import {AppStateType} from "../../redux/store";
 import Title from "../../components/common/Title/Title";
+<<<<<<< HEAD
+=======
+import {inputNewPassword} from "../../redux/authReducer";
+>>>>>>> f5c864a2cb25ce618c18e9ffed4e1d7c480e246e
 
 type FormikErrorType = {
     password?: string
