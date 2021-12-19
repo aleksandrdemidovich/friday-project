@@ -4,8 +4,9 @@ import {useFormik} from "formik";
 import {NavLink, Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {useDispatch, useSelector} from "react-redux";
-import {passwordRecovery, RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
 import {AppStateType} from "../../redux/store";
+import Title from "../../components/common/Title/Title";
+import {passwordRecovery, RequestStatusType} from "../../redux/authReducer";
 
 type FormikErrorType = {
     email?: string
@@ -16,7 +17,7 @@ function ForgotPassword() {
 
 
     const dispatch = useDispatch();
-    const appStatus = useSelector<AppStateType, RecoveryStatusType>(state => state.app.status);
+    const appStatus = useSelector<AppStateType, RequestStatusType>(state => state.app.status);
     const appError = useSelector<AppStateType, string>(state => state.app.error);
 
     const formik = useFormik({
@@ -44,7 +45,8 @@ function ForgotPassword() {
 
     return (
         <div className={s.forgotPassword}>
-            <h2 className={s.title}>It-incubator</h2>
+             <Title/>
+            {/* <h2 className={s.title}>It-incubator</h2> */}
             <h3 className={s.subtitle}>Forgot your password?</h3>
             {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
             

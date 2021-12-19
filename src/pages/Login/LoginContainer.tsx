@@ -1,12 +1,13 @@
 import React from 'react'
 import {Formik} from "formik";
 import Login from "./Login";
-import {AuthStateType, loginTC} from "./loginReducer";
+// import {AuthStateType, loginTC} from "../../redux/loginReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {PATH} from "../Routes";
 import {Redirect} from "react-router-dom";
-import {Preloader} from "./Preloader";
+import {Preloader} from "../../components/common/Preloader/Preloader";
+import {AuthStateType, loginTC} from "../../redux/authReducer";
 
 
 type ErrorsType = {
