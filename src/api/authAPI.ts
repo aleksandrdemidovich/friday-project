@@ -23,6 +23,7 @@ export const authAPI = {
         return response.data
     },
     logout: async () => {
+        debugger
         const response = await instance.delete<DefaultResponseType>('auth/me')
         console.log('LOGOUT: ', response.data)
         return response.data

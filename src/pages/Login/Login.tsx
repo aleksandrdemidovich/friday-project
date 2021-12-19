@@ -8,18 +8,16 @@ import Title from "../../components/common/Title/Title";
 
 type LoginPropsType = FormikProps<any> & {
     error: string | null,
-    loading: boolean
 }
 
 
 export const Login: React.FC<LoginPropsType> =
-    ({handleSubmit, getFieldProps, error, loading }) => {
+    ({handleSubmit, getFieldProps, error }) => {
 
         return (
         <>
             <div className={s.login}>
             <Title/>
-                {/* <h2 className={s.title}>It-incubator</h2> */}
                 <h3 className={s.subtitle}>Sign In</h3>
                 <Form className={s.formBox} onSubmit={handleSubmit}>
                     <div className={s.registrWrap}>                       
@@ -43,18 +41,18 @@ export const Login: React.FC<LoginPropsType> =
                         </div>
                     </div>
                     <p/>
-                    {/* <label>Remember me</label>
+                     <label>Remember me</label>
                     <input
                         id="rememberMe"
                         type="checkbox"
                         {...getFieldProps('rememberMe')}
-                    /> */}
+                    />
                     <p/>
                     
                     <NavLink className={s.linkTransparent} to={PATH.FORGOT_PASSWORD}>
                     Forgot Password
                 </NavLink>
-                    <button className={s.btnBlue} type={'submit'} disabled={loading}>Login</button>
+                    <button className={s.btnBlue} type={'submit'} >Login</button>
                 
                 <div className={s.linkWrap}>
                 <p className={s.textLight}>
@@ -65,7 +63,7 @@ export const Login: React.FC<LoginPropsType> =
                 </NavLink>
                 </div>
             </Form>
-                {/* {error !== null && <div style={{color: 'red'}}>{error}</div>} */}
+                 {error !== null && <div style={{color: 'red'}}>{error}</div>}
                 </div>
                 
             </>

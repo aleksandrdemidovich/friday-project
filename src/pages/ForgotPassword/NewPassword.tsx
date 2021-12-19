@@ -3,10 +3,9 @@ import React from 'react'
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
 import {AppStateType} from "../../redux/store";
 import Title from "../../components/common/Title/Title";
-import {inputNewPassword} from "../../redux/authReducer";
+import {inputNewPassword, RequestStatusType} from "../../redux/authReducer";
 
 type FormikErrorType = {
     password?: string
@@ -16,7 +15,7 @@ function NewPassword() {
     const {token} = useParams<{ token: string }>()
 
     const dispatch = useDispatch();
-    const appStatus = useSelector<AppStateType, RecoveryStatusType>(state => state.app.status);
+    const appStatus = useSelector<AppStateType, RequestStatusType>(state => state.app.status);
     const appError = useSelector<AppStateType, string>(state => state.app.error);
 
 

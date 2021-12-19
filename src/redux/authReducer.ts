@@ -1,16 +1,12 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 import {authAPI} from "../api/authAPI";
-import {Dispatch} from "redux";
-import {setAppError, setAppStatus} from "./app-reducer";
+import {AppActionsType, setAppError, setAppStatus} from "./app-reducer";
 import errorResponseHandler from "../utils/errorResponseHandler";
 
 export enum AuthEvents {
     SET_USER_DATA = 'SET_USER_DATA',
-    SET_LOADING = 'SET_LOADING',
-    SET_ERROR = 'SET_ERROR',
     LOGOUT = 'LOGOUT',
-    SET_STATUS_REGISTRATION = "SET_STATUS_REGISTRATION",
     SET_EMAIL = 'SET_EMAIL',
 }
 
@@ -21,18 +17,12 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type AuthStateType = {
     user: IUser | null
     isLoggedIn: boolean
-    error: string | null
-    loading: boolean,
-    status: RequestStatusType
     email: string
 }
 
 export const initialState: AuthStateType = {
     user: null,
     isLoggedIn: false,
-    error: null,
-    loading: false,
-    status: 'idle',
     email: ''
 }
 
@@ -55,22 +45,17 @@ export type InferActionsType<T> = T extends { [keys: string]: (...args: any[]) =
 
 export type AuthActionsType = InferActionsType<typeof authActions>
 
+export type AuthAppActionsType = AuthActionsType | AppActionsType
+
 // reducer
 export const authReducer = (state = initialState, action: AuthActionsType) => {
     switch (action.type) {
         case AuthEvents.SET_USER_DATA:
-            return {...state, user: action.payload, isLoggedIn: true, loading: false}
-        case AuthEvents.SET_LOADING:
-            return {...state, loading: action.payload}
-        case AuthEvents.SET_ERROR:
-            return {...state, error: action.error, loading: false}
+            return {...state, user: action.payload, isLoggedIn: true}
         case AuthEvents.LOGOUT:
-            return {...state, isLoggedIn: false, loading: false, error: '', user: null}
-        case AuthEvents.SET_STATUS_REGISTRATION:
-            return {...state, status: action.status, loading: false}
+            return {...state, isLoggedIn: false, user: null}
         case AuthEvents.SET_EMAIL:
             return {...state, email: action.email};
-
         default :
             return state
     }
@@ -84,27 +69,9 @@ export const authActions = {
             payload
         } as const
     },
-    setLoading: (payload: boolean) => {
-        return {
-            type: AuthEvents.SET_LOADING,
-            payload
-        } as const
-    },
-    setError: (error: string) => {
-        return {
-            type: AuthEvents.SET_ERROR,
-            error
-        } as const
-    },
     logout: () => {
         return {
             type: AuthEvents.LOGOUT
-        } as const
-    },
-    setStatusRegistration: (status: RequestStatusType) => {
-        return {
-            type: AuthEvents.SET_STATUS_REGISTRATION,
-            status
         } as const
     },
     setEmail: (email: string) => {
@@ -116,61 +83,70 @@ export const authActions = {
 }
 
 // thunks
-export const loginTC = (email: string, password: string, rememberMe: boolean): ThunkAction<void, AppStateType, {}, AuthActionsType> => async (dispatch) => {
-    dispatch(authActions.setLoading(true))
+export const loginTC = (email: string, password: string, rememberMe: boolean): ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
+    dispatch(setAppError({error: ''}))
+    dispatch(setAppStatus({status: 'loading'}));
     try {
         const data = await authAPI.login(email, password, rememberMe);
         dispatch(authActions.setUserData(data))
-        dispatch(authActions.setLoading(false))
+        dispatch(setAppStatus({status:'idle'}))
     } catch (e: any) {
         const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-        dispatch(authActions.setError(error))
+        dispatch(setAppError({error}))
+        dispatch(setAppStatus({status:'failed'}))
     } finally {
 
     }
 }
 
 
-export const initializingTC = (): ThunkAction<void, AppStateType, {}, AuthActionsType> => async (dispatch) => {
-    dispatch(authActions.setLoading(true))
+export const initializingTC = (): ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
+    dispatch(setAppError({error: ''}))
+    dispatch(setAppStatus({status: 'loading'}));
     try {
         const data = await authAPI.me()
         dispatch(authActions.setUserData(data))
+        dispatch(setAppStatus({status:'idle'}))
     } catch (e: any) {
         const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-        dispatch(authActions.setError(error))
+        dispatch(setAppError({error}))
+        dispatch(setAppStatus({status:'failed'}))
     } finally {
     }
 }
 
-export const logoutTC = (): ThunkAction<void, AppStateType, {}, AuthActionsType> => async (dispatch) => {
-    dispatch(authActions.setLoading(true))
+export const logoutTC = (): ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
+    dispatch(setAppError({error: ''}))
+    dispatch(setAppStatus({status: 'loading'}));
+    debugger
     try {
         const response = await authAPI.logout()
         dispatch(authActions.logout())
+        dispatch(setAppStatus({status:'idle'}))
         return response
-    } catch (e) {
-
+    } catch (e:any) {
+        // const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
+        // dispatch(setAppError({error}))
+        // dispatch(setAppStatus({status:'failed'}))
     }
 
 }
 
-export const setNewUserTC = (email: string, password: string) => (dispatch: Dispatch) => {
-    dispatch(authActions.setStatusRegistration('loading'))
+export const setNewUserTC = (email: string, password: string):ThunkAction<void, AppStateType, {}, AuthAppActionsType> => (dispatch) => {
+    dispatch(setAppStatus({status:'loading'}))
     authAPI.signUp(email, password)
         .then((res) => {
             console.log(res.data)
-            dispatch(authActions.setStatusRegistration('succeeded'))
+            dispatch(setAppStatus({status:'succeeded'}))
         })
         .catch((e) => {
             const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-            // dispatch(setErrorRegistrationAC(error))
-            dispatch(authActions.setError(error))
-            dispatch(authActions.setStatusRegistration('failed'))
+            dispatch(setAppError({error}))
+            dispatch(setAppStatus({status:'failed'}))
         })
 }
 
-export const passwordRecovery = (email: string, message: string) => async (dispatch: Dispatch) => {
+export const passwordRecovery = (email: string, message: string):ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
     try {
         dispatch(setAppError({error: ''}))
         dispatch(setAppStatus({status: 'loading'}));
@@ -182,7 +158,7 @@ export const passwordRecovery = (email: string, message: string) => async (dispa
     }
 }
 
-export const inputNewPassword = (password: string, resetPasswordToken: string | undefined) => async (dispatch: Dispatch) => {
+export const inputNewPassword = (password: string, resetPasswordToken: string | undefined):ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
     try {
         dispatch(setAppError({error: ''}))
         dispatch(setAppStatus({status: 'loading'}));
