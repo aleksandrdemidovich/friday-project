@@ -13,8 +13,7 @@ function CheckEmail() {
 
     return (
         <div className={s.checkEmail}>
-            <Title/>
-            {/* <h2 className={s.title}>It-incubator</h2> */}
+            <Title/>           
             <img className={s.letterImg} src={letterImg} alt="latter" />           
             <h3 className={s.subtitle}>Check Email</h3>
             <p className={s.textLight}>We've sent an Email with instructions to {email}</p>

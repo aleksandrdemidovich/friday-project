@@ -5,12 +5,15 @@ import {NavLink} from 'react-router-dom'
 import {PATH} from "../Routes";
 import eyeImg from '../../assets/images/eye.svg';
 import Title from "../../components/common/Title/Title";
-import Input from "../../components/common/Input/Input";
+import { AppError } from "../../components/common/appError/AppError";
+import { InputS } from "../../components/common/InputS/InputS";
+// import Input from "../../components/common/Input/Input";
 
 type LoginPropsType = FormikProps<any> & {
     error: string | null,
     loading: boolean
 }
+
 
 
 export const Login: React.FC<LoginPropsType> =
@@ -20,29 +23,24 @@ export const Login: React.FC<LoginPropsType> =
         <>
             <div className={s.login}>
             <Title/>
-                {/* <h2 className={s.title}>It-incubator</h2> */}
+                
                 <h3 className={s.subtitle}>Sign In</h3>
                 <Form className={s.formBox} onSubmit={handleSubmit}>
-                    <div className={s.registrWrap}> 
-                    <Input/>                      
-                        {/* <input className={s.field}
-                        id="email"
-                        type="email"
+                    <div className={s.registrWrap}>                                    
+                        <InputS
+                        id={1}
+                        type={'email'}
+                        label={"Email"}
                         {...getFieldProps('email')}
-                        /> */}
-                        <label className={s.label}>Email</label>
-                        <img className={s.eyeImg} src={eyeImg} alt="latter" />
+                        />                      
                     </div>
                     <p/>
-                    <div className={s.registrWrap}>
-                        <label className={s.label}>Password</label>
-                        <div className={s.inputWrap}>
-                            <input className={s.field}
-                        id="email"
-                        type="password"
-                        {...getFieldProps('password')}
-                    />
-                        </div>
+                    <div className={s.registrWrap}>                
+                        <InputS
+                        id={2}
+                        type={"password"}
+                        label={"Password"}
+                        {...getFieldProps('password')}/>                       
                     </div>
                     <p/>
                     {/* <label>Remember me</label>
@@ -67,7 +65,7 @@ export const Login: React.FC<LoginPropsType> =
                 </NavLink>
                 </div>
             </Form>
-                {/* {error !== null && <div style={{color: 'red'}}>{error}</div>} */}
+                {error !== null && <AppError error={error}/>}
                 </div>
                 
             </>
