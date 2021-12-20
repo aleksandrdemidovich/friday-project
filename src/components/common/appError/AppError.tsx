@@ -11,8 +11,7 @@ type AppErrorPropsType = {
 export const AppError = (props:AppErrorPropsType) => {
     return (
         <div className={s.appError}>
-            <Alert severity="error">{props.error}</Alert>
-            {/* <div className={s.errorRed}>{props.error}</div> */}
+            <Alert className={s.errorRed}  severity="error">{props.error}</Alert>          
         </div>
     )
 }

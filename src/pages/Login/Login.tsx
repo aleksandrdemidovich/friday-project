@@ -6,8 +6,8 @@ import {PATH} from "../Routes";
 import eyeImg from '../../assets/images/eye.svg';
 import Title from "../../components/common/Title/Title";
 import { AppError } from "../../components/common/appError/AppError";
-import { InputS } from "../../components/common/InputS/InputS";
-// import Input from "../../components/common/Input/Input";
+import { InputPassword } from "../../components/common/InputPassword/InputPassword";
+import { InputMail } from "../../components/common/InputMail/InputMail";
 
 type LoginPropsType = FormikProps<any> & {
     error: string | null,
@@ -26,8 +26,8 @@ export const Login: React.FC<LoginPropsType> =
                 
                 <h3 className={s.subtitle}>Sign In</h3>
                 <Form className={s.formBox} onSubmit={handleSubmit}>
-                    <div className={s.registrWrap}>                                    
-                        <InputS
+                    <div className={s.registrWrap}>                      
+                        <InputMail
                         id={1}
                         type={'email'}
                         label={"Email"}
@@ -36,7 +36,7 @@ export const Login: React.FC<LoginPropsType> =
                     </div>
                     <p/>
                     <div className={s.registrWrap}>                
-                        <InputS
+                        <InputPassword
                         id={2}
                         type={"password"}
                         label={"Password"}

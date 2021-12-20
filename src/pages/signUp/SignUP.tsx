@@ -7,6 +7,7 @@ import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {Preloader} from "../../components/common/Preloader/Preloader";
 import Title from "../../components/common/Title/Title";
+import { AppError } from "../../components/common/appError/AppError";
 import {authActions, RequestStatusType, setNewUserTC} from "../../redux/authReducer";
 
 type FormikErrorType = {
@@ -126,8 +127,10 @@ function SignUp() {
                 <button className={s.btnLeft} type="button" onClick={formik.handleReset}>Cancel</button>
                 <button className={s.btnRight} type="submit" disabled={status === 'loading'}>Sign Up</button>
             
-            {error !== null && <div style={{color: 'red'}}>{error}</div>}
+            {/* {error !== null && <div style={{color: 'red'}}>{error}</div>} */}
+           
             </div>
+            {error !== null && <AppError error={error}/>}
         </form>
     </div>
         </>
