@@ -5,6 +5,7 @@ import {Preloader} from "../../components/common/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {IUser, logoutTC} from "../../redux/authReducer";
+import {AppStatusType} from "../../redux/app-reducer";
 
 
 
@@ -12,7 +13,7 @@ function Profile() {
 
     const user = useSelector<AppStateType, IUser | null>(state => state.auth.user)
     const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
-    const loading = useSelector<AppStateType, boolean>(state => state.auth.loading)
+    const status = useSelector<AppStateType, AppStatusType>(state=>state.app.status)
     const dispatch = useDispatch()
 
     const logout = () => {
@@ -24,7 +25,8 @@ function Profile() {
     }
     return (
         <div>
-            {loading && <Preloader/>}
+            {/*{loading && <Preloader/>}*/}
+            {status === 'loading' && <Preloader/>}
             <div>
                 {
                     user !== null ? <div>
