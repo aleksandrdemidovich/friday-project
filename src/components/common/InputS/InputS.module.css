@@ -1,0 +1,29 @@
+
+.input > label {
+    font-family: "SFUIDisplay-Regular";
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #24254A;
+    opacity: 0.5;
+}
+
+.input {
+    width: 350px;  
+}
+.InputS {
+    position: relative;
+    margin-bottom: 38px;
+}
+.eyeImg {
+    content: ""; 
+    display: block;
+    cursor: pointer;
+    width: 31px;
+    height: 25px;
+    position: absolute;
+    top: 11px;
+    right: 13px;
+
+}
+

@@ -1,26 +1,26 @@
 import s from "./ForgotPassword.module.css"
-import React, {useState} from 'react'
+import React from 'react'
 import {useFormik} from "formik";
 import {NavLink, Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {useDispatch, useSelector} from "react-redux";
-import {passwordRecovery, RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
 import {AppStateType} from "../../redux/store";
 import Title from "../../components/common/Title/Title";
 import {Alert, CircularProgress, Snackbar} from "@mui/material";
+import {passwordRecovery, RequestStatusType} from "../../redux/authReducer";
+
+
 
 type FormikErrorType = {
     email?: string
 }
 
 function ForgotPassword() {
-
-
-    const messageForEmail = `<div style={{'backgroundColor': 'lime', 'padding': '15px'}}>Password recovery link:<a href='https://aleksandrdemidovich.github.io/friday-project/#/set-new-password/$token$'> link</a></div>`
+    const messageForEmail = `<div style={{'backgroundColor': 'lime', 'padding': '15px'}}>Password recovery link:<a href='http://localhost:3000/friday-project#/set-new-password/$token$'> link</a></div>`
 
 
     const dispatch = useDispatch();
-    const appStatus = useSelector<AppStateType, RecoveryStatusType>(state => state.app.status);
+    const appStatus = useSelector<AppStateType, RequestStatusType>(state => state.app.status);
     const appError = useSelector<AppStateType, string>(state => state.app.error);
 
     const formik = useFormik({
@@ -52,7 +52,7 @@ function ForgotPassword() {
             {/* <h2 className={s.title}>It-incubator</h2> */}
             <h3 className={s.subtitle}>Forgot your password?</h3>
             {appStatus === 'loading' && <CircularProgress />}
-            
+
                 <form className={s.formBox} onSubmit={formik.handleSubmit}>
                     <div className={s.inputWrap}>
                         <input className={s.field}
@@ -94,7 +94,7 @@ function ForgotPassword() {
                 </Alert>
             </Snackbar>
         </div>
-    
+
     )
 }
 

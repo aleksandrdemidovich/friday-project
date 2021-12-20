@@ -1,13 +1,15 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
-import {IUser, logoutTC} from "../Login/loginReducer";
-import {Preloader} from "../Login/Preloader";
+import {Preloader} from "../../components/common/Preloader/Preloader";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
+import {IUser, logoutTC} from "../../redux/authReducer";
+
 
 
 function Profile() {
+
     const user = useSelector<AppStateType, IUser | null>(state => state.auth.user)
     const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
     const loading = useSelector<AppStateType, boolean>(state => state.auth.loading)
