@@ -13,6 +13,7 @@ function TempHeader() {
             <NavLink to={PATH.PROFILE}>Profile</NavLink>
             <NavLink to={PATH.NEW_PASSWORD}>New Password Page</NavLink>
             <NavLink to={PATH.FORGOT_PASSWORD}>Forgot Password Page</NavLink>
+            <NavLink to={PATH.PACKS_LIST}>Pack List Page</NavLink>
             <NavLink to={PATH.ERROR_404}>404 Error Page</NavLink>
         </div>
     )
