@@ -6,7 +6,10 @@ import {PATH} from "../Routes";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import Title from "../../components/common/Title/Title";
+import {Alert, CircularProgress, Snackbar} from "@mui/material";
 import {passwordRecovery, RequestStatusType} from "../../redux/authReducer";
+
+
 
 type FormikErrorType = {
     email?: string
@@ -48,8 +51,8 @@ function ForgotPassword() {
              <Title/>
             {/* <h2 className={s.title}>It-incubator</h2> */}
             <h3 className={s.subtitle}>Forgot your password?</h3>
-            {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
-            
+            {appStatus === 'loading' && <CircularProgress />}
+
                 <form className={s.formBox} onSubmit={formik.handleSubmit}>
                     <div className={s.inputWrap}>
                         <input className={s.field}
@@ -83,8 +86,15 @@ function ForgotPassword() {
 
                     <NavLink className={s.linkBlue} to={PATH.LOGIN}>Try logging in</NavLink>
                 </div>
+
+            <Snackbar open={!!appError.length} autoHideDuration={3000}
+                      style={{position: 'absolute', bottom: 10, left: 10}}>
+                <Alert severity="error">
+                    {appError}
+                </Alert>
+            </Snackbar>
         </div>
-    
+
     )
 }
 
