@@ -5,14 +5,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
-<<<<<<< HEAD
-import {Preloader} from "../Login/Preloader";
-import Title from "../../components/common/Title/Title";
-=======
 import {Preloader} from "../../components/common/Preloader/Preloader";
 import Title from "../../components/common/Title/Title";
 import {authActions, RequestStatusType, setNewUserTC} from "../../redux/authReducer";
->>>>>>> f5c864a2cb25ce618c18e9ffed4e1d7c480e246e
 
 type FormikErrorType = {
     email?: string

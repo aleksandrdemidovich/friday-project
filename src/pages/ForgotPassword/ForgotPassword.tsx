@@ -6,10 +6,10 @@ import {PATH} from "../Routes";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import Title from "../../components/common/Title/Title";
-<<<<<<< HEAD
-=======
 import {passwordRecovery, RequestStatusType} from "../../redux/authReducer";
->>>>>>> f5c864a2cb25ce618c18e9ffed4e1d7c480e246e
+import { AppError } from "../../components/common/appError/AppError";
+
+
 
 type FormikErrorType = {
     email?: string
@@ -69,7 +69,7 @@ function ForgotPassword() {
 
                     {formik.touched.email && formik.errors.email &&
                     <div style={{color: 'red'}}>{formik.errors.email}</div>}
-                    {appError && <div style={{color: 'red'}}>{appError}</div>}
+                
 
                     <p className={s.textLight}>
                         Enter your email address and we will send you further instructions
@@ -86,6 +86,9 @@ function ForgotPassword() {
 
                     <NavLink className={s.linkBlue} to={PATH.LOGIN}>Try logging in</NavLink>
                 </div>
+                 {appError && <AppError error={appError} />}
+                
+                 {/* <div style={{color: 'red'}}>{appError}</div> */}
         </div>
     
     )

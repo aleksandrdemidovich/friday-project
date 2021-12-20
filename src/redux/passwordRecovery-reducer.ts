@@ -4,7 +4,7 @@ import errorResponseHandler from "../utils/errorResponseHandler";
 import {authAPI} from "../api/authAPI";
 import {authActions} from "./authReducer";
 
-//
+
 // export type RecoveryStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 // type InitialStateType = {
