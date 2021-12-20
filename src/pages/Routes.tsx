@@ -10,6 +10,7 @@ import React from "react";
 import TempHeader from "../temp/TempHeader";
 import {LoginPage} from "./Login/LoginPage";
 import CheckEmail from "./ForgotPassword/CheckEmail";
+import PacksList from "./PacksList/PacksList";
 
 
 
@@ -22,6 +23,7 @@ export const PATH = {
     NEW_PASSWORD: '/set-new-password/:token',
     CHECK_EMAIL: '/checkemail',
     TEST: '/test',
+    PACKS_LIST:'/packs-list'
 }
 
 
@@ -39,6 +41,7 @@ function Routes() {
                 <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
                 <Route path={PATH.TEST} render={() => <Test/>}/>
                 <Route path={PATH.CHECK_EMAIL} render={() => <CheckEmail/>}/>
+                <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
                 <Route render={() => <Error404/>}/>
             </Switch>
         </>

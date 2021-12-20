@@ -5,6 +5,7 @@ import {passwordRecoveryReducer} from "./passwordRecovery-reducer";
 import {appReducer} from "./app-reducer";
 import { loginReducer } from "../pages/Login/loginReducer";
 import {signUpReducer} from "../pages/signUp/signUp-reducer";
+import {cardPacksReducer} from "./cardPacksReducer";
 
 
 let rootReducers = combineReducers({
@@ -12,7 +13,8 @@ let rootReducers = combineReducers({
     auth: loginReducer,
     signUp: signUpReducer,
     passwordRecovery: passwordRecoveryReducer,
-    app: appReducer
+    app: appReducer,
+    cardPacks: cardPacksReducer,
 })
 
 

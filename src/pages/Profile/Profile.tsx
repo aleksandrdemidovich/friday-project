@@ -26,7 +26,7 @@ function Profile() {
             <div>
                 {
                     user !== null ? <div>
-                        <img src={user.avatar} alt='avatar'/>
+                        <img src={user.avatar} style={{width:'250px', height:'250px'}} alt='avatar'/>
                         <p/>
                         Name: {user.name}
                         <p/>
