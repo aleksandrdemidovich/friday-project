@@ -48,6 +48,7 @@ function LoginContainer() {
                 }}
                 onSubmit={ ({email, password, rememberMe}) => {
                   dispatch( loginTC(email, password, rememberMe))
+                    console.log(email, password, rememberMe)
                 }}
             >
                 {
