@@ -1,0 +1,11 @@
+.subtitle {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #2D2E46;
+
+}
+.subtitleWrap {
+    margin-bottom: 15px;
+}

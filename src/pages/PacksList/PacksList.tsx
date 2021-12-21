@@ -1,3 +1,5 @@
+import s from "./PacksList.module.css"
+
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -13,7 +15,9 @@ import AlertDialogForEditPack from "./AlertDialogForEditPack";
 import AlertDialogForNewPack from "./AlertDialogForNewPack";
 import {PATH} from "../Routes";
 import {Redirect} from "react-router-dom";
-
+import BtnShowCards from "../../components/common/btnShowCards/BtnShowCards";
+import { ServerStreamFileResponseOptionsWithError } from "http2";
+import Subtitle from "../../components/common/subtitle/Subtitle";
 
 
 function PacksList() {
@@ -100,15 +104,29 @@ function PacksList() {
         return <Redirect to={PATH.LOGIN}/>
     }
 
+    
+    const style1: any = {    
+        color: '#2D2E46',
+        background: '#FFFFFF',        
+    }
+
+    const style2: any = {    
+        color: '#FFFFFF',
+        background: '#9A91C8',       
+    }
+    
+
     return (
-        <div style={{display: 'flex', flexDirection: 'row', padding: '20px'}}>
-            <div style={{display: 'flex', flexDirection: 'column', border: '1px solid red', width: '25%'}}>
-                <p>Show pack cards</p>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <button style={{width: '70px'}} onClick={fetchMyPacksCards}>My</button>
-                    <button style={{width: '70px'}} onClick={fetchAllPacksCards}>All</button>
+        <div className={s.packsList} >
+            <div className={s.contentLeft} >
+                <h3 className={s.titleLeft}>Show pack cards</h3>
+                <div className={s.btnWrap}>
+                    <BtnShowCards name='My' onClick={fetchMyPacksCards} style={style1}
+                    />
+                    <BtnShowCards  name='All' onClick={fetchAllPacksCards} style={style2}
+                    />                
                 </div>
-                <p>Number of cards</p>
+                <h3 className={s.titleLeft}>Number of cards</h3>
                 <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
                 {value[0]}<Slider
                     value={value}
@@ -117,25 +135,25 @@ function PacksList() {
                     style={{width:'70%', margin:'0 10px 0 10px'}}
                 />{value[1]}</div>
             </div>
-            <div style={{display: 'flex', flexDirection: 'column', border: '1px solid green', width: '75%'}}>
-                <h1>Packs list</h1>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <input type="text" placeholder='Search...' value={searchPackName} onChange={searchPackNameHandler} style={{width: '70%'}}/>
-                    <AlertDialogForNewPack open={openAlertDialogForNewPack}
-                                           setOpenAlertDialogForNewPack={setOpenAlertDialogForNewPack}/>
-                    {/*<button style={{width: '30%'}} onClick={addNewPackHandler}>Add new pack</button>*/}
-                </div>
+            <div className={s.contentRight} >
+                <Subtitle subtitle='Packs list'/>
+                    <div className={s.contentRightTop}>
+                        <input className={s.search} type="text" placeholder='Search...' value={searchPackName} onChange={searchPackNameHandler} />
+                        <AlertDialogForNewPack open={openAlertDialogForNewPack}
+                                            setOpenAlertDialogForNewPack={setOpenAlertDialogForNewPack}/>
+                        {/*<button style={{width: '30%'}} onClick={addNewPackHandler}>Add new pack</button>*/}
+                    </div>
 
                 {appStatus === 'loading' ?
                     <CircularProgress style={{position: 'absolute', right: '50%', top: '300px'}}/>
                     : <>
-                        <table style={{padding: '50px'}}>
-                            <tr>
-                                <td>Name</td>
-                                <td>Cards</td>
-                                <td>Last updated</td>
-                                <td>Created by</td>
-                                <td>Actions</td>
+                        <table className={s.table} >
+                            <tr className={s.tableHeader}>
+                                <td className={s.tableHeaderName}>Name</td>
+                                <td className={s.tableHeaderCards}>Cards</td>
+                                <td className={s.tableHeaderLast}>Last updated</td>
+                                <td className={s.tableHeaderCreated}>Created by</td>
+                                <td className={s.tableHeaderActions}>Actions</td>
                             </tr>
                             {dataCardsList.map(pack => <tr key={pack._id} style={{border: '1px solid blue'}}>
                                 <td style={{border: '1px solid blue'}}>{pack.name}</td>
@@ -151,10 +169,10 @@ function PacksList() {
                                     {idAuthorizedUser === pack.user_id &&
                                     <>
                                         <AlertDialogForDeletePack packName={pack.name}
-                                                                  key={pack._id}
-                                                                  packId = {pack._id}
-                                                                  open={openAlertDialogForDeletePack}
-                                                                  setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}/>
+                                                                key={pack._id}
+                                                                packId = {pack._id}
+                                                                open={openAlertDialogForDeletePack}
+                                                                setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}/>
                                         <AlertDialogForEditPack packName={pack.name}
                                                                 open={openAlertDialogForEditPack}
                                                                 setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
@@ -183,5 +201,6 @@ function PacksList() {
         </div>
     )
 }
+
 
 export default PacksList
