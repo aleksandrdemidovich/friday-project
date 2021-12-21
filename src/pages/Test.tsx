@@ -5,6 +5,7 @@ import SuperInputText from "../components/c1-SuperInputText/SuperInputText";
 import { AppError } from '../components/common/appError/AppError';
 
 
+
 function Test() {
 
     return (
@@ -14,6 +15,7 @@ function Test() {
             <SuperButton>Test</SuperButton>
             <SuperCheckbox/>
             <AppError error={'Error123'}/>
+
         </div>
     )
 }
