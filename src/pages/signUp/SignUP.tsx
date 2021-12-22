@@ -7,7 +7,9 @@ import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {Preloader} from "../../components/common/Preloader/Preloader";
 import Title from "../../components/common/Title/Title";
+import { AppError } from "../../components/common/appError/AppError";
 import {authActions, RequestStatusType, setNewUserTC} from "../../redux/authReducer";
+import {AppStatusType, setAppError} from "../../redux/app-reducer";
 
 type FormikErrorType = {
     email?: string
@@ -17,8 +19,8 @@ type FormikErrorType = {
 
 function SignUp() {
 
-    const error = useSelector<AppStateType, string | null>(state => state.auth.error)
-    const status = useSelector<AppStateType, RequestStatusType>(state => state.auth.status)
+    const error = useSelector<AppStateType, string | null>(state => state.app.error)
+    const status = useSelector<AppStateType, AppStatusType>(state => state.app.status)
     const dispatch = useDispatch()
 
     const formik = useFormik({
@@ -46,7 +48,7 @@ function SignUp() {
             } else if (values.confirmPassword.length < 8) {
                 errors.confirmPassword = 'Length password should be 8 symbols';
             } else if (values.password !== values.confirmPassword) {
-                dispatch(authActions.setError('Please make sure you passwords match'));
+                dispatch(setAppError({error:'Please make sure you passwords match'}));
             }
 
             return errors;
@@ -126,8 +128,10 @@ function SignUp() {
                 <button className={s.btnLeft} type="button" onClick={formik.handleReset}>Cancel</button>
                 <button className={s.btnRight} type="submit" disabled={status === 'loading'}>Sign Up</button>
             
-            {error !== null && <div style={{color: 'red'}}>{error}</div>}
+            {/* {error !== null && <div style={{color: 'red'}}>{error}</div>} */}
+           
             </div>
+            {error !== null && <AppError error={error}/>}
         </form>
     </div>
         </>

@@ -1,14 +1,13 @@
 import React from 'react'
 import {Formik} from "formik";
 import Login from "./Login";
-// import {AuthStateType, loginTC} from "../../redux/loginReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {PATH} from "../Routes";
 import {Redirect} from "react-router-dom";
 import {Preloader} from "../../components/common/Preloader/Preloader";
 import {AuthStateType, loginTC} from "../../redux/authReducer";
-
+import {AppStatusType} from "../../redux/app-reducer";
 
 type ErrorsType = {
     email?: string
@@ -18,14 +17,16 @@ type ErrorsType = {
 
 
 function LoginContainer() {
-    const {isLoggedIn, loading, error} = useSelector<AppStateType, AuthStateType>(state => state.auth)
+    const {isLoggedIn} = useSelector<AppStateType, AuthStateType>(state => state.auth)
+    const status = useSelector<AppStateType, AppStatusType>(state=>state.app.status)
+    const error = useSelector<AppStateType, string>(state=>state.app.error)
     const dispatch = useDispatch();
     if (isLoggedIn) {
         return <Redirect to={PATH.PROFILE}/>
     }
     return (
         <>
-            {loading && <Preloader/>}
+            {status === 'loading' && <Preloader/>}
             <Formik
                 initialValues={{email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: false}}
                 validate={values => {
@@ -47,11 +48,12 @@ function LoginContainer() {
                 }}
                 onSubmit={ ({email, password, rememberMe}) => {
                   dispatch( loginTC(email, password, rememberMe))
+                    console.log(email, password, rememberMe)
                 }}
             >
                 {
                     (props) => (
-                        <Login {...props} error={error} loading={loading}/>
+                        <Login {...props} error={error}/>
                     )
                 }
 
