@@ -1,8 +1,11 @@
+import s from "./PacksList.module.css"
 import React from 'react'
+// import BtnActions from "../../pages/PacksList/BtnActions/BtnActions";
 
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {fetchDeletePack} from "../../redux/cardPacksReducer";
+import BtnActions from "./BtnActions/BtnActions";
 
 type AlertDialogForDeletePackPropsType = {
     packName: string
@@ -31,9 +34,16 @@ function AlertDialogForDeletePack(props: AlertDialogForDeletePackPropsType) {
         props.setOpenAlertDialogForDeletePack(false)
     };
 
+    const styleBtnDelete: any = {    
+        color: '#FFFFFF',
+        background: '#F1453D',        
+    }
+  
+
     return (
         <div>
-            <button style={{width: '100px', color: 'red'}} onClick={handleOpen}>Delete</button>
+            <BtnActions name='Delete' onClick={handleOpen} style={styleBtnDelete}
+            />           
             <Dialog
                 open={props.open}
                 onClose={handleClose}

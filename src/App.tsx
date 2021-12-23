@@ -4,13 +4,12 @@ import Routes from "./pages/Routes";
 import {HashRouter} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {initializingTC} from "./redux/authReducer";
-
-
-
+import HeaderMain from './HeaderMain/HeaderMain';
 
 
 
 function App() {
+
     const dispatch = useDispatch()
 
     useEffect( ()=>{
@@ -18,16 +17,13 @@ function App() {
     })
 
 
-    return (
-        
-        <div className="wrapper">
-            <HashRouter>
-                <Routes/>
+return (        
+        <div className="wrapper">            
+            <HeaderMain/>        
+            <HashRouter>  
+            <Routes/>
             </HashRouter>
-                  
-        </div>
-       
-        
+        </div>      
     );
 }
 

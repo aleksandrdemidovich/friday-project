@@ -1,17 +1,18 @@
 .packsList {
-    display:flex;
-    flex-direction: row;
+    display:flex;   
     margin: auto;
+    max-width: 1008px;
 }
+
 .contentLeft {   
     display: flex;
     flex-direction:column;   
     min-width:245px;
-    background-color: #ECECF9;
-    
+    background-color: #ECECF9;    
     padding: 33px 23px 0 23px;
 }
-.titleLeft {
+
+.titleForButtons {
     font-family: "SFUIDisplay-Semibold";
     font-style: normal;
     font-weight: 600;
@@ -21,6 +22,23 @@
     text-align: left;
     margin-bottom: 20px;
 }
+.titleForSlider {
+    font-family: "SFUIDisplay-Semibold";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #2D2E46;
+    text-align: left;
+    margin-bottom: 54px;   
+}
+
+.sliderWrap {
+    display: flex;
+    align-items: center;
+    width: 196px;
+}
+
 .btnWrap {
     display:flex;
     margin-bottom: 45px;
@@ -29,18 +47,19 @@
 .contentRight {   
     display:flex;
     flex-direction: column;
-    min-width: 835px;
+    flex-grow: 1;
     background-color:#FEFEFF;
     padding:  24px 48px;
 }
 .contentRightTop {
-    /* style={{display: 'flex', flexDirection: 'row'}} */
     display: flex;
+    align-items: center;
+    justify-content: space-between;    
     gap: 24px;
 }
+
 .btnBlue {
     width: 184px;
-    /* только здесь для пропсов */
     background: #21268F;
     text-align: center;
     letter-spacing: 0.01em;
@@ -68,28 +87,108 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 24px;
-    width: 460px;
+    width: 469px;
     padding-top: 6px;
     padding-bottom: 6px;
     padding-left: 40px;   
 }
+
 .table {
-    padding: 24px;
-    min-width: 679px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    max-width: 670px;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
 }
+
 .tableHeader {    
     background-color: #ECECF9;
 }
-.tableHeaderName,
-.tableHeaderCards,
-.tableHeaderLast,
-.tableHeaderCreated,
-.tableHeaderActions {
-    padding-top: 16px;
-    padding-bottom: 16px;
-    text-align: left;
 
+.tr {
+    height: 48px;
+    text-align: left;     
+    color: #2D2E46;
+    font-family: "SFUIDisplay-Bold";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 16px;
+    padding-left: 24px;
+    display: grid;
+    grid-template-columns: 165px 85px 135px 112px 1fr;
+    align-items: center;
 }
+
+.tr:nth-child(2n) {
+    background-color:#F8F7FD;
+}
+
+.td {
+    font-family: "SFUIDisplay-Regular";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;   
+}
+
+.td:nth-child(4) {
+    max-width: 112px;
+    word-wrap: break-word;
+} 
+
+.th:last-child,
+.td:last-child {
+    justify-self: center;
+}
+
+.btnBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.contentRightBottom {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #2D2E46;
+}
+
+.pagination {
+    margin-right: 34px;    
+}
+
+.choiceCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
