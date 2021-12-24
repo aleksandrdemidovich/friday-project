@@ -31,9 +31,10 @@ function App() {
 
 return (        
         <div className="wrapper">            
-            <HeaderMain/>        
-            <HashRouter>  
-            <Routes/>
+
+            <HashRouter>
+                <HeaderMain/>
+                <Routes/>
             </HashRouter>
         </div>      
     );
