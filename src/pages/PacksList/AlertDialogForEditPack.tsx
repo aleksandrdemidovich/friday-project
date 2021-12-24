@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {fetchEditPack} from "../../redux/cardPacksReducer";
+import BtnActions from "./BtnActions/BtnActions";
 
 type AlertDialogForDeletePackPropsType = {
     packName: string
@@ -34,10 +35,16 @@ function AlertDialogForEditPack(props: AlertDialogForDeletePackPropsType) {
         props.setOpenAlertDialogForEditPack(false)
     };
 
+    const styleBtnEdit: any = {    
+        color: '#21268F',
+        background: '#D7D8EF',        
+    }
+
 
     return (
         <div>
-            <button style={{width: '100px', color: 'blue'}} onClick={handleOpen}>Edit</button>
+            <BtnActions name='Edit' onClick={handleOpen} style={styleBtnEdit}
+                    />            
             <Dialog
                 open={props.open}
                 onClose={handleClose}

@@ -1,0 +1,15 @@
+.btn {
+    border-radius: 0px 2px 2px 0px;
+    width: 97px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border:none;
+    font-family: "SFUIDisplay-Regular";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    cursor: pointer;
+
+}

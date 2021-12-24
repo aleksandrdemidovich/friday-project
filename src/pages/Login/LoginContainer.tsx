@@ -30,7 +30,7 @@ function LoginContainer() {
             {status === 'loading' && <Preloader/>}
 
             <Formik
-                initialValues={{email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: false}}
+                initialValues={{email: 'darya.gameza1@gmail.com', password: 'gameza1986', rememberMe: false}}
                 validate={values => {
                     const errors: ErrorsType = {};
 

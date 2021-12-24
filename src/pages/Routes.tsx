@@ -31,19 +31,19 @@ function Routes() {
 
     return (
         <>
-           <TempHeader/>
-            <Switch>
-                <Route path={'/'} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
-                <Route path={PATH.LOGIN} render={() => <LoginPage/>}/>
-                <Route path={PATH.SIGN_UP} render={() => <SignUp/>}/>
-                <Route path={PATH.PROFILE} render={() => <Profile/>}/>
-                <Route path={PATH.FORGOT_PASSWORD} render={() => <ForgotPassword/>}/>
-                <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
-                <Route path={PATH.TEST} render={() => <Test/>}/>
-                <Route path={PATH.CHECK_EMAIL} render={() => <CheckEmail/>}/>
-                <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
-                <Route render={() => <Error404/>}/>
-            </Switch>
+            <TempHeader/>
+                <Switch>
+                    <Route path={'/'} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
+                    <Route path={PATH.LOGIN} render={() => <LoginPage/>}/>
+                    <Route path={PATH.SIGN_UP} render={() => <SignUp/>}/>
+                    <Route path={PATH.PROFILE} render={() => <Profile/>}/>
+                    <Route path={PATH.FORGOT_PASSWORD} render={() => <ForgotPassword/>}/>
+                    <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
+                    <Route path={PATH.TEST} render={() => <Test/>}/>
+                    <Route path={PATH.CHECK_EMAIL} render={() => <CheckEmail/>}/>
+                    <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
+                    <Route render={() => <Error404/>}/>
+                </Switch>
         </>
     )
 }

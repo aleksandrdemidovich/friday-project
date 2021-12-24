@@ -5,3 +5,7 @@
     flex-direction: column;
     position: relative;
 }
+.container {
+    margin: 0 auto;
+    max-width: 1008px;
+}
