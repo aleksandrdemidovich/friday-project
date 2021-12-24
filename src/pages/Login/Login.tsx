@@ -46,11 +46,11 @@ export const Login: React.FC<LoginPropsType> =
                     <Form className={s.formBox} onSubmit={handleSubmit}>
                         <div className={s.registrWrap}>
                             <TextField id="email"
-                                       label="Email"
-                                       type='email'
-                                       variant="standard"
-                                       className={s1.input}
-                                       {...getFieldProps('email')}   />
+                                    label="Email"
+                                    type='email'
+                                    variant="standard"
+                                    className={s1.input}
+                                    {...getFieldProps('email')}   />
                         </div>
                         <p/>
                         <div className={s.registrWrap}>

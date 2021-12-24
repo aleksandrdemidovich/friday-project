@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import s from "./PacksList.module.css"
 import {
     Button,
     Dialog,
@@ -46,7 +47,7 @@ function AlertDialogForNewPack(props: AlertDialogForDeletePackPropsType) {
 
     return (
         <div>
-            <button style={{width: '100px', color: 'blue'}} onClick={handleOpen}>Add new pack</button>
+            <button className={s.btnBlue} onClick={handleOpen}>Add new pack</button>
             <Dialog
                 open={props.open}
                 onClose={handleClose}

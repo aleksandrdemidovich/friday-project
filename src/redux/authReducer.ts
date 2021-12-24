@@ -2,7 +2,7 @@ import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 import {authAPI} from "../api/authAPI";
 import {Dispatch} from "redux";
-import {AppActionsType, setAppError, setAppStatus} from "./app-reducer";
+import {AppActionsType, setAppError, setAppStatus, setIsInitialized} from "./app-reducer";
 import errorResponseHandler from "../utils/errorResponseHandler";
 
 export enum AuthEvents {
@@ -92,9 +92,10 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): T
         dispatch(authActions.setUserData(data))
         dispatch(setAppStatus({status:'idle'}))
     } catch (e: any) {
-        const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-        dispatch(setAppError({error}))
-        dispatch(setAppStatus({status:'failed'}))
+        // const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
+        // dispatch(setAppError({error}))
+        // dispatch(setAppStatus({status:'failed'}))
+        errorResponseHandler(e, dispatch)
     } finally {
 
     }
@@ -113,13 +114,13 @@ export const initializingTC = (): ThunkAction<void, AppStateType, {}, AuthAppAct
         dispatch(setAppError({error}))
         dispatch(setAppStatus({status:'failed'}))
     } finally {
+        dispatch(setIsInitialized({isInitialized:true}))
     }
 }
 
 export const logoutTC = (): ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
     dispatch(setAppError({error: ''}))
     dispatch(setAppStatus({status: 'loading'}));
-    debugger
     try {
         const response = await authAPI.logout()
         dispatch(authActions.logout())
