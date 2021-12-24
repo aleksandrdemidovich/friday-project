@@ -1,3 +1,5 @@
+import s from "./PacksList.module.css"
+
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -13,7 +15,11 @@ import AlertDialogForEditPack from "./AlertDialogForEditPack";
 import AlertDialogForNewPack from "./AlertDialogForNewPack";
 import {PATH} from "../Routes";
 import {Redirect} from "react-router-dom";
-
+import BtnShowCards from "../../components/common/btnShowCards/BtnShowCards";
+import { ServerStreamFileResponseOptionsWithError } from "http2";
+import Subtitle from "../../components/common/subtitle/Subtitle";
+// import BtnActions from "./PackList/BtnActions/BtnActions";
+import BtnActions from "./BtnActions/BtnActions";
 
 
 function PacksList() {
@@ -100,88 +106,113 @@ function PacksList() {
         return <Redirect to={PATH.LOGIN}/>
     }
 
+    
+    const style1: any = {    
+        color: '#2D2E46',
+        background: '#FFFFFF',        
+    }
+
+    const style2: any = {    
+        color: '#FFFFFF',
+        background: '#9A91C8',       
+    }
+
+    const styleBtnLearn: any = {    
+        color: '#21268F',
+        background: '#D7D8EF',        
+    }
+    
+
     return (
-        <div style={{display: 'flex', flexDirection: 'row', padding: '20px'}}>
-            <div style={{display: 'flex', flexDirection: 'column', border: '1px solid red', width: '25%'}}>
-                <p>Show pack cards</p>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <button style={{width: '70px'}} onClick={fetchMyPacksCards}>My</button>
-                    <button style={{width: '70px'}} onClick={fetchAllPacksCards}>All</button>
+        <div className={s.packsList}>
+            <div className={s.contentLeft}>
+                <h3 className={s.titleForButtons}>Show pack cards</h3>
+                <div className={s.btnWrap}>
+                    <BtnShowCards name='My' onClick={fetchMyPacksCards} style={style1}
+                    />
+                    <BtnShowCards  name='All' onClick={fetchAllPacksCards} style={style2}
+                    />                
                 </div>
-                <p>Number of cards</p>
-                <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-                {value[0]}<Slider
-                    value={value}
-                    onChange={handleChangeRangeCardCount}
-                    valueLabelDisplay="auto"
-                    style={{width:'70%', margin:'0 10px 0 10px'}}
-                />{value[1]}</div>
+                <h3 className={s.titleForSlider}>Number of cards</h3>
+                <div className={s.sliderWrap}>
+                    <Slider className={s.slider}
+                        value={value}
+                        onChange={handleChangeRangeCardCount}
+                        valueLabelDisplay="on"                        
+                    />
             </div>
-            <div style={{display: 'flex', flexDirection: 'column', border: '1px solid green', width: '75%'}}>
-                <h1>Packs list</h1>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <input type="text" placeholder='Search...' value={searchPackName} onChange={searchPackNameHandler} style={{width: '70%'}}/>
-                    <AlertDialogForNewPack open={openAlertDialogForNewPack}
-                                           setOpenAlertDialogForNewPack={setOpenAlertDialogForNewPack}/>
-                    {/*<button style={{width: '30%'}} onClick={addNewPackHandler}>Add new pack</button>*/}
-                </div>
+            </div>
+            <div className={s.contentRight} >
+                <Subtitle subtitle='Packs list'/>
+                    <div className={s.contentRightTop}>
+                        <input className={s.search} type="text" placeholder='Search...' value={searchPackName} onChange={searchPackNameHandler} />
+                        <AlertDialogForNewPack open={openAlertDialogForNewPack}
+                                            setOpenAlertDialogForNewPack={setOpenAlertDialogForNewPack}/>
+                        {/*<button style={{width: '30%'}} onClick={addNewPackHandler}>Add new pack</button>*/}
+                    </div>
 
                 {appStatus === 'loading' ?
                     <CircularProgress style={{position: 'absolute', right: '50%', top: '300px'}}/>
                     : <>
-                        <table style={{padding: '50px'}}>
-                            <tr>
-                                <td>Name</td>
-                                <td>Cards</td>
-                                <td>Last updated</td>
-                                <td>Created by</td>
-                                <td>Actions</td>
-                            </tr>
-                            {dataCardsList.map(pack => <tr key={pack._id} style={{border: '1px solid blue'}}>
-                                <td style={{border: '1px solid blue'}}>{pack.name}</td>
-                                <td style={{border: '1px solid #7FFFD4'}}>{pack.cardsCount}</td>
-                                <td style={{border: '1px solid #8A2BE2'}}>{formattingDate(pack.updated)}</td>
-                                <td style={{border: '1px solid #5F9EA0'}}>{pack.user_name}</td>
-                                <div style={{
-                                    border: '1px solid #5F9EA0',
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-around'
-                                }}>
-                                    {idAuthorizedUser === pack.user_id &&
-                                    <>
-                                        <AlertDialogForDeletePack packName={pack.name}
-                                                                  key={pack._id}
-                                                                  packId = {pack._id}
-                                                                  open={openAlertDialogForDeletePack}
-                                                                  setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}/>
-                                        <AlertDialogForEditPack packName={pack.name}
-                                                                open={openAlertDialogForEditPack}
-                                                                setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
-                                                                packId={pack._id}/>
-                                    </>}
-                                    <button style={{width: '70px', color: 'green'}}>Learn</button>
-                                </div>
-                            </tr>)}
+                        <table className={s.table}>
+                            <thead className={s.tableHeader}>
+                                <tr className={s.tr}>
+                                    <th className={s.th}>Name</th>
+                                    <th className={s.th}>Cards</th>
+                                    <th className={s.th}>Last updated</th>
+                                    <th className={s.th}>Created by</th>
+                                    <th className={s.th}>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody >                          
+                                {dataCardsList.map(pack => <tr className={s.tr} key={pack._id}>
+                                    <td className={s.td}>{pack.name}</td>
+                                    <td className={s.td}>{pack.cardsCount}</td>
+                                    <td className={s.td} >{formattingDate(pack.updated)}</td>
+                                    <td className={s.td}>{pack.user_name}</td>
+                                    <td className={s.td}>
+                                        <div className={s.btnBox}>
+                                            {idAuthorizedUser === pack.user_id &&
+                                            <>
+                                                <AlertDialogForDeletePack packName={pack.name}
+                                                                        key={pack._id}
+                                                                        packId = {pack._id}
+                                                                        open={openAlertDialogForDeletePack}
+                                                                        setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}/>
+                                                <AlertDialogForEditPack packName={pack.name}
+                                                                        open={openAlertDialogForEditPack}
+                                                                        setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
+                                                                        packId={pack._id}/>
+                                            </>}
+                                            <BtnActions name='Learn' style={styleBtnLearn} onClick = {()=>{}}/>
+                                        </div>
+                                    </td>
+                                    
+                                </tr>)}
+                            </tbody>
                         </table>
 
-                        <div style={{display: "flex", flexDirection: "row", alignItems:'center'}}>
-                            <Pagination count={Math.ceil(totalCount / pageCount)} color={"primary"} page={currentPage} onChange={onChangePage} shape="rounded"/>
-                            <p>Show <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
+                        <div className={s.contentRightBottom}>
+                            <Pagination className={s.pagination} count={Math.ceil(totalCount / pageCount)} color={"primary"} page={currentPage} onChange={onChangePage} shape="rounded"/>
+
+                            <div className={s.choiceCard}>
+                                <span>Show</span>
+                                <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
                                 <option value='5'>5</option>
                                 <option value='10'>10</option>
                                 <option value='15'>15</option>
                                 <option value='20'>20</option>
                                 <option value='25'>25</option>
-                            </select> Cards per Page
-                            </p>
-
+                                </select> 
+                                <span>Cards per Page</span>                               
+                            </div>
                         </div>
                     </>}
-
             </div>
         </div>
     )
 }
+
 
 export default PacksList
