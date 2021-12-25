@@ -33,11 +33,15 @@
     margin-bottom: 54px;   
 }
 
-.sliderWrap {
+ /* {
     display: flex;
     align-items: center;
     width: 196px;
-}
+} */
+/* .sliderWrap > span {
+    color: #21268F;
+} */
+
 
 .btnWrap {
     display:flex;
@@ -166,6 +170,7 @@
 .pagination {
     margin-right: 34px;    
 }
+
 
 .choiceCard {
     display: flex;

@@ -1,6 +1,7 @@
 import s from "./HeaderBtn.module.css"
 
 
+
 export default function HeaderBtn(props) {
 
 
@@ -9,7 +10,7 @@ const priorityStyle = props.isActive ? `${s.headerBtn} ${s.active} `: `${s.heade
   return (
     
       <button className={priorityStyle}>      
-        <img src={props.img} alt=""  />        
+        <img src={props.img} alt=""  />      
         {props.name}
       </button>
     

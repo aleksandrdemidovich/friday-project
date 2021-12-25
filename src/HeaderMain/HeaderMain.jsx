@@ -17,7 +17,8 @@ return (
             <div className={s.wrapper}>
                 <h1 className={s.title}>It-incubator</h1>
                 <div className={s.btnWrap}>              
-                    <HeaderBtn isActive={false} name="Packs list" img={imgPackList} />
+                    <HeaderBtn isActive={false} name="Packs list"
+                     img={imgPackList} />
                     <HeaderBtn isActive={true} name="Profile" img={imgProfile} />
                 </div>
             </div>

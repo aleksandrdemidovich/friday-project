@@ -18,8 +18,14 @@ import {Redirect} from "react-router-dom";
 import BtnShowCards from "../../components/common/btnShowCards/BtnShowCards";
 import { ServerStreamFileResponseOptionsWithError } from "http2";
 import Subtitle from "../../components/common/subtitle/Subtitle";
-// import BtnActions from "./PackList/BtnActions/BtnActions";
+// 
+
 import BtnActions from "./BtnActions/BtnActions";
+//slider
+import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
+import UsePagination from "./Pagination/UsePagination";
+import SelectLabels from "./Select/Select";
 
 
 function PacksList() {
@@ -100,13 +106,14 @@ function PacksList() {
 
     const handleChangeRangeCardCount = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
+        
     }
 
     if (!isLoggedIn) {
         return <Redirect to={PATH.LOGIN}/>
     }
 
-    
+    //btn my/all
     const style1: any = {    
         color: '#2D2E46',
         background: '#FFFFFF',        
@@ -117,11 +124,45 @@ function PacksList() {
         background: '#9A91C8',       
     }
 
+     //btn Learn
     const styleBtnLearn: any = {    
         color: '#21268F',
         background: '#D7D8EF',        
     }
-    
+
+    //slider
+
+    const UseSlider = styled(Slider)({
+        color: '#21268F',
+        height: 5,
+        '& .MuiSlider-track': {
+          border: 'none',
+        },
+        '& .MuiSlider-thumb': {
+          height: 16,
+          width: 16,
+          backgroundColor: '#fff',
+          border: '5px solid currentColor',
+          '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+            boxShadow: 'inherit',
+          },
+          '&:before': {
+            display: 'none',
+          },
+        },
+        '& .MuiSlider-valueLabel': {
+          lineHeight: 1.2,
+          fontSize: 12,
+          background: 'unset',
+          padding: 0,
+          width: 32,
+          height: 24,
+          borderRadius: '3',
+         backgroundColor: '#21268F',
+         '&:before': { display: 'none'},
+        },
+      });
+
 
     return (
         <div className={s.packsList}>
@@ -135,11 +176,21 @@ function PacksList() {
                 </div>
                 <h3 className={s.titleForSlider}>Number of cards</h3>
                 <div className={s.sliderWrap}>
-                    <Slider className={s.slider}
+
+                    {/* <Slider 
                         value={value}
                         onChange={handleChangeRangeCardCount}
                         valueLabelDisplay="on"                        
+                    /> */}
+
+                    <UseSlider
+                        max={150}                        
+                        value={value}
+                        onChange={handleChangeRangeCardCount}
+                        valueLabelDisplay="on"       
                     />
+
+
             </div>
             </div>
             <div className={s.contentRight} >
@@ -194,17 +245,25 @@ function PacksList() {
                         </table>
 
                         <div className={s.contentRightBottom}>
-                            <Pagination className={s.pagination} count={Math.ceil(totalCount / pageCount)} color={"primary"} page={currentPage} onChange={onChangePage} shape="rounded"/>
+
+
+                            {/* <Pagination className={s.pagination} count={Math.ceil(totalCount / pageCount)} color={"primary"} page={currentPage} onChange={onChangePage} shape="rounded"/> */}
+
+                            <UsePagination/>
+
 
                             <div className={s.choiceCard}>
                                 <span>Show</span>
-                                <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
+                                {/* <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
                                 <option value='5'>5</option>
                                 <option value='10'>10</option>
                                 <option value='15'>15</option>
                                 <option value='20'>20</option>
                                 <option value='25'>25</option>
-                                </select> 
+                                </select>  */}
+
+
+                            <SelectLabels/>
                                 <span>Cards per Page</span>                               
                             </div>
                         </div>

@@ -8,6 +8,7 @@ import HeaderMain from './HeaderMain/HeaderMain';
 
 
 
+
 function App() {
 
     const dispatch = useDispatch()
@@ -19,11 +20,12 @@ function App() {
 
 return (        
         <div className="wrapper">            
-            <HeaderMain/>        
+            <HeaderMain/>  
             <HashRouter>  
             <Routes/>
             </HashRouter>
-        </div>      
+        </div>  
+            
     );
 }
 
