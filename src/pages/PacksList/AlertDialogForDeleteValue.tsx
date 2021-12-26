@@ -1,10 +1,7 @@
-import s from "./PacksList.module.css"
 import React from 'react'
-// import BtnActions from "../../pages/PacksList/BtnActions/BtnActions";
-
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {fetchDeletePack} from "../../redux/cardPacksReducer";
+import {fetchDeleteCard, fetchDeletePack, fetchEditCard, fetchEditPack} from "../../redux/cardPacksReducer";
 import BtnActions from "./BtnActions/BtnActions";
 
 type AlertDialogForDeletePackPropsType = {
@@ -12,38 +9,42 @@ type AlertDialogForDeletePackPropsType = {
     open: boolean
     setOpenAlertDialogForDeletePack: (newStateValue: boolean) => void
     packId: string
+    alertTitle: string
+    type: 'pack' | 'card'
 }
 
-function AlertDialogForDeletePack(props: AlertDialogForDeletePackPropsType) {
-
+function AlertDialogForDeleteValue(props: AlertDialogForDeletePackPropsType) {
 
     const dispatch = useDispatch()
 
-
-    const handleOpen = ( ) => {
+    const handleOpen = () => {
         props.setOpenAlertDialogForDeletePack(true)
 
     }
-    const removePackHandler = () => {
-        dispatch(fetchDeletePack(props.packId))
-        props.setOpenAlertDialogForDeletePack(false)
-    };
-
-
     const handleClose = () => {
         props.setOpenAlertDialogForDeletePack(false)
-    };
-
-    const styleBtnDelete: any = {    
-        color: '#FFFFFF',
-        background: '#F1453D',        
     }
-  
+
+    const removePackHandler = () => {
+        if (props.type === 'pack') {
+            dispatch(fetchDeletePack(props.packId))
+            props.setOpenAlertDialogForDeletePack(false)
+        } else {
+            dispatch(fetchDeleteCard(props.packId))
+            props.setOpenAlertDialogForDeletePack(false)
+        }
+    }
+
+
+    const styleBtnDelete: any = {
+        color: '#FFFFFF',
+        background: '#F1453D',
+    }
+
 
     return (
         <div>
-            <BtnActions name='Delete' onClick={handleOpen} style={styleBtnDelete}
-            />           
+            <BtnActions name='Delete' key={props.packId} onClick={handleOpen} style={styleBtnDelete}/>
             <Dialog
                 open={props.open}
                 onClose={handleClose}
@@ -51,12 +52,17 @@ function AlertDialogForDeletePack(props: AlertDialogForDeletePackPropsType) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Delete Pack?"}
+                    {props.alertTitle}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Do you really want to remove <strong>Pack - {props.packName}</strong>?
-                        All cards will be excluded from this course
+                        {props.type === 'pack'
+                            ? <span>Do you really want to remove <strong>Pack - {props.packName}</strong>?
+                            All cards will be excluded from this course
+                        </span>
+                            : <span>
+                                Do you really want to remove - <strong>Card - {props.packName}</strong>?
+                            </span>}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -70,4 +76,4 @@ function AlertDialogForDeletePack(props: AlertDialogForDeletePackPropsType) {
     )
 }
 
-export default AlertDialogForDeletePack
+export default AlertDialogForDeleteValue

@@ -3,6 +3,7 @@ import {AppStateType} from './store';
 import {setAppError, setAppStatus} from './app-reducer';
 import errorResponseHandler from '../utils/errorResponseHandler';
 import {EditPackBodyType, packsAPI} from "../api/packs-api";
+import {cardsAPI, CardsQueryRequestType, EditCardBodyType} from "../api/cards-api";
 
 export type PackType = {
     _id: string
@@ -26,8 +27,6 @@ type CardPacksType = {
     max: number,
     packName: string,
     sortPacks: string | null
-    // token: string,
-    // tokenDeathTime: number
 }
 
 export type CardType = {
@@ -41,12 +40,9 @@ export type CardType = {
     question: string
     questionImg: null | string
     questionVideo: null | string
-    // rating: number
     shots: number
-    // type: string
     updated: string
     user_id: string
-    // __v: string
     _id: string
 }
 type CardsType = {
@@ -57,8 +53,6 @@ type CardsType = {
     packUserId: string
     page: number
     pageCount: number
-    token: string
-    tokenDeathTime: number
     sortCards: string | null
 }
 
@@ -73,6 +67,20 @@ type NewCardsPackType = {
     type?: string
 }
 
+export type NewCardType = {
+    cardsPack_id: string
+    question: string
+    answer: string
+    grade?: number
+    shots?: number
+    rating?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+    type?: string
+}
+
 type InitialStateType = {
     currentCardPacks: CardPacksType
     currentCards: CardsType
@@ -80,6 +88,7 @@ type InitialStateType = {
     currentCardsPackId: string
     user_id: null | string
     newCardsPack: NewCardsPackType
+    newCard: NewCardType
 }
 
 const initialState: InitialStateType = {
@@ -90,8 +99,8 @@ const initialState: InitialStateType = {
         cardPacksTotalCount: 0,
         minCardsCount: 0,
         min: 0,
-        maxCardsCount: 100,
-        max: 100,
+        maxCardsCount: 103,
+        max: 103,
         packName: '',
         sortPacks: null,
     },
@@ -102,9 +111,7 @@ const initialState: InitialStateType = {
         minGrade: 0,
         packUserId: '',
         page: 1,
-        pageCount: 4,
-        token: '',
-        tokenDeathTime: 0,
+        pageCount: 5,
         sortCards: null,
     },
     currentPackName: '',
@@ -120,6 +127,19 @@ const initialState: InitialStateType = {
         private: false,
         type: '',
     },
+    newCard:{
+        cardsPack_id: '',
+        question: 'test question',
+        answer: 'test answer',
+        grade: 3.456780,
+        shots: 0,
+        rating: 0,
+        answerImg: '',
+        questionImg: '',
+        questionVideo: '',
+        answerVideo: '',
+        type: ''
+    }
 }
 
 export const cardPacksReducer = (state: InitialStateType = initialState, action: CardPacksActionsType): InitialStateType => {
@@ -173,7 +193,7 @@ export const cardPacksReducer = (state: InitialStateType = initialState, action:
                 currentCards: {...state.currentCards, ...action.payload.cards}
             };
         case 'RESET-CARDS':
-            return { ...state, currentCards: {...initialState.currentCards, cards: []}}
+            return {...state, currentCards: {...initialState.currentCards, cards: []}}
         case 'SET-CARDS-PAGE':
             return {
                 ...state,
@@ -184,6 +204,7 @@ export const cardPacksReducer = (state: InitialStateType = initialState, action:
                 ...state,
                 currentCards: {...state.currentCards, pageCount: action.payload.pageCount}
             };
+
 
         case 'SET-CURRENT-CARDS-PACK-ID':
             return {...state, currentCardsPackId: action.payload.currentCardsPackId};
@@ -231,7 +252,7 @@ export const setSearchPacksName = (payload: { packName: string }) => ({
     type: 'SET-SEARCH-PACKS-NAME',
     payload
 } as const)
-export const setSortPacks = (sortPacks: string | null ) => ({
+export const setSortPacks = (sortPacks: string | null) => ({
     type: 'SET-SORT-PACKS',
     payload: {sortPacks}
 } as const)
@@ -256,10 +277,22 @@ export const setCards = (cards: CardsType) => ({type: 'SET-CARDS', payload: {car
 export const resetCards = () => ({type: 'RESET-CARDS'} as const)
 export const setCardsPage = (payload: { page: number }) => ({type: 'SET-CARDS-PAGE', payload} as const)
 export const setCardsPageCount = (payload: { pageCount: number }) => ({type: 'SET-CARDS-PAGE-COUNT', payload} as const)
-
 export const setCurrentCardsPackID = (payload: { currentCardsPackId: string }) => ({
     type: 'SET-CURRENT-CARDS-PACK-ID',
     payload
+} as const)
+export const setCurrentCardName = (payload: { currentCardName: string }) => ({
+    type: 'SET-CURRENT-CARD-NAME',
+    payload
+} as const)
+export const changeGradeCard = (grade: number, card_id: string) => ({
+    type: 'CHANGE-GRADE-CARD',
+    grade,
+    card_id,
+} as const)
+export const setSortCards = (sortCards: string | null) => ({
+    type: 'SET-FILTER-CARDS',
+    payload: {sortCards}
 } as const)
 
 export const setUserId = (payload: { user_id: string }) => ({
@@ -271,16 +304,9 @@ export const addNewCardsPack = (payload: { cardsPack: NewCardsPackType }) => ({
     type: 'ADD-NEW-CARDS-PACK',
     payload
 } as const)
-
-export const changeGradeCard = (grade: number, card_id: string) => ({
-    type: 'CHANGE-GRADE-CARD',
-    grade,
-    card_id,
-} as const)
-
-export const setSortCards = (sortCards: string | null) => ({
-    type: 'SET-FILTER-CARDS',
-    payload: {sortCards}
+export const addNewCard = (payload: { card: NewCardType }) => ({
+    type: 'ADD-NEW-CARD',
+    payload
 } as const)
 
 
@@ -297,6 +323,8 @@ type CardsActionsTypes = | ReturnType<typeof setCards>
     | ReturnType<typeof setCardsPage>
     | ReturnType<typeof setCardsPageCount>
     | ReturnType<typeof resetCards>
+    | ReturnType<typeof addNewCard>
+    | ReturnType<typeof setCurrentCardName>
 
 
 export type CardPacksActionsType =
@@ -329,6 +357,7 @@ export const addNewPack = (newPackName: string) => async (dispatch: Dispatch<any
         dispatch(setAppStatus({status: "succeeded"}))
         dispatch(requestCardPack())
     } catch (e) {
+        errorResponseHandler(e, dispatch)
     }
 }
 
@@ -340,6 +369,7 @@ export const fetchDeletePack = (idPack: string) => async (dispatch: Dispatch<any
         dispatch(setAppStatus({status: "succeeded"}))
         dispatch(requestCardPack())
     } catch (e) {
+        errorResponseHandler(e, dispatch)
     }
 }
 
@@ -356,6 +386,66 @@ export const fetchEditPack = (cardsPack: EditPackBodyType) => async (dispatch: D
 }
 
 
+//----------------------------cards----------------------------
+
+export const requestCards = (data?: CardsQueryRequestType) => async (dispatch: Dispatch, getState: () => AppStateType) => {
+    const page = getState().cardPacks.currentCards.page
+    const pageCount = getState().cardPacks.currentCards.pageCount
+    const currentCardsPackId = getState().cardPacks.currentCardsPackId
+    const sortCards = getState().cardPacks.currentCards.sortCards
+
+    try {
+        dispatch(setAppStatus({status: 'loading'}))
+        let response = await cardsAPI.getCards({
+            page,
+            pageCount,
+            cardsPack_id: currentCardsPackId,
+            sortCards,
+            ...data
+        })
+        dispatch(setCards(response.data))
+        dispatch(setAppStatus({status: 'succeeded'}))
+        dispatch(setAppError({error: ''}))
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
+
+export const addNewCards = (cardName: string) => async (dispatch: Dispatch<any>, getState: () => AppStateType) => {
+    const grade = getState().cardPacks.newCard.grade
+    // const question = getState().cardPacks.newCard.question
+    const answer = getState().cardPacks.newCard.answer
+    const idCurrentCardsPack = getState().cardPacks.currentCardsPackId
 
 
+    try {
+        dispatch(setAppStatus({status: "loading"}))
+        await cardsAPI.postCards({cardsPack_id: idCurrentCardsPack, answer:answer, question: cardName, grade:grade})
+        dispatch(setAppStatus({status: "succeeded"}))
+        dispatch(requestCards())
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
 
+export const fetchDeleteCard = (idCard: string) => async (dispatch: Dispatch<any>) => {
+    try {
+        dispatch(setAppStatus({status: "loading"}))
+        await cardsAPI.deleteCards(idCard)
+        dispatch(setAppStatus({status: "succeeded"}))
+        dispatch(requestCards())
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
+
+export const fetchEditCard = (cardsPack: EditCardBodyType) => async (dispatch: Dispatch<any>) => {
+    try {
+        dispatch(setAppStatus({status: "loading"}))
+        await cardsAPI.editCard(cardsPack)
+        dispatch(setAppStatus({status: "succeeded"}))
+        dispatch(requestCards())
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
