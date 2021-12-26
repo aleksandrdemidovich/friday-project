@@ -264,6 +264,8 @@ function PacksList() {
 
 
                             <SelectLabels/>
+
+                            
                                 <span>Cards per Page</span>                               
                             </div>
                         </div>
