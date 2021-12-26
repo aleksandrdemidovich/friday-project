@@ -17,8 +17,12 @@ return (
             <div className={s.wrapper}>
                 <h1 className={s.title}>It-incubator</h1>
                 <div className={s.btnWrap}>              
+<<<<<<< HEAD
                     <HeaderBtn isActive={false} name="Packs list"
                      img={imgPackList} />
+=======
+                    <HeaderBtn isActive={false} name="Packs list" img={imgPackList} />
+>>>>>>> 92a23cd9abb597c728347bb3d4caf4737124b98f
                     <HeaderBtn isActive={true} name="Profile" img={imgProfile} />
                 </div>
             </div>

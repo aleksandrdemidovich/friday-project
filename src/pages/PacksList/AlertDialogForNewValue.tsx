@@ -11,25 +11,31 @@ import {
     TextField
 } from "@mui/material";
 import {useDispatch} from "react-redux";
-import {addNewPack} from "../../redux/cardPacksReducer";
+import {addNewCards, addNewPack} from "../../redux/cardPacksReducer";
 import CloseIcon from '@mui/icons-material/Close';
+
 
 
 type AlertDialogForDeletePackPropsType = {
     open: boolean
     setOpenAlertDialogForNewPack: (newStateValue: boolean) => void
+    alertTitle: string
+    buttonName: string
+    inputLabel: string
+    type: 'pack' | 'card'
 }
 
-function AlertDialogForNewPack(props: AlertDialogForDeletePackPropsType) {
+function AlertDialogForNewValue(props: AlertDialogForDeletePackPropsType) {
 
-    const [packName, setPackName] = useState('')
+
+    const [name, setName] = useState('')
 
 
     const dispatch = useDispatch()
 
 
     const packNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPackName(e.currentTarget.value)
+        setName(e.currentTarget.value)
     }
 
     const handleOpen = ( ) => {
@@ -40,14 +46,20 @@ function AlertDialogForNewPack(props: AlertDialogForDeletePackPropsType) {
         props.setOpenAlertDialogForNewPack(false)
     };
     const editNewPackName = () => {
-        dispatch(addNewPack(packName))
-        props.setOpenAlertDialogForNewPack(false)
+        if(props.type === 'pack'){
+            dispatch(addNewPack(name))
+            props.setOpenAlertDialogForNewPack(false)
+        } else {
+            dispatch(addNewCards(name))
+            props.setOpenAlertDialogForNewPack(false)
+        }
+
     };
 
 
     return (
         <div>
-            <button className={s.btnBlue} onClick={handleOpen}>Add new pack</button>
+            <button className={s.btnBlue} onClick={handleOpen}>{props.buttonName}</button>
             <Dialog
                 open={props.open}
                 onClose={handleClose}
@@ -55,14 +67,14 @@ function AlertDialogForNewPack(props: AlertDialogForDeletePackPropsType) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Add new pack?"}
+                    {props.alertTitle}
                     <IconButton onClick={handleClose} style={{float:'right'}}>
                         <CloseIcon/>
                     </IconButton>
                 </DialogTitle>
                 <DialogContent style={{width:'500px'}}>
                     <DialogContentText id="alert-dialog-description">
-                        <TextField id="outlined-basic" onChange={packNameHandler} fullWidth label="Name pack" variant="standard" />
+                        <TextField id="outlined-basic" onChange={packNameHandler} fullWidth label={props.inputLabel} variant="standard" />
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -76,4 +88,4 @@ function AlertDialogForNewPack(props: AlertDialogForDeletePackPropsType) {
     )
 }
 
-export default AlertDialogForNewPack
+export default AlertDialogForNewValue
