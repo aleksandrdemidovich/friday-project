@@ -1,50 +1,10 @@
-// import * as React from 'react';
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormHelperText from '@mui/material/FormHelperText';
-// import FormControl from '@mui/material/FormControl';
-// import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-// export default function SelectLabels() {
-//   const [age, setAge] = React.useState('');
-
-//   const handleChange = (event: SelectChangeEvent) => {
-//     setAge(event.target.value);
-//   };
-
-//   return (
-//     <div>
-     
-//       <FormControl sx={{ m: 1, minWidth: 40 }}>
-//         <Select
-//           value={age}
-//           onChange={handleChange}
-//           displayEmpty
-        
-//         >
-//           <MenuItem value="">
-//             <em>10</em>
-//           </MenuItem>
-         
-//           <MenuItem value={15}>15</MenuItem>
-//           <MenuItem value={20}>20</MenuItem>
-//           <MenuItem value={25}>25</MenuItem>
-//         </Select>
-       
-//       </FormControl>
-//     </div>
-//   );
-// }
-
 
 
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import NativeSelect from '@mui/material/NativeSelect';
 import InputBase from '@mui/material/InputBase';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({

@@ -9,6 +9,7 @@ import {Preloader} from "../../components/common/Preloader/Preloader";
 import {AuthStateType, loginTC} from "../../redux/authReducer";
 import {AppStatusType} from "../../redux/app-reducer";
 
+
 type ErrorsType = {
     email?: string
     password?: string
@@ -27,6 +28,7 @@ function LoginContainer() {
     return (
         <>
             {status === 'loading' && <Preloader/>}
+
             <Formik
                 initialValues={{email: 'darya.gameza1@gmail.com', password: 'gameza1986', rememberMe: false}}
                 validate={values => {
