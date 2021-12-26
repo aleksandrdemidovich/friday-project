@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {fetchEditPack} from "../../redux/cardPacksReducer";
+import {addNewCards, addNewPack, fetchEditCard, fetchEditPack} from "../../redux/cardPacksReducer";
 import BtnActions from "./BtnActions/BtnActions";
 
 type AlertDialogForDeletePackPropsType = {
@@ -9,18 +9,21 @@ type AlertDialogForDeletePackPropsType = {
     open: boolean
     setOpenAlertDialogForEditPack: (newStateValue: boolean) => void
     packId: string
+    alertTitle: string
+    inputLabel: string
+    type: 'pack' | 'card'
 }
 
-function AlertDialogForEditPack(props: AlertDialogForDeletePackPropsType) {
+function AlertDialogForEditValue(props: AlertDialogForDeletePackPropsType) {
 
-    const [newPackName, setNewPackName] = useState('')
+    const [newName, setNewName] = useState('')
 
 
     const dispatch = useDispatch()
 
 
     const packNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNewPackName(e.currentTarget.value)
+        setNewName(e.currentTarget.value)
     }
 
     const handleOpen = ( ) => {
@@ -29,11 +32,16 @@ function AlertDialogForEditPack(props: AlertDialogForDeletePackPropsType) {
     }
     const handleClose = () => {
         props.setOpenAlertDialogForEditPack(false)
-    };
+    }
     const editNewPackName = () => {
-        dispatch(fetchEditPack({_id: props.packId, name: newPackName}))
-        props.setOpenAlertDialogForEditPack(false)
-    };
+        if(props.type === 'pack'){
+            dispatch(fetchEditPack({_id: props.packId, name: newName}))
+            props.setOpenAlertDialogForEditPack(false)
+        } else {
+            dispatch(fetchEditCard({_id: props.packId, question:newName}))
+            props.setOpenAlertDialogForEditPack(false)
+        }
+    }
 
     const styleBtnEdit: any = {    
         color: '#21268F',
@@ -43,8 +51,7 @@ function AlertDialogForEditPack(props: AlertDialogForDeletePackPropsType) {
 
     return (
         <div>
-            <BtnActions name='Edit' onClick={handleOpen} style={styleBtnEdit}
-                    />            
+            <BtnActions name='Edit' onClick={handleOpen} style={styleBtnEdit}/>
             <Dialog
                 open={props.open}
                 onClose={handleClose}
@@ -52,11 +59,11 @@ function AlertDialogForEditPack(props: AlertDialogForDeletePackPropsType) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Change Pack name?"}
+                    {props.alertTitle}
                 </DialogTitle>
                 <DialogContent style={{width:'500px'}}>
                     <DialogContentText id="alert-dialog-description">
-                        <TextField id="outlined-basic" onChange={packNameHandler} fullWidth label="New Pack name" variant="standard" />
+                        <TextField id="outlined-basic" onChange={packNameHandler} fullWidth label={props.inputLabel} variant="standard" />
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -70,4 +77,4 @@ function AlertDialogForEditPack(props: AlertDialogForDeletePackPropsType) {
     )
 }
 
-export default AlertDialogForEditPack
+export default AlertDialogForEditValue
