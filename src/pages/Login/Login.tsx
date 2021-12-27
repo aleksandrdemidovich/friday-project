@@ -55,7 +55,7 @@ export const Login: React.FC<LoginPropsType> =
                         <p/>
                         <div className={s.registrWrap}>
                             <FormControl variant="standard">
-                                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                                {/* <InputLabel htmlFor="standard-adornment-password">Password</InputLabel> */}
                                 <Input
                                     id="standard-adornment-password"
                                     type={showPassword ? 'text' : 'password'}
