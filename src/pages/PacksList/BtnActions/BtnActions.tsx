@@ -1,17 +1,14 @@
 import s from "./BtnActions.module.css"
 
 type BtnActionsPropsType = {
-    onClick:() => void
+    onClick: () => void
     style: any
-    name:string
+    name: string
+    key?: string
+}
+export default function BtnActions(props: BtnActionsPropsType) {
 
-} 
-export default function BtnActions(props:BtnActionsPropsType) {
-
-
-return (
-       
-        <button className={s.btn} style={props.style} onClick={props.onClick}>{props.name}</button>   
-
-);
+    return (
+        <button className={s.btn} style={props.style} key={props.key} onClick={props.onClick}>{props.name}</button>
+    );
 }

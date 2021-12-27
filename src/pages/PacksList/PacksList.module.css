@@ -119,6 +119,8 @@
     display: grid;
     grid-template-columns: 165px 85px 135px 112px 1fr;
     align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tr:nth-child(2n) {
@@ -131,17 +133,32 @@
     font-weight: normal;
     font-size: 13px;
     line-height: 16px;
-    color: #000000;   
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .td:nth-child(4) {
     max-width: 112px;
     word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
 } 
 
 .th:last-child,
 .td:last-child {
     justify-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.th{
+    cursor: pointer;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .btnBox {

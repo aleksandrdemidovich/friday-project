@@ -11,6 +11,7 @@ import TempHeader from "../temp/TempHeader";
 import {LoginPage} from "./Login/LoginPage";
 import CheckEmail from "./ForgotPassword/CheckEmail";
 import PacksList from "./PacksList/PacksList";
+import {CardsList} from "./CardsList/CardsList";
 
 
 
@@ -23,7 +24,8 @@ export const PATH = {
     NEW_PASSWORD: '/set-new-password/:token',
     CHECK_EMAIL: '/checkemail',
     TEST: '/test',
-    PACKS_LIST:'/packs-list'
+    PACKS_LIST:'/packs-list',
+    CARDS_LIST:'/cards-list'
 }
 
 
@@ -42,6 +44,7 @@ function Routes() {
                     <Route path={PATH.TEST} render={() => <Test/>}/>
                     <Route path={PATH.CHECK_EMAIL} render={() => <CheckEmail/>}/>
                     <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
+                    <Route path={PATH.CARDS_LIST} render={() => <CardsList/>}/>
                     <Route render={() => <Error404/>}/>
                 </Switch>
         </>
