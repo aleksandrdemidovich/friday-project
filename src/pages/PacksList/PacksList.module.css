@@ -33,14 +33,6 @@
     margin-bottom: 54px;   
 }
 
- /* {
-    display: flex;
-    align-items: center;
-    width: 196px;
-} */
-/* .sliderWrap > span {
-    color: #21268F;
-} */
 
 
 .btnWrap {
@@ -91,10 +83,11 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 24px;
-    width: 469px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 40px;   
+    padding: 6px 20px 6px 40px;   
+}
+.search:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
 }
 
 .table {
@@ -120,6 +113,7 @@
     font-size: 13px;
     line-height: 16px;
     padding-left: 24px;
+    padding-right: 24px;
     display: grid;
     grid-template-columns: 165px 85px 135px 112px 1fr;
     align-items: center;

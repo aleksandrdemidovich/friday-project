@@ -1,3 +1,4 @@
+import s from "./CardsList.module.css"
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from "../../redux/store";
@@ -11,7 +12,7 @@ import {Button, Pagination} from "@mui/material";
 import {formattingDate} from "../../utils/formattingDate";
 import {useHistory} from "react-router-dom";
 import {PATH} from "../Routes";
-import s from "../PacksList/PacksList.module.css"
+// import s from "../PacksList/PacksList.module.css"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import AlertDialogForNewValue from "../PacksList/AlertDialogForNewValue";
 import AlertDialogForEditValue from "../PacksList/AlertDialogForEditValue";
@@ -64,19 +65,21 @@ export const CardsList = () => {
 
 
     return (
-        <div style={{margin: '100px auto', backgroundColor: 'white'}}>
+        <div className={s.cardsList} >
             {appStatus === 'loading' && <Preloader/>}
             <div>
-                <div>
-                    <Button variant={"text"}
+                <div className={s.titleBox}>
+                    <Button className={s.rowBtn} style={{transform: 'translate(-15px)'}}
+                            variant={"text"}
                             color={"inherit"}
                             startIcon={<ArrowBackOutlinedIcon/>}
                             onClick={() => {
                                 history.goBack()
                             }}>{currentPackName}</Button>
+                            <h3>Pack Name</h3>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <input type={"text"} placeholder={'search'}/>
+                <div className={s.searchBox}>
+                    <input className={s.search} type={"text"} placeholder={'search'}/>
                     <AlertDialogForNewValue open={openAlertDialogForNewPack}
                                             setOpenAlertDialogForNewPack={setOpenAlertDialogForNewPack}
                                             alertTitle={"Add new card?"}
@@ -123,7 +126,7 @@ export const CardsList = () => {
                         </tr>)}
                         </tbody>
                     </table>
-                </div> : <h1> This pack is empty. Click add new card to fill this pack</h1>}
+                </div> : <p className={s.centerText}> This pack is empty. Click add new card to fill this pack</p>}
                 {dataCardsList.length ? <div className={s.contentRightBottom}>
                     <Pagination className={s.pagination}
                                 count={Math.ceil(totalCount / pageCount)}
