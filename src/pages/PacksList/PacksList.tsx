@@ -122,6 +122,12 @@ function PacksList() {
         history.push(PATH.CARDS_LIST)
     }
 
+    const onClickShowLearnPageHandle = (id: string, name: string) => {
+        dispatch(setCurrentCardsPackID({currentCardsPackId: id}))
+        dispatch(setCurrentPackName({currentPackName: name}))
+        history.push(PATH.LEARN_PAGE)
+    }
+
     const toggleFilter = (type: string) => {
         if(!sort){
             if(type === 'card'){
@@ -246,7 +252,7 @@ function PacksList() {
 
                             <tbody>
                             {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
-                                <td className={s.td} key={pack._id}>{pack.name}</td>
+                                <td className={s.td} key={pack._id} onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
                                 <td className={s.td} key={pack._id}>{pack.cardsCount}</td>
                                 <td className={s.td} key={pack._id}>{formattingDate(pack.updated)}</td>
                                 <td className={s.td} key={pack._id}>{pack.user_name}</td>
@@ -270,7 +276,7 @@ function PacksList() {
                                                                      inputLabel={"New Pack name"}/>
                                         </>}
                                         <BtnActions name='Learn' style={styleBtnLearn}
-                                                    onClick={() => onClickShowCardsHandle(pack._id, pack.name)}/>
+                                                    onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
                                     </div>
                                 </td>
 

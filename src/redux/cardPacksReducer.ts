@@ -44,6 +44,7 @@ export type CardType = {
     updated: string
     user_id: string
     _id: string
+    rating: number //added
 }
 type CardsType = {
     cards: CardType[]
@@ -445,6 +446,18 @@ export const fetchEditCard = (cardsPack: EditCardBodyType) => async (dispatch: D
         await cardsAPI.editCard(cardsPack)
         dispatch(setAppStatus({status: "succeeded"}))
         dispatch(requestCards())
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
+
+//added
+export const fetchUpdateCard = (grade: number, card_id: string) => async (dispatch: Dispatch<any>) => {
+    try {
+        dispatch(setAppStatus({status: "loading"}))
+        let response =  await cardsAPI.putGradeCard(grade, card_id)
+        dispatch(setAppStatus({status: "succeeded"}))
+        dispatch(changeGradeCard(response.data.updatedGrade.grade, response.data.updatedGrade.card_id))
     } catch (e) {
         errorResponseHandler(e, dispatch)
     }
