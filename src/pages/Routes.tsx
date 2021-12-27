@@ -12,6 +12,7 @@ import {LoginPage} from "./Login/LoginPage";
 import CheckEmail from "./ForgotPassword/CheckEmail";
 import PacksList from "./PacksList/PacksList";
 import {CardsList} from "./CardsList/CardsList";
+import {LearnPage} from "./LearnPage/LearnPage";
 
 
 
@@ -25,7 +26,8 @@ export const PATH = {
     CHECK_EMAIL: '/checkemail',
     TEST: '/test',
     PACKS_LIST:'/packs-list',
-    CARDS_LIST:'/cards-list'
+    CARDS_LIST:'/cards-list',
+    LEARN_PAGE:'/learn-page'
 }
 
 
@@ -45,6 +47,7 @@ function Routes() {
                     <Route path={PATH.CHECK_EMAIL} render={() => <CheckEmail/>}/>
                     <Route path={PATH.PACKS_LIST} render={() => <PacksList/>}/>
                     <Route path={PATH.CARDS_LIST} render={() => <CardsList/>}/>
+                    <Route path={PATH.LEARN_PAGE} render={() => <LearnPage/>}/>
                     <Route render={() => <Error404/>}/>
                 </Switch>
         </>
