@@ -239,6 +239,9 @@ function PacksList() {
                 {appStatus === 'loading' ?
                     <CircularProgress style={{position: 'absolute', right: '50%', top: '300px'}}/>
                     : <>
+                    <div className={s.tableWrap}>
+                        
+                    
                         <table className={s.table}>
                             <thead className={s.tableHeader}>
                             <tr className={s.tr}>
@@ -283,7 +286,7 @@ function PacksList() {
                             </tr>)}
                             </tbody>
                         </table>
-
+                        </div>
                         <div className={s.contentRightBottom}>
 
 

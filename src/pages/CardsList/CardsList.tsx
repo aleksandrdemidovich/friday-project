@@ -17,6 +17,8 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import AlertDialogForNewValue from "../PacksList/AlertDialogForNewValue";
 import AlertDialogForEditValue from "../PacksList/AlertDialogForEditValue";
 import AlertDialogForDeleteValue from "../PacksList/AlertDialogForDeleteValue";
+import UsePagination from "../PacksList/Pagination/UsePagination";
+import SelectLabels from "../PacksList/Select/Select";
 
 
 export const CardsList = () => {
@@ -87,7 +89,8 @@ export const CardsList = () => {
                                             inputLabel={"Card name"}
                                             type={"card"}/>
                 </div>
-                {dataCardsList.length ? <div>
+                {dataCardsList.length ? 
+                <div>
                     <table className={s.table}>
                         <thead className={s.tableHeader}>
                         <tr className={s.tr}>
@@ -128,22 +131,30 @@ export const CardsList = () => {
                     </table>
                 </div> : <p className={s.centerText}> This pack is empty. Click add new card to fill this pack</p>}
                 {dataCardsList.length ? <div className={s.contentRightBottom}>
-                    <Pagination className={s.pagination}
-                                count={Math.ceil(totalCount / pageCount)}
-                                color={"primary"} page={page}
-                                onChange={onChangePage}
-                                shape="rounded"/>
+                    <div className={s.contentBottom}> 
+                        {/* <Pagination className={s.pagination}
+                                    count={Math.ceil(totalCount / pageCount)}
+                                    color={"primary"} page={page}
+                                    onChange={onChangePage}
+                                    shape="rounded"/> */}
 
-                    <div className={s.choiceCard}>
-                        <span>Show</span>
-                        <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
-                            <option value='5'>5</option>
-                            <option value='10'>10</option>
-                            <option value='15'>15</option>
-                            <option value='20'>20</option>
-                            <option value='25'>25</option>
-                        </select>
-                        <span>Cards per Page</span>
+                                    <UsePagination/>
+
+                        <div className={s.choiceCard}>
+                            <span>Show</span>
+                            {/* <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
+                                <option value='5'>5</option>
+                                <option value='10'>10</option>
+                                <option value='15'>15</option>
+                                <option value='20'>20</option>
+                                <option value='25'>25</option>
+                            </select> */}
+
+
+<SelectLabels/>
+
+                            <span>Cards per Page</span>
+                        </div>
                     </div>
                 </div>: <></>}
             </div>
