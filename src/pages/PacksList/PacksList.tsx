@@ -239,20 +239,20 @@ function PacksList() {
                 {appStatus === 'loading' ?
                     <CircularProgress style={{position: 'absolute', right: '50%', top: '300px'}}/>
                     : <>
-                    <div className={s.tableWrap}>
+                   
                         
-                    
+      <div className={s.tableWrap}>           
                         <table className={s.table}>
                             <thead className={s.tableHeader}>
-                            <tr className={s.tr}>
-                                <th className={s.th}>Name</th>
-                                <th className={s.th} onClick={() => toggleFilter('card')}>Cards{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
-                                <th className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
-                                <th className={s.th}>Created by</th>
-                                <th className={s.th}>Actions</th>
-                            </tr>
+                                <tr className={s.tr}>
+                                    <th className={s.th}>Name</th>
+                                    <th className={s.th} onClick={() => toggleFilter('card')}>Cards{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                                    <th className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                                    <th className={s.th}>Created by</th>
+                                    <th className={s.th}>Actions</th>
+                                </tr>
                             </thead>
-
+                        <div className={s.scrollTableBody}>
                             <tbody>
                             {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
                                 <td className={s.td} key={pack._id} onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
@@ -285,8 +285,10 @@ function PacksList() {
 
                             </tr>)}
                             </tbody>
-                        </table>
                         </div>
+                    </table>
+                </div> 
+                       
                         <div className={s.contentRightBottom}>
 
 
