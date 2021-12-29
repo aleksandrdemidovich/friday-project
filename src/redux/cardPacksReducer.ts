@@ -44,6 +44,7 @@ export type CardType = {
     updated: string
     user_id: string
     _id: string
+    rating: number //added
 }
 type CardsType = {
     cards: CardType[]
@@ -54,6 +55,7 @@ type CardsType = {
     page: number
     pageCount: number
     sortCards: string | null
+    cardName: string
 }
 
 type NewCardsPackType = {
@@ -113,6 +115,7 @@ const initialState: InitialStateType = {
         page: 1,
         pageCount: 5,
         sortCards: null,
+        cardName:''
     },
     currentPackName: '',
     currentCardsPackId: '',
@@ -205,10 +208,10 @@ export const cardPacksReducer = (state: InitialStateType = initialState, action:
                 currentCards: {...state.currentCards, pageCount: action.payload.pageCount}
             };
 
-
         case 'SET-CURRENT-CARDS-PACK-ID':
             return {...state, currentCardsPackId: action.payload.currentCardsPackId};
-
+        case "SET-CURRENT-CARD-NAME":
+            return {...state, currentCards: {...state.currentCards, cardName: action.payload.currentCardName}}
         case 'SET-USER-ID':
             return {...state, user_id: action.payload.user_id}
 
@@ -281,7 +284,7 @@ export const setCurrentCardsPackID = (payload: { currentCardsPackId: string }) =
     type: 'SET-CURRENT-CARDS-PACK-ID',
     payload
 } as const)
-export const setCurrentCardName = (payload: { currentCardName: string }) => ({
+export const setSearchCardName = (payload: { currentCardName: string }) => ({
     type: 'SET-CURRENT-CARD-NAME',
     payload
 } as const)
@@ -324,7 +327,7 @@ type CardsActionsTypes = | ReturnType<typeof setCards>
     | ReturnType<typeof setCardsPageCount>
     | ReturnType<typeof resetCards>
     | ReturnType<typeof addNewCard>
-    | ReturnType<typeof setCurrentCardName>
+    | ReturnType<typeof setSearchCardName>
 
 
 export type CardPacksActionsType =
@@ -393,6 +396,7 @@ export const requestCards = (data?: CardsQueryRequestType) => async (dispatch: D
     const pageCount = getState().cardPacks.currentCards.pageCount
     const currentCardsPackId = getState().cardPacks.currentCardsPackId
     const sortCards = getState().cardPacks.currentCards.sortCards
+    const cardName = getState().cardPacks.currentCards.cardName
 
     try {
         dispatch(setAppStatus({status: 'loading'}))
@@ -401,6 +405,7 @@ export const requestCards = (data?: CardsQueryRequestType) => async (dispatch: D
             pageCount,
             cardsPack_id: currentCardsPackId,
             sortCards,
+            cardQuestion: cardName,
             ...data
         })
         dispatch(setCards(response.data))
@@ -445,6 +450,18 @@ export const fetchEditCard = (cardsPack: EditCardBodyType) => async (dispatch: D
         await cardsAPI.editCard(cardsPack)
         dispatch(setAppStatus({status: "succeeded"}))
         dispatch(requestCards())
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
+
+//added
+export const fetchUpdateCard = (grade: number, card_id: string) => async (dispatch: Dispatch<any>) => {
+    try {
+        dispatch(setAppStatus({status: "loading"}))
+        let response =  await cardsAPI.putGradeCard(grade, card_id)
+        dispatch(setAppStatus({status: "succeeded"}))
+        dispatch(changeGradeCard(response.data.updatedGrade.grade, response.data.updatedGrade.card_id))
     } catch (e) {
         errorResponseHandler(e, dispatch)
     }
