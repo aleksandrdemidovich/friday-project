@@ -8,10 +8,11 @@
     max-width: 1008px;
     min-height: 636px;
     padding: 20px 24px 20px 24px;
-    position: absolute;
+    margin: auto;
+    /* position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
 }
 
 .titleBox {

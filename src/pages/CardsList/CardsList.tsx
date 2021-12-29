@@ -67,6 +67,7 @@ export const CardsList = () => {
 
 
     return (
+        
         <div className={s.cardsList} >
             {appStatus === 'loading' && <Preloader/>}
             <div>
@@ -78,7 +79,7 @@ export const CardsList = () => {
                             onClick={() => {
                                 history.goBack()
                             }}>{currentPackName}</Button>
-                            <h3>Pack Name</h3>
+                            
                 </div>
                 <div className={s.searchBox}>
                     <input className={s.search} type={"text"} placeholder={'search'}/>
