@@ -5,21 +5,24 @@ import {AppStateType} from "../../redux/store";
 import {
     requestCards,
     setCardsPage,
-    setCardsPageCount,
+    setCardsPageCount, setSearchCardName,
 } from "../../redux/cardPacksReducer";
 import {Preloader} from "../../components/common/Preloader/Preloader";
-import {Button, Pagination} from "@mui/material";
+import {Button} from "@mui/material";
 import {formattingDate} from "../../utils/formattingDate";
 import {useHistory} from "react-router-dom";
 import {PATH} from "../Routes";
-// import s from "../PacksList/PacksList.module.css"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import AlertDialogForNewValue from "../PacksList/AlertDialogForNewValue";
 import AlertDialogForEditValue from "../PacksList/AlertDialogForEditValue";
 import AlertDialogForDeleteValue from "../PacksList/AlertDialogForDeleteValue";
+import SelectLabels from "../PacksList/Select/Select";
+import UsePagination from "../PacksList/Pagination/UsePagination";
 
 
 export const CardsList = () => {
+
+
 
     const dispatch = useDispatch()
     const isLoggedIn = useSelector((state: AppStateType) => state.auth.isLoggedIn)
@@ -30,38 +33,52 @@ export const CardsList = () => {
     const totalCount = useSelector((state: AppStateType) => state.cardPacks.currentCards.cardsTotalCount)
     const dataCardsList = useSelector((state: AppStateType) => state.cardPacks.currentCards.cards);
     const currentPackId = useSelector((state: AppStateType) => state.cardPacks.currentCardsPackId);
-    const cardUserID = useSelector((state: AppStateType) => state.cardPacks.user_id);
+    const cardUserID = useSelector((state: AppStateType) => state.cardPacks.currentCards.packUserId);
     const sortCards = useSelector((state: AppStateType) => state.cardPacks.currentCards.sortCards);
     const idAuthorizedUser = useSelector<AppStateType, string>(state => state.auth.user?._id!);
+    const cardName = useSelector((state: AppStateType) => state.cardPacks.currentCards.cardName);
+
 
 
     const [openAlertDialogForDeletePack, setOpenAlertDialogForDeletePack] = React.useState(false);
     const [openAlertDialogForEditPack, setOpenAlertDialogForEditPack] = React.useState(false);
     const [openAlertDialogForNewPack, setOpenAlertDialogForNewPack] = React.useState(false);
 
+    const [searchCardsName, setSearchCardsName] = React.useState('');
+
 
     let history = useHistory();
 
     useEffect(() => {
+
         if (!isLoggedIn) {
             history.push(PATH.LOGIN)
         }
         isLoggedIn && dispatch(requestCards())
-        return () => {
-            dispatch(requestCards())
-        }
-    }, [page, pageCount, currentPackId, sortCards, isLoggedIn])
+    }, [page, pageCount, currentPackId, sortCards, isLoggedIn, cardName])
 
 
 
 
-    const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    const onChangePage = (value: number) => {
         dispatch(setCardsPage({page: value}))
     }
     const onChangeCardsCountPerPage = (value: string) => {
         dispatch(setCardsPageCount({pageCount: +value}))
     }
 
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            dispatch(setSearchCardName({currentCardName: searchCardsName}))
+        }, 1000)
+        return () => {
+            clearTimeout(handler);
+            dispatch(setSearchCardName({currentCardName: ''}))
+        }
+    }, [searchCardsName])
+    const searchCardNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchCardsName(e.currentTarget.value)
+    }
 
 
     return (
@@ -76,16 +93,15 @@ export const CardsList = () => {
                             onClick={() => {
                                 history.goBack()
                             }}>{currentPackName}</Button>
-                            <h3>Pack Name</h3>
                 </div>
                 <div className={s.searchBox}>
-                    <input className={s.search} type={"text"} placeholder={'search'}/>
-                    <AlertDialogForNewValue open={openAlertDialogForNewPack}
-                                            setOpenAlertDialogForNewPack={setOpenAlertDialogForNewPack}
-                                            alertTitle={"Add new card?"}
-                                            buttonName={"Add new card"}
-                                            inputLabel={"Card name"}
-                                            type={"card"}/>
+                    <input className={s.search} type={"text"} value={searchCardsName} onChange={searchCardNameHandler} placeholder={'search'}/>
+                    {idAuthorizedUser === cardUserID && <AlertDialogForNewValue open={openAlertDialogForNewPack}
+                                             setOpenAlertDialogForNewPack={setOpenAlertDialogForNewPack}
+                                             alertTitle={"Add new card?"}
+                                             buttonName={"Add new card"}
+                                             inputLabel={"Card name"}
+                                             type={"card"}/>}
                 </div>
                 {dataCardsList.length ? <div>
                     <table className={s.table}>
@@ -128,21 +144,11 @@ export const CardsList = () => {
                     </table>
                 </div> : <p className={s.centerText}> This pack is empty. Click add new card to fill this pack</p>}
                 {dataCardsList.length ? <div className={s.contentRightBottom}>
-                    <Pagination className={s.pagination}
-                                count={Math.ceil(totalCount / pageCount)}
-                                color={"primary"} page={page}
-                                onChange={onChangePage}
-                                shape="rounded"/>
-
+                    <UsePagination count={Math.ceil(totalCount / pageCount)} page={page} onChange={onChangePage}/>
                     <div className={s.choiceCard}>
                         <span>Show</span>
-                        <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
-                            <option value='5'>5</option>
-                            <option value='10'>10</option>
-                            <option value='15'>15</option>
-                            <option value='20'>20</option>
-                            <option value='25'>25</option>
-                        </select>
+                        <SelectLabels value={pageCount}
+                                      onChange={onChangeCardsCountPerPage}/>
                         <span>Cards per Page</span>
                     </div>
                 </div>: <></>}

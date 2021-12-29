@@ -1,11 +1,10 @@
-
-
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
+
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
  
@@ -35,25 +34,30 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedSelects() {
-  const [age, setAge] = React.useState('');
+type CustomizedSelectsPropsType = {
+  value: number
+  onChange: (e: any) => void
+}
+
+
+export default function CustomizedSelects(props: CustomizedSelectsPropsType) {
+
   const handleChange = (event: { target: { value: string } }) => {
-    setAge(event.target.value);
+    props.onChange(event.target.value);
   };
+
   return (
     <div>
       <FormControl sx={{ m: 1 }} variant="standard">
-
         <Select
-          value={age}
+          value={props.value.toString()}
           displayEmpty
           id="demo-customized-select"
           onChange={handleChange}
           input={<BootstrapInput />}
         >
-          <MenuItem value="">
-              <em>10</em>
-          </MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
           <MenuItem value={15}>15</MenuItem>
           <MenuItem value={20}>20</MenuItem>
           <MenuItem value={25}>25</MenuItem>
@@ -62,6 +66,7 @@ export default function CustomizedSelects() {
     </div>
   );
 }
+
 
 
 
