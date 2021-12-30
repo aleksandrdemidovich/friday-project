@@ -1,83 +1,29 @@
-.packsList {
-    display:flex;   
-    margin: auto;
-    max-width: 1008px;
-    background-color: white;
+.cardsList {
+    background-color: #FEFEFF;
     border-radius: 8px;
-    overflow: hidden;
-    
+    max-width: 1008px;
+    min-height: 636px;
+    padding: 20px 24px 20px 24px;
+    margin: auto;
 }
 
-.contentLeft {   
-    display: flex;
-    flex-direction:column;   
-    min-width:245px;
-    background-color: #ECECF9;    
-    padding: 33px 23px 0 23px;
-    border-top-left-radius:8px;
-    border-bottom-left-radius :8px;
-}
-
-.titleForButtons {
-    font-family: "SFUIDisplay-Semibold";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    color: #2D2E46;
-    text-align: left;
-    margin-bottom: 20px;
-}
-.titleForSlider {
-    font-family: "SFUIDisplay-Semibold";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    color: #2D2E46;
-    text-align: left;
-    margin-bottom: 54px;   
-}
-
-
-
-.btnWrap {
-    display:flex;
-    margin-bottom: 45px;
-}
-
-.contentRight {   
-    display:flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding:  24px 48px;
-}
-.contentRightTop {
+.titleBox {
     display: flex;
     align-items: center;
-    justify-content: space-between;    
-    gap: 24px;
-    margin-bottom: 24px;
+    justify-content: flex-start;
+}
+.rowBtn {
+    height: 24px;
 }
 
-.btnBlue {
-    width: 184px;
-    background: #21268F;
-    text-align: center;
-    letter-spacing: 0.01em;
-    color: #ECECF9;
-    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
-    height: 36px;
-    font-family: "SFUIDisplay-Medium";
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    margin: 0 auto;
-    border: none;
-    cursor: pointer;   
-    box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
-} 
+.searchBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 20px;
+
+}
 
 .search {
     background: #ECECF9;
@@ -89,29 +35,48 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 24px;
+    width: 960px;
     padding: 6px 20px 6px 40px;
-    width: 460px;
 }
+
 .search:active, :hover, :focus {
     outline: 0;
     outline-offset: 0;
 }
+.centerText {
+    font-family: "SFUIDisplay-Regular";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+    opacity: 0.5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
 
 .table {
-    border: none;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    max-width: 960px;
+    height: 432px;
     border-spacing: 0px;
     border-collapse: collapse;
-    width: 100%; 
-    max-width: 670px;   
-    table-layout: fixed; 
-    max-height: 432px;
     box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    margin: 0 auto;
+    margin-top: 24px;
+    margin-bottom: 24px;
+
 }
 
-.tableHeader {    
+.tableHeader {
     background-color: #ECECF9;
-    /* position: fixed; */
 }
+
 .scrollTableBody {
     max-height:384px;
     overflow-x: hidden;
@@ -121,7 +86,7 @@
 
 .tr {
     height: 48px;
-    text-align: left;     
+    text-align: left;
     color: #2D2E46;
     font-family: "SFUIDisplay-Bold";
     font-style: normal;
@@ -131,9 +96,9 @@
     padding-left: 24px;
     padding-right: 24px;
     display: grid;
-    grid-template-columns: 160px 80px 135px minmax(110px, 120px) 140px;
+    grid-template-columns: 245px 307px 130px 130px 1fr;
     align-items: center;
-    overflow: hidden;
+    overflow-y: hidden;
     text-overflow: ellipsis;
 }
 
@@ -152,16 +117,12 @@
     text-overflow: ellipsis;
 }
 
-.td:first-child {
-    cursor: pointer;
-}
-
 .td:nth-child(4) {
     max-width: 112px;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-} 
+}
 
 .th:last-child,
 .td:last-child {
@@ -186,7 +147,8 @@
     gap: 10px;
 }
 
-.contentRightBottom {
+
+.contentBottom {
     display: flex;
     align-items: center;
     justify-content: left;
@@ -196,59 +158,21 @@
     font-size: 12px;
     line-height: 14px;
     color: #2D2E46;
-    margin-top: 24px;
+
 }
-
-.pagination {
-    margin-right: 34px;    
-}
-
-
 .choiceCard {
     display: flex;
     align-items: center;
     justify-content: center;
     gap:5px;
 }
+
 ::-webkit-scrollbar {
-	width: 6px;
-} 
-::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-} 
-::-webkit-scrollbar-thumb {
-	box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    width: 6px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}

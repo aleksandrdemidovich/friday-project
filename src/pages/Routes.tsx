@@ -35,7 +35,7 @@ function Routes() {
 
     return (
         <>
-            <TempHeader/>
+            {/*<TempHeader/>*/}
                 <Switch>
                     <Route path={'/'} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
                     <Route path={PATH.LOGIN} render={() => <LoginPage/>}/>
