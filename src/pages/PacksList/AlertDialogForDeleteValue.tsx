@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {fetchDeleteCard, fetchDeletePack, fetchEditCard, fetchEditPack} from "../../redux/cardPacksReducer";
+import {fetchDeleteCard, fetchDeletePack} from "../../redux/cardPacksReducer";
 import BtnActions from "./BtnActions/BtnActions";
 
 type AlertDialogForDeletePackPropsType = {
@@ -14,7 +14,6 @@ type AlertDialogForDeletePackPropsType = {
 }
 
 function AlertDialogForDeleteValue(props: AlertDialogForDeletePackPropsType) {
-
     const dispatch = useDispatch()
 
     const handleOpen = () => {
@@ -44,7 +43,7 @@ function AlertDialogForDeleteValue(props: AlertDialogForDeletePackPropsType) {
 
     return (
         <div>
-            <BtnActions name='Delete' key={props.packId} onClick={handleOpen} style={styleBtnDelete}/>
+            <BtnActions name='Delete'  onClick={handleOpen} style={styleBtnDelete}/>
             <Dialog
                 open={props.open}
                 onClose={handleClose}

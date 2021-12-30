@@ -134,7 +134,7 @@ const initialState: InitialStateType = {
         cardsPack_id: '',
         question: 'test question',
         answer: 'test answer',
-        grade: 3.456780,
+        grade: 0,
         shots: 0,
         rating: 0,
         answerImg: '',
