@@ -102,7 +102,7 @@ function PacksList() {
 
     const handleChangeRangeCardCount = (event: Event, newValue: number | number[], activeThumb: number ) => {
         setValue(newValue as number[]);
-        // activeThumb = newValue as number
+        
     }
 
     if (!isLoggedIn) {
@@ -234,31 +234,31 @@ function PacksList() {
                 {appStatus === 'loading' ?
                     <CircularProgress style={{position: 'absolute', right: '50%', top: '300px'}}/>
                     : <>
+
+
+      <div className={s.tableWrap}>
                         <table className={s.table}>
                             <thead className={s.tableHeader}>
-                            <tr className={s.tr}>
-                                <th className={s.th}>Name</th>
-                                <th className={s.th} onClick={() => toggleFilter('card')}>Cards{sort ?
-                                    <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
-                                <th className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ?
-                                    <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
-                                <th className={s.th}>Created by</th>
-                                <th className={s.th}>Actions</th>
-                            </tr>
+                                <tr className={s.tr}>
+                                    <th className={s.th}>Name</th>
+                                    <th className={s.th} onClick={() => toggleFilter('card')}>Cards{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                                    <th className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                                    <th className={s.th}>Created by</th>
+                                    <th className={s.th}>Actions</th>
+                                </tr>
                             </thead>
+                        <div className={s.scrollTableBody}>
                             <tbody>
                             {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
-                                <td className={s.td} key={pack._id}
-                                    onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
+                                <td className={s.td} onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
                                 <td className={s.td}>{pack.cardsCount}</td>
                                 <td className={s.td}>{formattingDate(pack.updated)}</td>
                                 <td className={s.td}>{pack.user_name}</td>
                                 <td className={s.td}>
-                                    <div className={s.btnBox}>
+                                    <div className={s.btnBox} >
                                         {idAuthorizedUser === pack.user_id &&
                                         <>
                                             <AlertDialogForDeleteValue packName={pack.name}
-                                                                       key={pack._id}
                                                                        packId={pack._id}
                                                                        open={openAlertDialogForDeletePack}
                                                                        setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
@@ -278,7 +278,9 @@ function PacksList() {
                                 </td>
                             </tr>)}
                             </tbody>
-                        </table>
+                        </div>
+                    </table>
+                </div>
 
                         <div className={s.contentRightBottom}>
                             <UsePagination count={Math.ceil(totalCount / pageCount)} page={currentPage}

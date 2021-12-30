@@ -18,6 +18,7 @@ import AlertDialogForEditValue from "../PacksList/AlertDialogForEditValue";
 import AlertDialogForDeleteValue from "../PacksList/AlertDialogForDeleteValue";
 import SelectLabels from "../PacksList/Select/Select";
 import UsePagination from "../PacksList/Pagination/UsePagination";
+import MainRating from "./Rating/Rating";
 
 
 export const CardsList = () => {
@@ -82,6 +83,7 @@ export const CardsList = () => {
 
 
     return (
+
         <div className={s.cardsList} >
             {appStatus === 'loading' && <Preloader/>}
             <div>
@@ -93,6 +95,7 @@ export const CardsList = () => {
                             onClick={() => {
                                 history.goBack()
                             }}>{currentPackName}</Button>
+
                 </div>
                 <div className={s.searchBox}>
                     <input className={s.search} type={"text"} value={searchCardsName} onChange={searchCardNameHandler} placeholder={'search'}/>
@@ -103,7 +106,8 @@ export const CardsList = () => {
                                              inputLabel={"Card name"}
                                              type={"card"}/>}
                 </div>
-                {dataCardsList.length ? <div>
+                {dataCardsList.length ?
+                <div>
                     <table className={s.table}>
                         <thead className={s.tableHeader}>
                         <tr className={s.tr}>
@@ -114,17 +118,16 @@ export const CardsList = () => {
                             {idAuthorizedUser === cardUserID &&<th className={s.th}>Actions</th>}
                         </tr>
                         </thead>
-
+            <div className={s.scrollTableBody}>
                         <tbody>
                         {dataCardsList.map(card => <tr className={s.tr} key={card._id}>
-                            <td className={s.td} key={card._id}>{card.question}</td>
-                            <td className={s.td} key={card._id}>{card.answer}</td>
-                            <td className={s.td} key={card._id}>{formattingDate(card.updated)}</td>
-                            <td className={s.td} key={card._id}>{card.grade}</td>
-                            {idAuthorizedUser === card.user_id &&<td className={s.td} key={card._id}>
+                            <td className={s.td}>{card.question}</td>
+                            <td className={s.td}>{card.answer}</td>
+                            <td className={s.td}>{formattingDate(card.updated)}</td>
+                            <td className={s.td}><MainRating rating={card.grade}/></td>
+                            {idAuthorizedUser === card.user_id &&<td className={s.td}>
                                 <div className={s.btnBox} key={card._id}>
                                     <AlertDialogForDeleteValue packName={card.question}
-                                                               key={card._id}
                                                                packId={card._id}
                                                                open={openAlertDialogForDeletePack}
                                                                setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
@@ -141,9 +144,10 @@ export const CardsList = () => {
                             </td>}
                         </tr>)}
                         </tbody>
+                    </div>
                     </table>
                 </div> : <p className={s.centerText}> This pack is empty. Click add new card to fill this pack</p>}
-                {dataCardsList.length ? <div className={s.contentRightBottom}>
+                {dataCardsList.length ? <div className={s.contentBottom}>
                     <UsePagination count={Math.ceil(totalCount / pageCount)} page={page} onChange={onChangePage}/>
                     <div className={s.choiceCard}>
                         <span>Show</span>
