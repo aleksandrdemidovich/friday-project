@@ -12,8 +12,7 @@ import {Preloader} from "./components/common/Preloader/Preloader";
 
 
 function App() {
-
- const isInitialized = useSelector<AppStateType, boolean>(state=>state.app.isInitialized)
+    const isInitialized = useSelector<AppStateType, boolean>(state=>state.app.isInitialized)
     const isLoggedIn = useSelector<AppStateType, boolean>(state=>state.auth.isLoggedIn)
 
     const dispatch = useDispatch()

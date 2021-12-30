@@ -1,5 +1,4 @@
 import s from "./PacksList.module.css"
-
 import React, {CSSProperties, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -9,7 +8,7 @@ import {
 } from "../../redux/cardPacksReducer";
 import {AppStateType} from "../../redux/store";
 import {formattingDate} from "../../utils/formattingDate";
-import {CircularProgress, Pagination, Slider} from "@mui/material";
+import {CircularProgress, createTheme, Slider, ThemeProvider} from "@mui/material";
 import AlertDialogForDeleteValue from "./AlertDialogForDeleteValue";
 import AlertDialogForEditValue from "./AlertDialogForEditValue";
 import AlertDialogForNewValue from "./AlertDialogForNewValue";
@@ -17,12 +16,7 @@ import {PATH} from "../Routes";
 import {Redirect, useHistory} from "react-router-dom";
 import BtnShowCards from "../../components/common/btnShowCards/BtnShowCards";
 import Subtitle from "../../components/common/subtitle/Subtitle";
-// 
-
-
-//slider
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import UsePagination from "./Pagination/UsePagination";
 import SelectLabels from "./Select/Select";
 import BtnActions from "./BtnActions/BtnActions";
@@ -67,10 +61,10 @@ function PacksList() {
     }, [userIdForRequest, packName, min, max, page, pageCount, sortPacks])
 
     //paginator
-    const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    const onChangePage = (value: number) => {
         dispatch(setPacksPage({page: value}))
     }
-    const onChangeCardsCountPerPage = (value: string) => {
+    const onChangePacksCountPerPage = (value: string) => {
         dispatch(setPacksPageCount({pageCount: +value}))
     }
 
@@ -106,9 +100,9 @@ function PacksList() {
         }
     }, [value])
 
-    const handleChangeRangeCardCount = (event: Event, newValue: number | number[]) => {
+    const handleChangeRangeCardCount = (event: Event, newValue: number | number[], activeThumb: number ) => {
         setValue(newValue as number[]);
-        
+        // activeThumb = newValue as number
     }
 
     if (!isLoggedIn) {
@@ -129,17 +123,17 @@ function PacksList() {
     }
 
     const toggleFilter = (type: string) => {
-        if(!sort){
-            if(type === 'card'){
+        if (!sort) {
+            if (type === 'card') {
                 dispatch(setSortPacks('0cardsCount'))
-            }else {
+            } else {
                 dispatch(setSortPacks('0updated'))
             }
             setSort(!sort)
         } else {
-            if(type === 'card'){
+            if (type === 'card') {
                 dispatch(setSortPacks('1cardsCount'))
-            }else {
+            } else {
                 dispatch(setSortPacks('1updated'))
             }
             setSort(!sort)
@@ -151,49 +145,57 @@ function PacksList() {
         color: '#2D2E46',
         background: '#FFFFFF',
     }
-
     const style2: CSSProperties = {
         color: '#FFFFFF',
         background: '#9A91C8',
     }
-
     const styleBtnLearn: CSSProperties = {
         color: '#21268F',
         background: '#D7D8EF',
     }
 
-    //slider
-
-    const UseSlider = styled(Slider)({
-        color: '#21268F',
-        height: 5,
-        '& .MuiSlider-track': {
-          border: 'none',
+    const theme = createTheme({
+        components: {
+            // Name of the component
+            MuiSlider: {
+                styleOverrides: {
+                    // Name of the slot
+                    root: {
+                        // Some CSS
+                        color: '#21268F',
+                        height: 5,
+                        '& .MuiSlider-track': {
+                            border: 'none',
+                        },
+                        '& .MuiSlider-thumb': {
+                            height: 16,
+                            width: 16,
+                            backgroundColor: '#fff',
+                            border: '5px solid currentColor',
+                            '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                                boxShadow: 'inherit',
+                                touchAction: 'pan-x',
+                            },
+                            '&:before': {
+                                display: 'none',
+                            },
+                        },
+                        '& .MuiSlider-valueLabel': {
+                            lineHeight: 1.2,
+                            fontSize: 12,
+                            background: 'unset',
+                            padding: 0,
+                            width: 32,
+                            height: 24,
+                            borderRadius: '3',
+                            backgroundColor: '#21268F',
+                            '&:before': {display: 'none'},
+                        },
+                    },
+                },
+            },
         },
-        '& .MuiSlider-thumb': {
-          height: 16,
-          width: 16,
-          backgroundColor: '#fff',
-          border: '5px solid currentColor',
-          '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-            boxShadow: 'inherit',
-          },
-          '&:before': {
-            display: 'none',
-          },
-        },
-        '& .MuiSlider-valueLabel': {
-          lineHeight: 1.2,
-          fontSize: 12,
-          background: 'unset',
-          padding: 0,
-          width: 32,
-          height: 24,
-          borderRadius: '3',
-         backgroundColor: '#21268F',
-         '&:before': { display: 'none'},
-        },
-      });
+    });
 
 
     return (
@@ -201,28 +203,21 @@ function PacksList() {
             <div className={s.contentLeft}>
                 <h3 className={s.titleForButtons}>Show pack cards</h3>
                 <div className={s.btnWrap}>
-                    <BtnShowCards name='My' onClick={fetchMyPacksCards} style={style1}/>
-                    <BtnShowCards name='All' onClick={fetchAllPacksCards} style={style2}/>
+                    <BtnShowCards name='My' onClick={fetchMyPacksCards} style={ idAuthorizedUser === userIdForRequest ? style2 : style1}/>
+                    <BtnShowCards name='All' onClick={fetchAllPacksCards} style={idAuthorizedUser === userIdForRequest ? style1 : style2}/>
                 </div>
                 <h3 className={s.titleForSlider}>Number of cards</h3>
                 <div className={s.sliderWrap}>
-
-                    {/* <Slider 
+                    <ThemeProvider theme={theme}>
+                    <Slider
                         value={value}
                         onChange={handleChangeRangeCardCount}
-                        valueLabelDisplay="on"                        
-                    /> */}
-
-                    <UseSlider
-                        max={150}                        
-                        value={value}
-                        onChange={handleChangeRangeCardCount}
-                        valueLabelDisplay="on"       
+                        valueLabelDisplay="on"
                     />
-
+                    </ThemeProvider>
                 </div>
             </div>
-            
+
             <div className={s.contentRight}>
                 <Subtitle subtitle='Packs list'/>
                 <div className={s.contentRightTop}>
@@ -255,12 +250,13 @@ function PacksList() {
                         <div className={s.scrollTableBody}>
                             <tbody>
                             {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
-                                <td className={s.td} key={pack._id} onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
-                                <td className={s.td} key={pack._id}>{pack.cardsCount}</td>
-                                <td className={s.td} key={pack._id}>{formattingDate(pack.updated)}</td>
-                                <td className={s.td} key={pack._id}>{pack.user_name}</td>
-                                <td className={s.td} key={pack._id}>
-                                    <div className={s.btnBox} key={pack._id}>
+                                <td className={s.td} key={pack._id}
+                                    onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
+                                <td className={s.td}>{pack.cardsCount}</td>
+                                <td className={s.td}>{formattingDate(pack.updated)}</td>
+                                <td className={s.td}>{pack.user_name}</td>
+                                <td className={s.td}>
+                                    <div className={s.btnBox}>
                                         {idAuthorizedUser === pack.user_id &&
                                         <>
                                             <AlertDialogForDeleteValue packName={pack.name}
@@ -282,7 +278,6 @@ function PacksList() {
                                                     onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
                                     </div>
                                 </td>
-
                             </tr>)}
                             </tbody>
                         </div>
@@ -290,34 +285,19 @@ function PacksList() {
                 </div> 
                        
                         <div className={s.contentRightBottom}>
-
-
-                            {/* <Pagination className={s.pagination} count={Math.ceil(totalCount / pageCount)} color={"primary"} page={currentPage} onChange={onChangePage} shape="rounded"/> */}
-
-                            <UsePagination/>
-
-
+                            <UsePagination count={Math.ceil(totalCount / pageCount)} page={currentPage}
+                                           onChange={onChangePage}/>
                             <div className={s.choiceCard}>
                                 <span>Show</span>
-                                {/* <select value={pageCount} onChange={(e) => onChangeCardsCountPerPage(e.currentTarget.value)}>
-                                <option value='5'>5</option>
-                                <option value='10'>10</option>
-                                <option value='15'>15</option>
-                                <option value='20'>20</option>
-                                <option value='25'>25</option>
-                                </select>  */}
-
-
-                            <SelectLabels/>
-
-                            
-                                <span>Cards per Page</span>                               
+                                <SelectLabels value={pageCount}
+                                              onChange={onChangePacksCountPerPage}/>
+                                <span>Cards per Page</span>
                             </div>
                         </div>
                     </>}
             </div>
         </div>
-    
+
     )
 }
 
