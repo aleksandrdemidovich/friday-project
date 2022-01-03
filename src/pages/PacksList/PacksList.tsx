@@ -247,38 +247,42 @@ function PacksList() {
                                     <th className={s.th}>Actions</th>
                                 </tr>
                             </thead>
-                        <div className={s.scrollTableBody}>
+                        
                             <tbody>
-                            {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
-                                <td className={s.td} onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
-                                <td className={s.td}>{pack.cardsCount}</td>
-                                <td className={s.td}>{formattingDate(pack.updated)}</td>
-                                <td className={s.td}>{pack.user_name}</td>
-                                <td className={s.td}>
-                                    <div className={s.btnBox} >
-                                        {idAuthorizedUser === pack.user_id &&
-                                        <>
-                                            <AlertDialogForDeleteValue packName={pack.name}
-                                                                       packId={pack._id}
-                                                                       open={openAlertDialogForDeletePack}
-                                                                       setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
-                                                                       alertTitle={"Delete Pack?"}
-                                                                       type={"pack"}/>
-                                            <AlertDialogForEditValue packName={pack.name}
-                                                                     open={openAlertDialogForEditPack}
-                                                                     setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
-                                                                     packId={pack._id}
-                                                                     alertTitle={"Change Pack name?"}
-                                                                     type={"pack"}
-                                                                     inputLabel={"New Pack name"}/>
-                                        </>}
-                                        <BtnActions name='Learn' style={styleBtnLearn}
-                                                    onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
-                                    </div>
-                                </td>
-                            </tr>)}
+                            <div className={s.scrollTableBody}>
+                                {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
+                                    <td className={s.td} onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
+                                    <td className={s.td}>{pack.cardsCount}</td>
+                                    <td className={s.td}>{formattingDate(pack.updated)}</td>
+                                    <td className={s.td}>{pack.user_name}</td>
+                                    <td className={s.td}>
+                                        <div className={s.btnBox} >
+                                            {idAuthorizedUser === pack.user_id &&
+                                            <>
+                                                <AlertDialogForDeleteValue packName={pack.name}
+                                                                        packId={pack._id}
+                                                                        open={openAlertDialogForDeletePack}
+                                                                        setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
+                                                                        alertTitle={"Delete Pack?"}
+                                                                        type={"pack"}/>
+                                                <AlertDialogForEditValue packName={pack.name}
+                                                                        open={openAlertDialogForEditPack}
+                                                                        setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
+                                                                        packId={pack._id}
+                                                                        alertTitle={"Change Pack name?"}
+                                                                        type={"pack"}
+                                                                        inputLabel={"New Pack name"}/>
+                                            </>}
+                                            <BtnActions name='Learn' style={styleBtnLearn}
+                                                        onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
+                                        </div>
+                                    </td>
+                                </tr>)}
+                            
+                            </div>
+                        
                             </tbody>
-                        </div>
+                        
                     </table>
                 </div>
 

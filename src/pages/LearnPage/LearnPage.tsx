@@ -1,3 +1,4 @@
+import s from "./LearnPage.module.css"
 import Card from "@mui/material/Card";
 import React, {useEffect, useState} from "react";
 import {CardType, fetchUpdateCard, requestCards, setCurrentCardsPackID} from "../../redux/cardPacksReducer";
@@ -6,6 +7,7 @@ import {AppStateType} from "../../redux/store";
 import {useHistory} from "react-router-dom";
 import {Button, CardActions, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import {Preloader} from "../../components/common/Preloader/Preloader";
+import BtnAll from "../../components/common/BtnAll/BtnAll";
 
 
 const grades = [
@@ -85,31 +87,73 @@ export const LearnPage = () => {
         }
     }
 
+    // for btn CANCEL
+
+    const styleBtnCancel: any = {
+        color: '#21268F',
+        background: '#D7D8EF',
+        width: '124px',
+        opacity: '0.8',
+        marginRight: '41px',
+    }
+
+    // for btn SAVE
+
+    const styleBtnShowAnswer: any = {
+        color: '#ECECF9',
+        background: '#21268F',
+        width: '187px',
+    }
+
+    // on btn NEXT 
+
+    const styleBtnNext: any = {
+        color: '#ECECF9',
+        background: '#21268F',
+        width: '187px',
+    }
+
+
+
     return (
-        <Card sx={{width: 413, minHeight: 300, margin: '100px auto'}}>
+        <Card className={s.card} sx={{width: 413, minHeight: 300, margin: '100px auto'}}>
             {appStatus === 'loading' && <Preloader/>}
-            <h2>Learn ' {cardName} '</h2>
+            <h3 className={s.subtitle}>Learn ' {cardName} '</h3>
             {card.question === 'question fake' ? (
-                <p style={{textAlign: 'center'}}>
+                <p className={s.question}>
                     <b>No questions in this Pack!!!</b>
                 </p>
             ) : (
-                <p>
+                <p className={s.question}>
                     <b>Question</b>: ' {card.question} '
                 </p>
             )}
 
             {!isChecked && (
                 <CardActions>
-                    <Button onClick={() => {
+
+                    <BtnAll name='Cancel' style={styleBtnCancel} onClick={() => {
+                        history.goBack()
+                    }} />
+
+
+                    {/* <Button onClick={() => {
                         history.goBack()
                     }}>
                         Cancel
-                    </Button>
+                    </Button> */}
+
+
                     {card.question !== 'question fake' && (
-                        <Button onClick={() => setIsChecked(true)}>
-                            Show answer
-                        </Button>
+
+                        <BtnAll name='Show answer' style={styleBtnShowAnswer} onClick={() => setIsChecked(true)}/>
+
+
+                        // <Button onClick={() => setIsChecked(true)}>
+                        //     Show answer
+                        // </Button>
+
+
                     )}
                 </CardActions>
             )}
@@ -137,10 +181,16 @@ export const LearnPage = () => {
                     </FormControl>
 
                     <CardActions>
-                        <Button onClick={() => {
+
+                        <BtnAll name='Cancel' style={styleBtnCancel} onClick={() => {
                             history.goBack()
-                        }}>Cancel</Button>
-                        <Button onClick={onNextHandler}>Next</Button>
+                        }}/>
+                        {/* <Button onClick={() => {
+                            history.goBack()
+                        }}>Cancel</Button> */}
+
+                        <BtnAll name='Next' style={styleBtnNext} onClick={onNextHandler}/>
+                        {/* <Button onClick={onNextHandler}>Next</Button> */}
                     </CardActions>
                 </>
             )}

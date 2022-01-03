@@ -1,0 +1,22 @@
+.card {
+    background: #F9F9FE;
+    width: 413px;
+    padding: 25px 33px 26px 33px;
+    text-align: center;
+    margin: auto;
+    border-radius: 8px;
+}
+
+.subtitle {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #2D2E46;
+    margin-bottom: 33px;
+}
+.question {
+    margin-bottom: 78px;
+    text-align: center;
+
+}
