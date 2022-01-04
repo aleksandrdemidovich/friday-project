@@ -16,6 +16,7 @@ export type CardsQueryRequestType = {
 export type EditCardBodyType = {
     _id: string
     question?: string
+    answer?: string
 }
 
 

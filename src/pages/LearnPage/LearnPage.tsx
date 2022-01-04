@@ -8,6 +8,9 @@ import {useHistory} from "react-router-dom";
 import {Button, CardActions, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import {Preloader} from "../../components/common/Preloader/Preloader";
 import BtnAll from "../../components/common/BtnAll/BtnAll";
+import { styled } from '@mui/material/styles';
+
+
 
 
 const grades = [
@@ -34,6 +37,9 @@ const getCard = (cards: CardType[]) => {
 
     return cards[res.id + 1]
 }
+
+
+
 
 export const LearnPage = () => {
 
@@ -94,10 +100,10 @@ export const LearnPage = () => {
         background: '#D7D8EF',
         width: '124px',
         opacity: '0.8',
-        marginRight: '41px',
+        marginRight: '40px',
     }
 
-    // for btn SAVE
+    // for btn SHOW ANSWER
 
     const styleBtnShowAnswer: any = {
         color: '#ECECF9',
@@ -105,7 +111,7 @@ export const LearnPage = () => {
         width: '187px',
     }
 
-    // on btn NEXT 
+    // for btn NEXT 
 
     const styleBtnNext: any = {
         color: '#ECECF9',
@@ -114,13 +120,73 @@ export const LearnPage = () => {
     }
 
 
+    // стилизация значка в ненажатом состоянии!
+
+    const BpIcon = styled('span')(({ theme }) => ({
+        borderRadius: '50%',
+        width: 16,
+        height: 16,
+        marginRight: 12,   
+        outline: '1px solid #2D2E46',
+    }));
+    
+    // стилизация значка в нажатом состоянии!
+    
+    const BpCheckedIcon = styled(BpIcon)({
+        backgroundColor: '#FFFFFF', 
+        outline: '4px solid #21268F',    
+        display: 'block',
+        width: 16,
+        height: 16,
+    })
+
+    // Inspired by blueprintjs
+
+    function BpRadio(props: RadioProps) {
+        return (
+        <Radio
+            disableRipple
+            // color="default"
+            checkedIcon={<BpCheckedIcon />}
+            icon={<BpIcon />}
+            {...props}
+        />
+        );
+    }
+
+    //  cтили для группы чекбоксов
+
+    const MyFormControlLabel = styled(FormControlLabel)({
+        '& .MuiTypography-root': {
+            fontFamily: 'SFUIDisplay-Regular',
+            fontSize: '16px',
+            lineHeight: '24px',
+            color: '#2D2E46',
+        },    
+       
+    });
+
+    //styleForLabel
+
+    const styleForLabel: any = {
+        textAlign: 'left',
+        marginBottom: '10px',
+        fontFamily: 'SFUIDisplay-Semibold',
+        fontWeight: '600',
+        fontSize: '16px',
+        lineHeight: '24px',
+        color: '#2D2E46'
+    }
+
+
+
 
     return (
-        <Card className={s.card} sx={{width: 413, minHeight: 300, margin: '100px auto'}}>
+        <Card className={s.card}>
             {appStatus === 'loading' && <Preloader/>}
             <h3 className={s.subtitle}>Learn ' {cardName} '</h3>
             {card.question === 'question fake' ? (
-                <p className={s.question}>
+                <p className={s.noQuestion}>
                     <b>No questions in this Pack!!!</b>
                 </p>
             ) : (
@@ -132,54 +198,69 @@ export const LearnPage = () => {
             {!isChecked && (
                 <CardActions>
 
-                    <BtnAll name='Cancel' style={styleBtnCancel} onClick={() => {
-                        history.goBack()
-                    }} />
+                    <div className={s.btnWrap}>                    
+
+                        <BtnAll name='Cancel' style={styleBtnCancel} onClick={() => {
+                            history.goBack()
+                        }} />
 
 
-                    {/* <Button onClick={() => {
-                        history.goBack()
-                    }}>
-                        Cancel
-                    </Button> */}
+                        {/* <Button onClick={() => {
+                            history.goBack()
+                        }}>
+                            Cancel
+                        </Button> */}
 
 
-                    {card.question !== 'question fake' && (
+                        {card.question !== 'question fake' && (
 
-                        <BtnAll name='Show answer' style={styleBtnShowAnswer} onClick={() => setIsChecked(true)}/>
-
-
-                        // <Button onClick={() => setIsChecked(true)}>
-                        //     Show answer
-                        // </Button>
+                            <BtnAll name='Show answer' style={styleBtnShowAnswer} onClick={() => setIsChecked(true)}/>
 
 
-                    )}
+                            // <Button onClick={() => setIsChecked(true)}>
+                            //     Show answer
+                            // </Button>
+
+
+                        )}
+                    </div>
                 </CardActions>
             )}
 
             {isChecked && (
                 <>
-                    <p><b>Answer</b>: ' {card.answer} '</p>
+                    <p className={s.answer}><b>Answer</b>: ' {card.answer} '</p>
+
+                <div className={s.wrapForm}>
 
                     <FormControl component="fieldset">
-                        <FormLabel component="legend">
+                        <FormLabel style={styleForLabel} component="legend">
                             Rate yourself:
                         </FormLabel>
 
                         <RadioGroup aria-label='Rate' name='radio-buttons-group'>
                             {grades.map((g: string, i: number) => (
-                                <FormControlLabel
+                                <MyFormControlLabel style={{marginBottom:12}}
+                                  /* A lot of thought */
                                     key={i}
                                     value={i + 1}
-                                    control={<Radio/>}
+                                    control={<BpRadio/>}
                                     label={g}
                                     onChange={() => setGrade(i + 1)}
                                 />
+
+                                // <FormControlLabel style={{marginBottom:12}}
+                                // /* A lot of thought */
+                                //     key={i}
+                                //     value={i + 1}
+                                //     control={<BpRadio/>}
+                                //     label={g}
+                                //     onChange={() => setGrade(i + 1)}
+                                // />
                             ))}
                         </RadioGroup>
                     </FormControl>
-
+                </div>
                     <CardActions>
 
                         <BtnAll name='Cancel' style={styleBtnCancel} onClick={() => {

@@ -2,6 +2,7 @@ import s from "./PacksList.module.css"
 import React, {CSSProperties, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {
+    PackType,
     requestCardPack, setCurrentCardsPackID, setCurrentPackName, setMinMaxCardsCount,
     setPacksPage,
     setPacksPageCount, setSearchPacksName, setSortPacks, setUserId
@@ -16,7 +17,6 @@ import {PATH} from "../Routes";
 import {Redirect, useHistory} from "react-router-dom";
 import BtnShowCards from "../../components/common/btnShowCards/BtnShowCards";
 import Subtitle from "../../components/common/subtitle/Subtitle";
-import {styled} from '@mui/material/styles';
 import UsePagination from "./Pagination/UsePagination";
 import SelectLabels from "./Select/Select";
 import BtnActions from "./BtnActions/BtnActions";
@@ -42,9 +42,17 @@ function PacksList() {
     const sortPacks = useSelector((state: AppStateType) => state.cardPacks.currentCardPacks.sortPacks)
 
     //dialog alerts
-    const [openAlertDialogForDeletePack, setOpenAlertDialogForDeletePack] = React.useState(false);
-    const [openAlertDialogForEditPack, setOpenAlertDialogForEditPack] = React.useState(false);
+    const [openAlertDialogForDeletePack, setOpenAlertDialogForDeletePack] = React.useState<PackType | null>(null);
+    const [openAlertDialogForEditPack, setOpenAlertDialogForEditPack] = React.useState<PackType | null>(null);
     const [openAlertDialogForNewPack, setOpenAlertDialogForNewPack] = React.useState(false);
+
+    const handleOpenDelete = (pack: PackType) => {
+        setOpenAlertDialogForDeletePack(pack)
+    }
+    const handleOpenEdit = (pack: PackType) => {
+        setOpenAlertDialogForEditPack(pack)
+    }
+
 
     //local state for input / range
     const [searchPackName, setSearchPackName] = React.useState('');
@@ -100,9 +108,8 @@ function PacksList() {
         }
     }, [value])
 
-    const handleChangeRangeCardCount = (event: Event, newValue: number | number[], activeThumb: number ) => {
+    const handleChangeRangeCardCount = (event: Event, newValue: number | number[], activeThumb: number) => {
         setValue(newValue as number[]);
-        
     }
 
     if (!isLoggedIn) {
@@ -149,53 +156,10 @@ function PacksList() {
         color: '#FFFFFF',
         background: '#9A91C8',
     }
-    const styleBtnLearn: CSSProperties = {
-        color: '#21268F',
-        background: '#D7D8EF',
-    }
 
-    const theme = createTheme({
-        components: {
-            // Name of the component
-            MuiSlider: {
-                styleOverrides: {
-                    // Name of the slot
-                    root: {
-                        // Some CSS
-                        color: '#21268F',
-                        height: 5,
-                        '& .MuiSlider-track': {
-                            border: 'none',
-                        },
-                        '& .MuiSlider-thumb': {
-                            height: 16,
-                            width: 16,
-                            backgroundColor: '#fff',
-                            border: '5px solid currentColor',
-                            '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-                                boxShadow: 'inherit',
-                                touchAction: 'pan-x',
-                            },
-                            '&:before': {
-                                display: 'none',
-                            },
-                        },
-                        '& .MuiSlider-valueLabel': {
-                            lineHeight: 1.2,
-                            fontSize: 12,
-                            background: 'unset',
-                            padding: 0,
-                            width: 32,
-                            height: 24,
-                            borderRadius: '3',
-                            backgroundColor: '#21268F',
-                            '&:before': {display: 'none'},
-                        },
-                    },
-                },
-            },
-        },
-    });
+
+
+
 
 
     return (
@@ -203,17 +167,19 @@ function PacksList() {
             <div className={s.contentLeft}>
                 <h3 className={s.titleForButtons}>Show pack cards</h3>
                 <div className={s.btnWrap}>
-                    <BtnShowCards name='My' onClick={fetchMyPacksCards} style={ idAuthorizedUser === userIdForRequest ? style2 : style1}/>
-                    <BtnShowCards name='All' onClick={fetchAllPacksCards} style={idAuthorizedUser === userIdForRequest ? style1 : style2}/>
+                    <BtnShowCards name='My' onClick={fetchMyPacksCards}
+                                  style={idAuthorizedUser === userIdForRequest ? style2 : style1}/>
+                    <BtnShowCards name='All' onClick={fetchAllPacksCards}
+                                  style={idAuthorizedUser === userIdForRequest ? style1 : style2}/>
                 </div>
                 <h3 className={s.titleForSlider}>Number of cards</h3>
                 <div className={s.sliderWrap}>
                     <ThemeProvider theme={theme}>
-                    <Slider
-                        value={value}
-                        onChange={handleChangeRangeCardCount}
-                        valueLabelDisplay="on"
-                    />
+                        <Slider
+                            value={value}
+                            onChange={handleChangeRangeCardCount}
+                            valueLabelDisplay="on"
+                        />
                     </ThemeProvider>
                 </div>
             </div>
@@ -236,55 +202,63 @@ function PacksList() {
                     : <>
 
 
-      <div className={s.tableWrap}>
-                        <table className={s.table}>
-                            <thead className={s.tableHeader}>
+                        <div className={s.tableWrap}>
+                            <table className={s.table}>
+                                <thead className={s.tableHeader}>
                                 <tr className={s.tr}>
                                     <th className={s.th}>Name</th>
-                                    <th className={s.th} onClick={() => toggleFilter('card')}>Cards{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
-                                    <th className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                                    <th className={s.th} onClick={() => toggleFilter('card')}>Cards{sort ?
+                                        <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                                    <th className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ?
+                                        <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
                                     <th className={s.th}>Created by</th>
                                     <th className={s.th}>Actions</th>
                                 </tr>
-                            </thead>
-                        
-                            <tbody>
-                            <div className={s.scrollTableBody}>
-                                {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
-                                    <td className={s.td} onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
-                                    <td className={s.td}>{pack.cardsCount}</td>
-                                    <td className={s.td}>{formattingDate(pack.updated)}</td>
-                                    <td className={s.td}>{pack.user_name}</td>
-                                    <td className={s.td}>
-                                        <div className={s.btnBox} >
-                                            {idAuthorizedUser === pack.user_id &&
-                                            <>
-                                                <AlertDialogForDeleteValue packName={pack.name}
-                                                                        packId={pack._id}
-                                                                        open={openAlertDialogForDeletePack}
-                                                                        setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
-                                                                        alertTitle={"Delete Pack?"}
-                                                                        type={"pack"}/>
-                                                <AlertDialogForEditValue packName={pack.name}
-                                                                        open={openAlertDialogForEditPack}
-                                                                        setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
-                                                                        packId={pack._id}
-                                                                        alertTitle={"Change Pack name?"}
-                                                                        type={"pack"}
-                                                                        inputLabel={"New Pack name"}/>
-                                            </>}
-                                            <BtnActions name='Learn' style={styleBtnLearn}
-                                                        onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
-                                        </div>
-                                    </td>
-                                </tr>)}
-                            
-                            </div>
-                        
-                            </tbody>
-                        
-                    </table>
-                </div>
+                                </thead>
+                                <div className={s.scrollTableBody}>
+                                    <tbody>
+                                    {dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
+                                        <td className={s.td}
+                                            onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
+                                        <td className={s.td}>{pack.cardsCount}</td>
+                                        <td className={s.td}>{formattingDate(pack.updated)}</td>
+                                        <td className={s.td}>{pack.name}</td>
+                                        <td className={s.td}>
+                                            <div className={s.btnBox}>
+                                                {idAuthorizedUser === pack.user_id &&
+                                                <>
+                                                    <BtnActions name='Delete' onClick={() => handleOpenDelete(pack)}
+                                                                style={styleBtnDelete}/>
+                                                    <BtnActions name='Edit' onClick={() => handleOpenEdit(pack)}
+                                                                style={styleBtnEdit}/>
+                                                </>
+                                                }
+                                                <BtnActions name='Learn' style={styleBtnLearn}
+                                                            onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
+                                            </div>
+                                        </td>
+                                    </tr>)}
+
+                                    {openAlertDialogForDeletePack &&
+                                    <AlertDialogForDeleteValue packName={openAlertDialogForDeletePack.name}
+                                                               packId={openAlertDialogForDeletePack._id}
+                                                               open={!!openAlertDialogForDeletePack}
+                                                               setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
+                                                               alertTitle={"Delete Pack?"}
+                                                               type={"pack"}/>}
+                                    {openAlertDialogForEditPack &&
+                                    <AlertDialogForEditValue packName={openAlertDialogForEditPack.name}
+                                                             open={!!openAlertDialogForEditPack}
+                                                             setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
+                                                             packId={openAlertDialogForEditPack._id}
+                                                             alertTitle={"Change Pack name?"}
+                                                             type={"pack"}
+                                                             inputLabel={"New Pack name"}/>}
+
+                                    </tbody>
+                                </div>
+                            </table>
+                        </div>
 
                         <div className={s.contentRightBottom}>
                             <UsePagination count={Math.ceil(totalCount / pageCount)} page={currentPage}
@@ -305,3 +279,59 @@ function PacksList() {
 
 
 export default PacksList
+
+export const styleBtnDelete: any = {
+    color: '#FFFFFF',
+    background: '#F1453D',
+}
+export const styleBtnEdit: any = {
+    color: '#21268F',
+    background: '#D7D8EF',
+}
+export const styleBtnLearn: CSSProperties = {
+    color: '#21268F',
+    background: '#D7D8EF',
+}
+
+export const theme = createTheme({
+    components: {
+        // Name of the component
+        MuiSlider: {
+            styleOverrides: {
+                // Name of the slot
+                root: {
+                    // Some CSS
+                    color: '#21268F',
+                    height: 5,
+                    '& .MuiSlider-track': {
+                        border: 'none',
+                    },
+                    '& .MuiSlider-thumb': {
+                        height: 16,
+                        width: 16,
+                        backgroundColor: '#fff',
+                        border: '5px solid currentColor',
+                        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                            boxShadow: 'inherit',
+                            touchAction: 'pan-x',
+                        },
+                        '&:before': {
+                            display: 'none',
+                        },
+                    },
+                    '& .MuiSlider-valueLabel': {
+                        lineHeight: 1.2,
+                        fontSize: 12,
+                        background: 'unset',
+                        padding: 0,
+                        width: 32,
+                        height: 24,
+                        borderRadius: '3',
+                        backgroundColor: '#21268F',
+                        '&:before': {display: 'none'},
+                    },
+                },
+            },
+        },
+    },
+});

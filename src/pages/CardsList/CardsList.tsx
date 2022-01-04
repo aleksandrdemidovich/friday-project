@@ -3,6 +3,8 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from "../../redux/store";
 import {
+    CardType,
+    PackType,
     requestCards,
     setCardsPage,
     setCardsPageCount, setSearchCardName,
@@ -19,6 +21,8 @@ import AlertDialogForDeleteValue from "../PacksList/AlertDialogForDeleteValue";
 import SelectLabels from "../PacksList/Select/Select";
 import UsePagination from "../PacksList/Pagination/UsePagination";
 import MainRating from "./Rating/Rating";
+import BtnActions from "../PacksList/BtnActions/BtnActions";
+import {styleBtnDelete, styleBtnEdit} from "../PacksList/PacksList";
 
 
 export const CardsList = () => {
@@ -41,11 +45,19 @@ export const CardsList = () => {
 
 
 
-    const [openAlertDialogForDeletePack, setOpenAlertDialogForDeletePack] = React.useState(false);
-    const [openAlertDialogForEditPack, setOpenAlertDialogForEditPack] = React.useState(false);
+    const [openAlertDialogForDeletePack, setOpenAlertDialogForDeletePack] = React.useState<CardType | null>(null);
+    const [openAlertDialogForEditPack, setOpenAlertDialogForEditPack] = React.useState<CardType | null>(null);
     const [openAlertDialogForNewPack, setOpenAlertDialogForNewPack] = React.useState(false);
 
     const [searchCardsName, setSearchCardsName] = React.useState('');
+
+
+    const handleOpenDelete = (card: CardType) => {
+        setOpenAlertDialogForDeletePack(card)
+    }
+    const handleOpenEdit = (card: CardType) => {
+        setOpenAlertDialogForEditPack(card)
+    }
 
 
     let history = useHistory();
@@ -80,6 +92,16 @@ export const CardsList = () => {
     const searchCardNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchCardsName(e.currentTarget.value)
     }
+
+
+    // const styleBtnDelete: any = {
+    //     color: '#FFFFFF',
+    //     background: '#F1453D',
+    // }
+    // const styleBtnEdit: any = {
+    //     color: '#21268F',
+    //     background: '#D7D8EF',
+    // }
 
 
     return (
@@ -125,22 +147,48 @@ export const CardsList = () => {
                             <td className={s.td}><MainRating rating={card.grade}/></td>
                             {idAuthorizedUser === card.user_id &&<td className={s.td}>
                                 <div className={s.btnBox} key={card._id}>
-                                    <AlertDialogForDeleteValue packName={card.question}
-                                                               packId={card._id}
-                                                               open={openAlertDialogForDeletePack}
-                                                               setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
-                                                               alertTitle={"Delete Card?"}
-                                                               type={"card"}/>
-                                    <AlertDialogForEditValue packName={card.question}
-                                                             open={openAlertDialogForEditPack}
-                                                             setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
-                                                             packId={card._id}
-                                                             alertTitle={"Change Card info?"}
-                                                             type={"card"}
-                                                             inputLabel={"New Card name"}/>
+                                    {/*<AlertDialogForDeleteValue packName={card.question}*/}
+                                    {/*                           packId={card._id}*/}
+                                    {/*                           open={openAlertDialogForDeletePack}*/}
+                                    {/*                           setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}*/}
+                                    {/*                           alertTitle={"Delete Card?"}*/}
+                                    {/*                           type={"card"}/>*/}
+                                    {/*<AlertDialogForEditValue packName={card.question}*/}
+                                    {/*                         open={openAlertDialogForEditPack}*/}
+                                    {/*                         setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}*/}
+                                    {/*                         packId={card._id}*/}
+                                    {/*                         alertTitle={"Change Card info?"}*/}
+                                    {/*                         type={"card"}*/}
+                                    {/*                         inputLabel={"New Card name"}/>*/}
+                                    {idAuthorizedUser === card.user_id &&
+                                    <>
+                                        <BtnActions name='Delete' onClick={() => handleOpenDelete(card)}
+                                                    style={styleBtnDelete}/>
+                                        <BtnActions name='Edit' onClick={() => handleOpenEdit(card)}
+                                                    style={styleBtnEdit}/>
+                                    </>
+                                    }
                                 </div>
                             </td>}
                         </tr>)}
+
+                        {openAlertDialogForDeletePack &&
+                        <AlertDialogForDeleteValue packName={openAlertDialogForDeletePack.question}
+                                                   packId={openAlertDialogForDeletePack._id}
+                                                   open={!!openAlertDialogForDeletePack}
+                                                   setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
+                                                   alertTitle={"Delete Card?"}
+                                                   type={"card"}/>}
+                        {openAlertDialogForEditPack &&
+                        <AlertDialogForEditValue packName={openAlertDialogForEditPack.question}
+                                                 answer = {openAlertDialogForEditPack.answer}
+                                                 open={!!openAlertDialogForEditPack}
+                                                 setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
+                                                 packId={openAlertDialogForEditPack._id}
+                                                 alertTitle={"Change Card info?"}
+                                                 type={"card"}
+                                                 inputLabel={"Question"}/>}
+
                         </tbody>
                     </div>
                     </table>

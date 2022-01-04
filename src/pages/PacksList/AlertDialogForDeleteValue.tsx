@@ -1,49 +1,41 @@
 import React from 'react'
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {fetchDeleteCard, fetchDeletePack} from "../../redux/cardPacksReducer";
-import BtnActions from "./BtnActions/BtnActions";
+import {CardType, fetchDeleteCard, fetchDeletePack, PackType} from "../../redux/cardPacksReducer";
 
 type AlertDialogForDeletePackPropsType = {
-    packName: string
+    packName: any
     open: boolean
-    setOpenAlertDialogForDeletePack: (newStateValue: boolean) => void
+    setOpenAlertDialogForDeletePack: (pack: any) => void
     packId: string
     alertTitle: string
     type: 'pack' | 'card'
 }
 
 function AlertDialogForDeleteValue(props: AlertDialogForDeletePackPropsType) {
+    console.log('render')
     const dispatch = useDispatch()
 
-    const handleOpen = () => {
-        props.setOpenAlertDialogForDeletePack(true)
 
-    }
     const handleClose = () => {
-        props.setOpenAlertDialogForDeletePack(false)
+        props.setOpenAlertDialogForDeletePack(null)
     }
 
     const removePackHandler = () => {
         if (props.type === 'pack') {
             dispatch(fetchDeletePack(props.packId))
-            props.setOpenAlertDialogForDeletePack(false)
+            props.setOpenAlertDialogForDeletePack(null)
         } else {
             dispatch(fetchDeleteCard(props.packId))
-            props.setOpenAlertDialogForDeletePack(false)
+            props.setOpenAlertDialogForDeletePack(null)
         }
     }
 
 
-    const styleBtnDelete: any = {
-        color: '#FFFFFF',
-        background: '#F1453D',
-    }
-
 
     return (
         <div>
-            <BtnActions name='Delete'  onClick={handleOpen} style={styleBtnDelete}/>
+
             <Dialog
                 open={props.open}
                 onClose={handleClose}
