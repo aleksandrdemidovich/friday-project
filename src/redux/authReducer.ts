@@ -1,9 +1,9 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./store";
 import {authAPI} from "../api/authAPI";
-import {Dispatch} from "redux";
 import {AppActionsType, setAppError, setAppStatus, setIsInitialized} from "./app-reducer";
 import errorResponseHandler from "../utils/errorResponseHandler";
+import {profileAPI} from "../api/profile-api";
 
 export enum AuthEvents {
     SET_USER_DATA = 'SET_USER_DATA',
@@ -40,6 +40,7 @@ export type  IUser = {
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean
+    updatedUser?: IUser
 }
 
 export type InferActionsType<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never
@@ -160,7 +161,6 @@ export const passwordRecovery = (email: string, message: string):ThunkAction<voi
     }
 }
 
-
 export const inputNewPassword = (password: string, resetPasswordToken: string | undefined):ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
     try {
         dispatch(setAppError({error: ''}))
@@ -169,5 +169,22 @@ export const inputNewPassword = (password: string, resetPasswordToken: string | 
         dispatch(setAppStatus({status: 'succeeded'}));
     } catch (e) {
         errorResponseHandler(e, dispatch)
+    }
+}
+
+export const updateUserProfile = (avatar: string, name: string): ThunkAction<void, AppStateType, {}, AuthAppActionsType> => async (dispatch) => {
+    dispatch(setAppError({error: ''}))
+    dispatch(setAppStatus({status: 'loading'}));
+    try {
+        const data = await profileAPI.update(avatar, name)
+        console.log(data)
+        dispatch(authActions.setUserData(data.updatedUser!))
+        dispatch(setAppStatus({status:'idle'}))
+    } catch (e: any) {
+        const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
+        dispatch(setAppError({error}))
+        dispatch(setAppStatus({status:'failed'}))
+    } finally {
+        dispatch(setIsInitialized({isInitialized:true}))
     }
 }

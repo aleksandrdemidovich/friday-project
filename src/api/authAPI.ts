@@ -24,7 +24,6 @@ export const authAPI = {
     },
     logout: async () => {
         const response = await instance.delete<DefaultResponseType>('auth/me')
-        console.log('LOGOUT: ', response.data)
         return response.data
     },
     passRecovery(email: string, message: string) {
