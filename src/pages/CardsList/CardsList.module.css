@@ -70,10 +70,9 @@
     margin: 0 auto;
     margin-top: 24px;
     margin-bottom: 24px;
-
 }
 
-.tableHeader {
+.tableHeader {    
     background-color: #ECECF9;
 }
 
@@ -86,7 +85,7 @@
 
 .tr {
     height: 48px;
-    text-align: left;
+    text-align: left;     
     color: #2D2E46;
     font-family: "SFUIDisplay-Bold";
     font-style: normal;
@@ -96,7 +95,7 @@
     padding-left: 24px;
     padding-right: 24px;
     display: grid;
-    grid-template-columns: 245px 307px 130px 130px 1fr;
+    grid-template-columns: 245px 307px 130px 130px 1fr;    
     align-items: center;
     overflow-y: hidden;
     text-overflow: ellipsis;
@@ -122,7 +121,7 @@
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-}
+} 
 
 .th:last-child,
 .td:last-child {
@@ -168,11 +167,12 @@
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-}
+	width: 6px;
+} 
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
+	box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
 ::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
 }
+
