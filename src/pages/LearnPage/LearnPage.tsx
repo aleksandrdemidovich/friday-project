@@ -100,7 +100,7 @@ export const LearnPage = () => {
         background: '#D7D8EF',
         width: '124px',
         opacity: '0.8',
-        marginRight: '40px',
+        // marginRight: '40px',
     }
 
     // for btn SHOW ANSWER
@@ -163,7 +163,6 @@ export const LearnPage = () => {
             lineHeight: '24px',
             color: '#2D2E46',
         },    
-       
     });
 
     //styleForLabel
@@ -177,8 +176,6 @@ export const LearnPage = () => {
         lineHeight: '24px',
         color: '#2D2E46'
     }
-
-
 
 
     return (
@@ -196,7 +193,7 @@ export const LearnPage = () => {
             )}
 
             {!isChecked && (
-                <CardActions>
+                <CardActions style={{paddingLeft: 0, paddingRight: 0}}>
 
                     <div className={s.btnWrap}>                    
 
@@ -253,7 +250,7 @@ export const LearnPage = () => {
                                 // /* A lot of thought */
                                 //     key={i}
                                 //     value={i + 1}
-                                //     control={<BpRadio/>}
+                                //     control={<Radio/>}
                                 //     label={g}
                                 //     onChange={() => setGrade(i + 1)}
                                 // />
