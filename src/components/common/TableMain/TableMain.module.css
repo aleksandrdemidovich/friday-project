@@ -1,0 +1,110 @@
+
+.table {
+    border: none;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    width: 100%; 
+    max-width: 670px;   
+    /* table-layout: fixed;  */
+    max-height: 432px;
+    box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+}
+
+.tableHeader {    
+    background-color: #ECECF9;
+    /* position: fixed; */
+}
+
+.tr {
+    height: 48px;
+    text-align: left;     
+    color: #2D2E46;
+    font-family: "SFUIDisplay-Bold";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 16px;
+    /* padding-left: 24px;
+    padding-right: 24px; */
+    /* display: grid; */
+    /* grid-template-columns: 160px 80px 135px minmax(110px, 120px) max-content; */
+    /* align-items: center; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+.th{
+    cursor: pointer;
+    align-items: center;
+    /* display: flex;
+    flex-direction: row;
+    align-items: center; */
+    vertical-align: middle;
+    padding: 0 5px;
+}
+
+.th:first-child {
+    padding-left: 24px;
+}
+
+.th:last-child {
+    padding-right: 24px;
+}
+
+.tr:nth-child(2n) {
+    background-color:#F8F7FD;
+}
+
+.scrollTableBody {
+    max-height:384px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+.td {
+    font-family: "SFUIDisplay-Regular";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+}
+
+.td:first-child {
+    padding-left: 24px;
+}
+
+.td:last-child {
+    padding: 0 5px 0 24px;
+}
+
+.tableHeader:first-child {
+    padding-left: 0 24px 0 5px;
+}
+
+
+
+.td:nth-child(4) {
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+} 
+
+.th:last-child,
+.td:last-child {
+    /* justify-self: center; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btnBox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

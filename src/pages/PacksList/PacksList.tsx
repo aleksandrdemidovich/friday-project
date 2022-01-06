@@ -22,6 +22,8 @@ import SelectLabels from "./Select/Select";
 import BtnActions from "./BtnActions/BtnActions";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import TableMain from "../../components/common/TableMain/TableMain.tsx";
+
 
 
 function PacksList() {
@@ -203,7 +205,9 @@ function PacksList() {
 
 
                         <div className={s.tableWrap}>
-                            <table className={s.table}>
+
+                          <TableMain/>
+                            {/* <table className={s.table}>
                                 <thead className={s.tableHeader}>
                                 <tr className={s.tr}>
                                     <th className={s.th}>Name</th>
@@ -257,7 +261,7 @@ function PacksList() {
 
                                     </tbody>
                                 </div>
-                            </table>
+                            </table> */}
                         </div>
 
                         <div className={s.contentRightBottom}>
