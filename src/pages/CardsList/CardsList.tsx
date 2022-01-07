@@ -94,14 +94,6 @@ export const CardsList = () => {
     }
 
 
-    // const styleBtnDelete: any = {
-    //     color: '#FFFFFF',
-    //     background: '#F1453D',
-    // }
-    // const styleBtnEdit: any = {
-    //     color: '#21268F',
-    //     background: '#D7D8EF',
-    // }
 
 
     return (
@@ -147,19 +139,6 @@ export const CardsList = () => {
                             <td className={s.td}><MainRating rating={card.grade}/></td>
                             {idAuthorizedUser === card.user_id &&<td className={s.td}>
                                 <div className={s.btnBox} key={card._id}>
-                                    {/*<AlertDialogForDeleteValue packName={card.question}*/}
-                                    {/*                           packId={card._id}*/}
-                                    {/*                           open={openAlertDialogForDeletePack}*/}
-                                    {/*                           setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}*/}
-                                    {/*                           alertTitle={"Delete Card?"}*/}
-                                    {/*                           type={"card"}/>*/}
-                                    {/*<AlertDialogForEditValue packName={card.question}*/}
-                                    {/*                         open={openAlertDialogForEditPack}*/}
-                                    {/*                         setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}*/}
-                                    {/*                         packId={card._id}*/}
-                                    {/*                         alertTitle={"Change Card info?"}*/}
-                                    {/*                         type={"card"}*/}
-                                    {/*                         inputLabel={"New Card name"}/>*/}
                                     {idAuthorizedUser === card.user_id &&
                                     <>
                                         <BtnActions name='Delete' onClick={() => handleOpenDelete(card)}

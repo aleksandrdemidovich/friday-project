@@ -2,16 +2,12 @@ import s from "./PacksList.module.css"
 import React, {CSSProperties, useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {
-    PackType,
     requestCardPack, setCurrentCardsPackID, setCurrentPackName, setMinMaxCardsCount,
     setPacksPage,
     setPacksPageCount, setSearchPacksName, setSortPacks, setUserId
 } from "../../redux/cardPacksReducer";
 import {AppStateType} from "../../redux/store";
-import {formattingDate} from "../../utils/formattingDate";
 import {CircularProgress, createTheme, Slider, ThemeProvider} from "@mui/material";
-import AlertDialogForDeleteValue from "./AlertDialogForDeleteValue";
-import AlertDialogForEditValue from "./AlertDialogForEditValue";
 import AlertDialogForNewValue from "./AlertDialogForNewValue";
 import {PATH} from "../Routes";
 import {Redirect, useHistory} from "react-router-dom";
@@ -19,11 +15,7 @@ import BtnShowCards from "../../components/common/btnShowCards/BtnShowCards";
 import Subtitle from "../../components/common/subtitle/Subtitle";
 import UsePagination from "./Pagination/UsePagination";
 import SelectLabels from "./Select/Select";
-import BtnActions from "./BtnActions/BtnActions";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import TableMain from "../../components/common/TableMain/TableMain.tsx";
-
+import TableMain from "../../components/common/TableMain/TableMain";
 
 
 function PacksList() {
@@ -44,22 +36,14 @@ function PacksList() {
     const sortPacks = useSelector((state: AppStateType) => state.cardPacks.currentCardPacks.sortPacks)
 
     //dialog alerts
-    const [openAlertDialogForDeletePack, setOpenAlertDialogForDeletePack] = React.useState<PackType | null>(null);
-    const [openAlertDialogForEditPack, setOpenAlertDialogForEditPack] = React.useState<PackType | null>(null);
     const [openAlertDialogForNewPack, setOpenAlertDialogForNewPack] = React.useState(false);
 
-    const handleOpenDelete = (pack: PackType) => {
-        setOpenAlertDialogForDeletePack(pack)
-    }
-    const handleOpenEdit = (pack: PackType) => {
-        setOpenAlertDialogForEditPack(pack)
-    }
 
 
     //local state for input / range
     const [searchPackName, setSearchPackName] = React.useState('');
     const [value, setValue] = React.useState<number[]>([min, max]);
-    const [sort, setSort] = useState(false)
+
 
     const dispatch = useDispatch()
     let history = useHistory();
@@ -112,6 +96,7 @@ function PacksList() {
 
     const handleChangeRangeCardCount = (event: Event, newValue: number | number[], activeThumb: number) => {
         setValue(newValue as number[]);
+
     }
 
     if (!isLoggedIn) {
@@ -119,35 +104,9 @@ function PacksList() {
     }
 
 
-    const onClickShowCardsHandle = (id: string, name: string) => {
-        dispatch(setCurrentCardsPackID({currentCardsPackId: id}))
-        dispatch(setCurrentPackName({currentPackName: name}))
-        history.push(PATH.CARDS_LIST)
-    }
 
-    const onClickShowLearnPageHandle = (id: string, name: string) => {
-        dispatch(setCurrentCardsPackID({currentCardsPackId: id}))
-        dispatch(setCurrentPackName({currentPackName: name}))
-        history.push(PATH.LEARN_PAGE)
-    }
 
-    const toggleFilter = (type: string) => {
-        if (!sort) {
-            if (type === 'card') {
-                dispatch(setSortPacks('0cardsCount'))
-            } else {
-                dispatch(setSortPacks('0updated'))
-            }
-            setSort(!sort)
-        } else {
-            if (type === 'card') {
-                dispatch(setSortPacks('1cardsCount'))
-            } else {
-                dispatch(setSortPacks('1updated'))
-            }
-            setSort(!sort)
-        }
-    }
+
 
 
     const style1: CSSProperties = {
@@ -158,10 +117,6 @@ function PacksList() {
         color: '#FFFFFF',
         background: '#9A91C8',
     }
-
-
-
-
 
 
     return (
@@ -206,7 +161,10 @@ function PacksList() {
 
                         <div className={s.tableWrap}>
 
-                          <TableMain/>
+                            <TableMain dataPacksList={dataPacksList}
+                                       idAuthorizedUser={idAuthorizedUser}/>
+
+
                             {/* <table className={s.table}>
                                 <thead className={s.tableHeader}>
                                 <tr className={s.tr}>
