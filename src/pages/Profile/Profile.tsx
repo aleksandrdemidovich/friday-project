@@ -107,17 +107,17 @@ function Profile() {
                                     alt='avatar'/>
                                 {editMode ?
                                     <>
-                                    <span> Name: <input className={s.search} type={"text"} onChange={changeUserNameHandler} value={userName}/></span>
-                                        <span>Avatar link: <input type={"text"} onChange={changeUserAvatarHandler} value={userAvatar} placeholder={'Link image'}/></span>
+                                    <span> Name: <input className={s.inputForEditProfile} type={"text"} onChange={changeUserNameHandler} value={userName}/></span>
+                                        <span>Avatar link: <input className={s.inputForEditProfile} type={"text"} onChange={changeUserAvatarHandler} value={userAvatar} placeholder={'Link image'}/></span>
                                     </>
                                     : <>
-                                        <p>Name: {user.name}</p>
-                                        <p>E-Mail: {user.email}</p>
+                                        <p className={s.name}>Name: {user.name}</p>
+                                        <p className={s.email}>E-Mail: {user.email}</p>
                                     </>}
 
 
                                 {editMode ?
-                                    <Button variant={"contained"} color={"secondary"} onClick={editProfile}>Save changes</Button>
+                                    <Button className={s.btnForEditProfile} variant={"contained"} color={"secondary"} onClick={editProfile}>Save changes</Button>
                                     : <Button variant={"outlined"} color={"primary"} onClick={() => setEditMode(!editMode)}>Edit profile</Button>}
                             </div> : 'No data'
                     }
@@ -139,9 +139,6 @@ function Profile() {
                     <Subtitle subtitle='Ma packs list'/>
                     {/* <h2>Ma packs list</h2> */}
                     <input className={s.search} type="text" placeholder='Search...'/>
-
-
-
                 </div>
         </div>
     )

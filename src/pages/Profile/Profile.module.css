@@ -47,6 +47,50 @@
     border-radius: 50%;
 }
 
+.inputForEditProfile {
+    background: #ECECF9;
+    opacity: 0.5;
+    border: 1px solid #635D80;
+    border-radius: 2px;
+    font-family: "SFUIDisplay-Regular";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    /* width: 670px; */
+    padding: 6px 20px 6px 40px;
+    margin-bottom: 8px;
+
+}
+
+.name {
+    color: #2D2E46; 
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.email {
+    font-family: "SFUIDisplay-Regular";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #2D2E46;
+    opacity: 0.5;
+    margin-bottom: 8px;
+}
+
+.btnForEditProfile {
+
+
+}
+
 .titleForSlider {
     font-family: "SFUIDisplay-Semibold";
     font-style: normal;
