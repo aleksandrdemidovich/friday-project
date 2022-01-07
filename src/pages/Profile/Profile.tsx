@@ -1,3 +1,4 @@
+import s from "./Profile.module.css";
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
@@ -7,11 +8,13 @@ import {PATH} from "../Routes";
 import {IUser, logoutTC, updateUserProfile} from "../../redux/authReducer";
 import {AppStatusType} from "../../redux/app-reducer";
 import {Button, Slider, ThemeProvider} from "@mui/material";
-import s from "../PacksList/PacksList.module.css";
+// import s from "../PacksList/PacksList.module.css";
 import {
     requestCardPack, setMinMaxCardsCount, setUserId
 } from "../../redux/cardPacksReducer";
 import {theme} from "../PacksList/PacksList";
+import Subtitle from "../../components/common/subtitle/Subtitle";
+
 
 
 function Profile() {
@@ -91,62 +94,55 @@ function Profile() {
 
 
     return (
-        <div style={{
-            width: '70%',
-            height: '75vh',
-            margin: '100px auto',
-            display: 'flex',
-            flexDirection: 'row'
-        }}>
-            {status === 'loading' && <Preloader/>}
-            <div style={{display:'flex', flexDirection:'column', width: '30%', backgroundColor: '#D9D9F1', justifyContent:'space-between'}}>
-                {
-                    user !== null ?
-                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                            <img src={user.avatar}
-                                style={{width: '150px', height: '150px', borderRadius: '75px'}}
-                                alt='avatar'/>
-                            {editMode ?
-                                <>
-                                   <span> Name: <input type={"text"} onChange={changeUserNameHandler} value={userName}/></span>
-                                    <span>Avatar link: <input type={"text"} onChange={changeUserAvatarHandler} value={userAvatar} placeholder={'Link image'}/></span>
-                                </>
-                                : <>
-                                    <p>Name: {user.name}</p>
-                                    <p>E-Mail: {user.email}</p>
-                                </>}
+        <div className={s.profile}>
+
+        
+            <div className={s.contentLeft} >
+                {status === 'loading' && <Preloader/>}
+                
+                    {
+                        user !== null ?
+                            <div className={s.userBlock}>
+                                <img className={s.userImg} src={user.avatar}
+                                    alt='avatar'/>
+                                {editMode ?
+                                    <>
+                                    <span> Name: <input className={s.search} type={"text"} onChange={changeUserNameHandler} value={userName}/></span>
+                                        <span>Avatar link: <input type={"text"} onChange={changeUserAvatarHandler} value={userAvatar} placeholder={'Link image'}/></span>
+                                    </>
+                                    : <>
+                                        <p>Name: {user.name}</p>
+                                        <p>E-Mail: {user.email}</p>
+                                    </>}
 
 
-                            {editMode ?
-                                <Button variant={"contained"} color={"secondary"} onClick={editProfile}>Save changes</Button>
-                                : <Button variant={"outlined"} color={"primary"} onClick={() => setEditMode(!editMode)}>Edit profile</Button>}
-                        </div> : 'No data'
-                }
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    backgroundColor: '#ECECF9',
-                }}>
-                    <h3>Number of cards</h3>
-                    <ThemeProvider theme={theme}>
-                        <Slider
-                            value={value}
-                            onChange={handleChangeRangeCardCount}
-                            valueLabelDisplay="on"
-                        />
-                    </ThemeProvider>
+                                {editMode ?
+                                    <Button variant={"contained"} color={"secondary"} onClick={editProfile}>Save changes</Button>
+                                    : <Button variant={"outlined"} color={"primary"} onClick={() => setEditMode(!editMode)}>Edit profile</Button>}
+                            </div> : 'No data'
+                    }
+                    <div className={s.sliderBlock}>
+                        <h3 className={s.titleForSlider}>Number of cards</h3>
+                        <ThemeProvider theme={theme}>
+                            <Slider
+                                value={value}
+                                onChange={handleChangeRangeCardCount}
+                                valueLabelDisplay="on"
+                            />
+                        </ThemeProvider>
+                    </div>
+                    <Button onClick={logout} disabled={!isLoggedIn}>Logout</Button>
+                
+            
                 </div>
-                <Button onClick={logout} disabled={!isLoggedIn}>Logout</Button>
-            </div>
-            <div style={{width: '70%', backgroundColor: 'white'}}>
-                <h1>Ma packs list</h1>
-                <input className={s.search} type="text" placeholder='Search...'/>
+                <div className={s.contentRight} >
+                    <Subtitle subtitle='Ma packs list'/>
+                    {/* <h2>Ma packs list</h2> */}
+                    <input className={s.search} type="text" placeholder='Search...'/>
 
 
 
-            </div>
-
+                </div>
         </div>
     )
 }
