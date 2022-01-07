@@ -131,7 +131,7 @@
     padding-left: 24px;
     padding-right: 24px;
     display: grid;
-    grid-template-columns: 160px 80px 135px minmax(110px, 120px) 140px;
+    grid-template-columns: 160px 80px 135px minmax(110px, 120px) max-content;
     align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -173,7 +173,7 @@
 .th{
     cursor: pointer;
     align-items: center;
-    align-content: center;
+   
     display: flex;
     flex-direction: row;
     align-items: center;

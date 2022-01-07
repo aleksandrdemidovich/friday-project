@@ -1,0 +1,42 @@
+.card {
+    background: #F9F9FE;
+    min-width: 413px;   
+    padding: 36px 30px 60px 30px;
+    text-align: center;
+    margin: auto;
+    border-radius: 8px;
+}
+
+.subtitle {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #2D2E46;
+    margin-bottom: 33px;
+}
+.noQuestion {
+    text-align: center;
+}
+.question {
+    text-align: left;
+}
+.answer {
+    text-align: left;
+    margin-top: 12px;
+}
+
+.wrapForm {
+    display: flex;
+    margin-top: 48px;
+    margin-bottom: 68px;
+}
+.label {
+    font-size: 50px;
+}
+.btnWrap {
+    margin-top: 78px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
