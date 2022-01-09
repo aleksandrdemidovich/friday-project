@@ -1,19 +1,19 @@
 import s from "./Profile.module.css";
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {Preloader} from "../../components/common/Preloader/Preloader";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {PATH} from "../Routes";
 import {IUser, logoutTC, updateUserProfile} from "../../redux/authReducer";
 import {AppStatusType} from "../../redux/app-reducer";
 import {Button, Slider, ThemeProvider} from "@mui/material";
-// import s from "../PacksList/PacksList.module.css";
 import {
     requestCardPack, setMinMaxCardsCount, setUserId
 } from "../../redux/cardPacksReducer";
 import {theme} from "../PacksList/PacksList";
 import Subtitle from "../../components/common/subtitle/Subtitle";
+import TableMain from "../../components/common/TableMain/TableMain";
 
 
 
@@ -22,14 +22,12 @@ function Profile() {
     const user = useSelector<AppStateType, IUser | null>(state => state.auth.user)
     const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
     const status = useSelector<AppStateType, AppStatusType>(state => state.app.status)
-
-
-    //--------------------------------
     const idAuthorizedUser = useSelector<AppStateType, string>(state => state.auth.user?._id!);
     const min = useSelector((state: AppStateType) => state.cardPacks.currentCardPacks.min)
     const max = useSelector((state: AppStateType) => state.cardPacks.currentCardPacks.max)
     const packName = useSelector((state: AppStateType) => state.cardPacks.currentCardPacks.packName)
     const sortPacks = useSelector((state: AppStateType) => state.cardPacks.currentCardPacks.sortPacks)
+    const dataPacksList = useSelector((state: AppStateType) => state.cardPacks.currentCardPacks.cardPacks);
 
 
     //local state for input / range
@@ -37,26 +35,27 @@ function Profile() {
     const [value, setValue] = React.useState<number[]>([min, max]);
     const [editMode, setEditMode] = React.useState(false);
 
-
     const [userName, setUserName] = React.useState(user?.name);
     const [userAvatar, setUserAvatar] = React.useState(user?.avatar);
-
-
     const dispatch = useDispatch()
 
     const logout = () => {
         dispatch(logoutTC())
     }
 
+    const editProfile = () => {
+        dispatch(updateUserProfile(userAvatar as string, userName as string))
+        setEditMode(!editMode)
+    }
 
     useEffect(() => {
         dispatch(setUserId({user_id: idAuthorizedUser}))
         dispatch(requestCardPack())
         return () => {
+            dispatch(setUserId({user_id: ''}))
             dispatch(setMinMaxCardsCount({range: [0, 100]}))
         }
     }, [packName, min, max,sortPacks])
-
 
 
 
@@ -82,10 +81,6 @@ function Profile() {
     }
 
 
-    const editProfile = () => {
-        dispatch(updateUserProfile(userAvatar as string, userName as string))
-        setEditMode(!editMode)
-    }
 
 
     if (!isLoggedIn) {
@@ -95,11 +90,8 @@ function Profile() {
 
     return (
         <div className={s.profile}>
-
-        
             <div className={s.contentLeft} >
                 {status === 'loading' && <Preloader/>}
-                
                     {
                         user !== null ?
                             <div className={s.userBlock}>
@@ -111,8 +103,8 @@ function Profile() {
                                         <span>Avatar link: <input className={s.inputForEditProfile} type={"text"} onChange={changeUserAvatarHandler} value={userAvatar} placeholder={'Link image'}/></span>
                                     </>
                                     : <>
-                                        <p className={s.name}>Name: {user.name}</p>
-                                        <p className={s.email}>E-Mail: {user.email}</p>
+                                        <p className={s.name}>{user.name}</p>
+                                        <p className={s.email}>{user.email}</p>
                                     </>}
 
 
@@ -132,13 +124,14 @@ function Profile() {
                         </ThemeProvider>
                     </div>
                     <Button onClick={logout} disabled={!isLoggedIn}>Logout</Button>
-                
-            
+
+
                 </div>
                 <div className={s.contentRight} >
                     <Subtitle subtitle='Ma packs list'/>
-                    {/* <h2>Ma packs list</h2> */}
                     <input className={s.search} type="text" placeholder='Search...'/>
+                    <TableMain dataPacksList={dataPacksList}
+                            idAuthorizedUser={idAuthorizedUser}/>
                 </div>
         </div>
     )

@@ -1,6 +1,6 @@
 .profile {
     height: 100%;
-    max-width: 1008px;
+    /* max-width: 1008px; */
     min-height: 635px;
     margin: auto;
     background-color: white;
@@ -12,20 +12,10 @@
 .contentLeft {
     display: flex;
     flex-direction:column;   
-    min-width:245px;
+    max-width:245px;
     background-color: #ECECF9;
     padding-left: 24px;
     padding-right: 24px;
-/*    
-        width: '70%',
-        height: '75vh',
-      
-        display: 'flex',
-        flexDirection: 'row' */
-/* 
-        style={{display:'flex', flexDirection:'column', width: '30%', backgroundColor: '#D9D9F1', justifyContent:'space-between'}}
-   */
-
 }
 
 .userBlock {
@@ -57,7 +47,6 @@
     font-weight: normal;
     font-size: 14px;
     line-height: 24px;
-    /* width: 670px; */
     padding: 6px 20px 6px 40px;
     margin-bottom: 8px;
 
@@ -86,11 +75,6 @@
     margin-bottom: 8px;
 }
 
-.btnForEditProfile {
-
-
-}
-
 .titleForSlider {
     font-family: "SFUIDisplay-Semibold";
     font-style: normal;
@@ -102,9 +86,6 @@
     margin-bottom: 54px;   
 }
 
-.contentRight {
-    /* width: '70%', backgroundColor: 'white' */
-}
 .contentRight {   
     display:flex;
     flex-direction: column;
@@ -124,4 +105,5 @@
     line-height: 24px;
     width: 670px;
     padding: 6px 20px 6px 40px;
+    margin-bottom: 24px;
 }

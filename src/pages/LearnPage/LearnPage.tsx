@@ -5,10 +5,20 @@ import {CardType, fetchUpdateCard, requestCards, setCurrentCardsPackID} from "..
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {useHistory} from "react-router-dom";
-import {Button, CardActions, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import {
+    Button,
+    CardActions,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    RadioProps
+} from "@mui/material";
 import {Preloader} from "../../components/common/Preloader/Preloader";
 import BtnAll from "../../components/common/BtnAll/BtnAll";
 import { styled } from '@mui/material/styles';
+import Subtitle from "../../components/common/subtitle/Subtitle";
 
 
 
@@ -181,7 +191,8 @@ export const LearnPage = () => {
     return (
         <Card className={s.card}>
             {appStatus === 'loading' && <Preloader/>}
-            <h3 className={s.subtitle}>Learn ' {cardName} '</h3>
+            {/*<h3 className={s.subtitle}>Learn ' {cardName} '</h3>*/}
+            <Subtitle subtitle={`Learn ' ${cardName} '`}/>
             {card.question === 'question fake' ? (
                 <p className={s.noQuestion}>
                     <b>No questions in this Pack!!!</b>
