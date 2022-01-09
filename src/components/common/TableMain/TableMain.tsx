@@ -1,5 +1,4 @@
-// import s from './TableMain.module.css'
-import s from './../../../pages/PacksList/PacksList.module.css'
+import s from './TableMain.module.css';
 import {formattingDate} from "../../../utils/formattingDate";
 import BtnActions from "../../../pages/PacksList/BtnActions/BtnActions";
 import {styleBtnDelete, styleBtnEdit, styleBtnLearn} from "../../../pages/PacksList/PacksList";
@@ -72,62 +71,60 @@ export default function TableMain(props: TableMainPropsType) {
         <div className={s.tableMain}>
             <table className={s.table}>
                 <thead className={s.tableHeader}>
-                <tr className={s.tr}>
-                    <th className={s.th}>Name</th>
-                    <th className={s.th} onClick={() => toggleFilter('card')}>Cards{sort ?
-                        <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
-                    <th className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ?
-                        <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
-                    <th className={s.th}>Created by</th>
-                    <th className={s.th}>Actions</th>
-                </tr>
+                    <tr className={s.tr}>
+                        <th className={s.th}>Name</th>
+                        <th align="center" className={s.th} onClick={() => toggleFilter('card')}><span>Cards</span>{sort ?
+                            <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                        <th align="center" className={s.th} onClick={() => toggleFilter('updated')}>Last updated{sort ?
+                            <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}</th>
+                        <th className={s.th}>Created by</th>
+                        <th className={s.th}>Actions</th>
+                    </tr>
                 </thead>
-                <div className={s.scrollTableBody}>
-                <tbody>
-
-                    {props.dataPacksList.map(pack => <tr className={s.tr} key={pack._id}>
-                        <td className={s.td}
-                            onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
-                        <td className={s.td}>{pack.cardsCount}</td>
-                        <td className={s.td}>{formattingDate(pack.updated)}</td>
-                        <td className={s.td}>{pack.user_name}</td>
-                        <td className={s.td}>
-                            <div className={s.btnBox}>
-                                {props.idAuthorizedUser === pack.user_id &&
-                                <>
+                
+                <tbody className={s.tableBody}>                    
+                    
+                        {props.dataPacksList.map(pack => 
+                        <tr className={s.tr} key={pack._id}>
+                            <td className={s.td}
+                                onClick={() => onClickShowCardsHandle(pack._id, pack.name)}>{pack.name}</td>
+                            <td className={s.td}>{pack.cardsCount}</td>
+                            <td className={s.td}>{formattingDate(pack.updated)}</td>
+                            <td className={s.td}>{pack.user_name}</td>
+                            <td className={s.td}>
+                                <div className={s.btnBox}>
+                                    {props.idAuthorizedUser === pack.user_id &&
+                                    <>
                                     <BtnActions name='Delete' onClick={() => handleOpenDelete(pack)}
-                                                style={styleBtnDelete}/>
+                                                    style={styleBtnDelete}/>
                                     <BtnActions name='Edit' onClick={() => handleOpenEdit(pack)}
-                                                style={styleBtnEdit}/>
-                                </>
-                                }
-                                <BtnActions name='Learn' style={styleBtnLearn}
-                                            onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
-                            </div>
-                        </td>
-                    </tr>)}
+                                                    style={styleBtnEdit}/>
+                                    </>
+                                    }
+                                    <BtnActions name='Learn' style={styleBtnLearn}
+                                                onClick={() => onClickShowLearnPageHandle(pack._id, pack.name)}/>
+                                </div>
+                            </td>
+                        </tr>)}
 
-                    {openAlertDialogForDeletePack &&
-                    <AlertDialogForDeleteValue packName={openAlertDialogForDeletePack.name}
-                                               packId={openAlertDialogForDeletePack._id}
-                                               open={!!openAlertDialogForDeletePack}
-                                               setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
-                                               alertTitle={"Delete Pack?"}
-                                               type={"pack"}/>}
-                    {openAlertDialogForEditPack &&
-                    <AlertDialogForEditValue packName={openAlertDialogForEditPack.name}
-                                             open={!!openAlertDialogForEditPack}
-                                             setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
-                                             packId={openAlertDialogForEditPack._id}
-                                             alertTitle={"Change Pack name?"}
-                                             type={"pack"}
-                                             inputLabel={"New Pack name"}/>}
-
-                </tbody>
-                </div>
-            </table>
-
-        </div>
+                        {openAlertDialogForDeletePack &&
+                        <AlertDialogForDeleteValue packName={openAlertDialogForDeletePack.name}
+                                                packId={openAlertDialogForDeletePack._id}
+                                                open={!!openAlertDialogForDeletePack}
+                                                setOpenAlertDialogForDeletePack={setOpenAlertDialogForDeletePack}
+                                                alertTitle={"Delete Pack?"}
+                                                type={"pack"}/>}
+                        {openAlertDialogForEditPack &&
+                        <AlertDialogForEditValue packName={openAlertDialogForEditPack.name}
+                                                open={!!openAlertDialogForEditPack}
+                                                setOpenAlertDialogForEditPack={setOpenAlertDialogForEditPack}
+                                                packId={openAlertDialogForEditPack._id}
+                                                alertTitle={"Change Pack name?"}
+                                                type={"pack"}
+                                                inputLabel={"New Pack name"}/>}
+        </tbody>            
+    </table>
+</div>
 
 
 

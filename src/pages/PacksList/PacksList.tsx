@@ -106,9 +106,6 @@ function PacksList() {
 
 
 
-
-
-
     const style1: CSSProperties = {
         color: '#2D2E46',
         background: '#FFFFFF',

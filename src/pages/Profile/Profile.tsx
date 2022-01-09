@@ -8,7 +8,6 @@ import {PATH} from "../Routes";
 import {IUser, logoutTC, updateUserProfile} from "../../redux/authReducer";
 import {AppStatusType} from "../../redux/app-reducer";
 import {Button, Slider, ThemeProvider} from "@mui/material";
-// import s from "../PacksList/PacksList.module.css";
 import {
     requestCardPack, setMinMaxCardsCount, setUserId
 } from "../../redux/cardPacksReducer";
@@ -100,17 +99,17 @@ function Profile() {
                                     alt='avatar'/>
                                 {editMode ?
                                     <>
-                                    <span> Name: <input type={"text"} onChange={changeUserNameHandler} value={userName}/></span>
-                                        <span>Avatar link: <input type={"text"} onChange={changeUserAvatarHandler} value={userAvatar} placeholder={'Link image'}/></span>
+                                    <span> Name: <input className={s.inputForEditProfile} type={"text"} onChange={changeUserNameHandler} value={userName}/></span>
+                                        <span>Avatar link: <input className={s.inputForEditProfile} type={"text"} onChange={changeUserAvatarHandler} value={userAvatar} placeholder={'Link image'}/></span>
                                     </>
                                     : <>
-                                        <p><b>{user.name}</b></p>
-                                        <p>{user.email}</p>
+                                        <p className={s.name}>{user.name}</p>
+                                        <p className={s.email}>{user.email}</p>
                                     </>}
 
 
                                 {editMode ?
-                                    <Button variant={"contained"} color={"secondary"} onClick={editProfile}>Save changes</Button>
+                                    <Button className={s.btnForEditProfile} variant={"contained"} color={"secondary"} onClick={editProfile}>Save changes</Button>
                                     : <Button variant={"outlined"} color={"primary"} onClick={() => setEditMode(!editMode)}>Edit profile</Button>}
                             </div> : 'No data'
                     }
@@ -132,7 +131,7 @@ function Profile() {
                     <Subtitle subtitle='Ma packs list'/>
                     <input className={s.search} type="text" placeholder='Search...'/>
                     <TableMain dataPacksList={dataPacksList}
-                               idAuthorizedUser={idAuthorizedUser}/>
+                            idAuthorizedUser={idAuthorizedUser}/>
                 </div>
         </div>
     )
